@@ -16,5 +16,15 @@ namespace SpaceLayout.Forms.ZoneForms
         {
             InitializeComponent();
         }
+
+        private void tableLayoutPanel4_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

@@ -30,9 +30,6 @@ namespace SpaceLayout.Forms
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.Previous = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.StartNode = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -40,10 +37,13 @@ namespace SpaceLayout.Forms
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.button2 = new System.Windows.Forms.Button();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.Previous = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
-            this.tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -65,45 +65,6 @@ namespace SpaceLayout.Forms
             this.tableLayoutPanel1.Size = new System.Drawing.Size(357, 611);
             this.tableLayoutPanel1.TabIndex = 0;
             this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
-            // 
-            // tableLayoutPanel3
-            // 
-            this.tableLayoutPanel3.ColumnCount = 2;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Controls.Add(this.Previous, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.button1, 1, 0);
-            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 35);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 1;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(345, 26);
-            this.tableLayoutPanel3.TabIndex = 4;
-            // 
-            // Previous
-            // 
-            this.Previous.BackColor = System.Drawing.Color.White;
-            this.Previous.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Previous.ForeColor = System.Drawing.Color.Navy;
-            this.Previous.Location = new System.Drawing.Point(3, 3);
-            this.Previous.Name = "Previous";
-            this.Previous.Size = new System.Drawing.Size(166, 20);
-            this.Previous.TabIndex = 0;
-            this.Previous.Text = "Previous";
-            this.Previous.UseVisualStyleBackColor = false;
-            // 
-            // button1
-            // 
-            this.button1.BackColor = System.Drawing.Color.White;
-            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button1.ForeColor = System.Drawing.Color.Navy;
-            this.button1.Location = new System.Drawing.Point(175, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(167, 20);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Next";
-            this.button1.UseVisualStyleBackColor = false;
             // 
             // dataGridView1
             // 
@@ -180,6 +141,45 @@ namespace SpaceLayout.Forms
             this.button2.Text = "Draw";
             this.button2.UseVisualStyleBackColor = false;
             // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 2;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Controls.Add(this.Previous, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.button1, 1, 0);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 35);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 1;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(345, 26);
+            this.tableLayoutPanel3.TabIndex = 4;
+            // 
+            // Previous
+            // 
+            this.Previous.BackColor = System.Drawing.Color.White;
+            this.Previous.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Previous.ForeColor = System.Drawing.Color.Navy;
+            this.Previous.Location = new System.Drawing.Point(3, 3);
+            this.Previous.Name = "Previous";
+            this.Previous.Size = new System.Drawing.Size(166, 20);
+            this.Previous.TabIndex = 0;
+            this.Previous.Text = "Previous";
+            this.Previous.UseVisualStyleBackColor = false;
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.White;
+            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button1.ForeColor = System.Drawing.Color.Navy;
+            this.button1.Location = new System.Drawing.Point(175, 3);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(167, 20);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "Next";
+            this.button1.UseVisualStyleBackColor = false;
+            // 
             // ZoneSelection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -189,9 +189,9 @@ namespace SpaceLayout.Forms
             this.Size = new System.Drawing.Size(357, 611);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            this.tableLayoutPanel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

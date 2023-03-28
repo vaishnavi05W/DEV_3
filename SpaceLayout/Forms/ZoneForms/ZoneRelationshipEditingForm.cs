@@ -10,16 +10,11 @@ using System.Windows.Forms;
 
 namespace SpaceLayout.Forms.ZoneForms
 {
-    public partial class UserControl1 : UserControl
+    public partial class ZoneRelationshipEditingForm : UserControl
     {
-        public UserControl1()
+        public ZoneRelationshipEditingForm()
         {
             InitializeComponent();
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
         }
     }
 }

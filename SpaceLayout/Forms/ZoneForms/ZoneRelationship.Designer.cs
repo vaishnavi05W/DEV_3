@@ -61,7 +61,7 @@ namespace SpaceLayout.Forms
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.53112F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 89.46888F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 69F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(357, 611);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(350, 610);
             this.tableLayoutPanel1.TabIndex = 0;
             this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
@@ -75,9 +75,9 @@ namespace SpaceLayout.Forms
             this.EndNode});
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.GridColor = System.Drawing.SystemColors.Control;
-            this.dataGridView1.Location = new System.Drawing.Point(3, 60);
+            this.dataGridView1.Location = new System.Drawing.Point(3, 59);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(351, 478);
+            this.dataGridView1.Size = new System.Drawing.Size(344, 478);
             this.dataGridView1.TabIndex = 3;
             // 
             // ID
@@ -103,10 +103,10 @@ namespace SpaceLayout.Forms
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.Font = new System.Drawing.Font("Corbel", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox1.ForeColor = System.Drawing.Color.Navy;
-            this.textBox1.Location = new System.Drawing.Point(0, 15);
+            this.textBox1.Location = new System.Drawing.Point(0, 14);
             this.textBox1.Margin = new System.Windows.Forms.Padding(0);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(357, 27);
+            this.textBox1.Size = new System.Drawing.Size(350, 27);
             this.textBox1.TabIndex = 1;
             this.textBox1.Text = "Zone Relationship";
             // 
@@ -117,12 +117,12 @@ namespace SpaceLayout.Forms
             this.tableLayoutPanel2.Controls.Add(this.button2, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 1);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 544);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 543);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(351, 64);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(344, 64);
             this.tableLayoutPanel2.TabIndex = 5;
             // 
             // button2
@@ -132,7 +132,7 @@ namespace SpaceLayout.Forms
             this.button2.ForeColor = System.Drawing.Color.Navy;
             this.button2.Location = new System.Drawing.Point(3, 3);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(345, 26);
+            this.button2.Size = new System.Drawing.Size(338, 26);
             this.button2.TabIndex = 5;
             this.button2.Text = "Draw";
             this.button2.UseVisualStyleBackColor = false;
@@ -149,7 +149,7 @@ namespace SpaceLayout.Forms
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(345, 26);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(338, 26);
             this.tableLayoutPanel3.TabIndex = 4;
             // 
             // Previous
@@ -159,7 +159,7 @@ namespace SpaceLayout.Forms
             this.Previous.ForeColor = System.Drawing.Color.Navy;
             this.Previous.Location = new System.Drawing.Point(3, 3);
             this.Previous.Name = "Previous";
-            this.Previous.Size = new System.Drawing.Size(166, 20);
+            this.Previous.Size = new System.Drawing.Size(163, 20);
             this.Previous.TabIndex = 0;
             this.Previous.Text = "Previous";
             this.Previous.UseVisualStyleBackColor = false;
@@ -169,9 +169,9 @@ namespace SpaceLayout.Forms
             this.button1.BackColor = System.Drawing.Color.White;
             this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button1.ForeColor = System.Drawing.Color.Navy;
-            this.button1.Location = new System.Drawing.Point(175, 3);
+            this.button1.Location = new System.Drawing.Point(172, 3);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(167, 20);
+            this.button1.Size = new System.Drawing.Size(163, 20);
             this.button1.TabIndex = 1;
             this.button1.Text = "Next";
             this.button1.UseVisualStyleBackColor = false;
@@ -182,7 +182,7 @@ namespace SpaceLayout.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "ZoneSelection";
-            this.Size = new System.Drawing.Size(357, 611);
+            this.Size = new System.Drawing.Size(350, 610);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

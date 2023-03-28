@@ -143,11 +143,17 @@
     <Compile Include="Forms\ZoneForms\LoadingPage.Designer.cs">
       <DependentUpon>LoadingPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ZoneForms\UserControl1.cs">
+    <Compile Include="Forms\ZoneForms\ZoneRelationshipEditingForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\ZoneForms\UserControl1.Designer.cs">
-      <DependentUpon>UserControl1.cs</DependentUpon>
+    <Compile Include="Forms\ZoneForms\ZoneRelationshipEditingForm.Designer.cs">
+      <DependentUpon>ZoneRelationshipEditingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ZoneForms\ZoneSelectionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\ZoneForms\ZoneSelectionControl.Designer.cs">
+      <DependentUpon>ZoneSelectionControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ZoneForms\ZoneSelectionControl1.cs">
       <SubType>UserControl</SubType>
@@ -179,8 +185,11 @@
     <EmbeddedResource Include="Forms\ZoneForms\LoadingPage.resx">
       <DependentUpon>LoadingPage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ZoneForms\UserControl1.resx">
-      <DependentUpon>UserControl1.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ZoneForms\ZoneRelationshipEditingForm.resx">
+      <DependentUpon>ZoneRelationshipEditingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ZoneForms\ZoneSelectionControl.resx">
+      <DependentUpon>ZoneSelectionControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ZoneForms\ZoneSelectionControl1.resx">
       <DependentUpon>ZoneSelectionControl1.cs</DependentUpon>

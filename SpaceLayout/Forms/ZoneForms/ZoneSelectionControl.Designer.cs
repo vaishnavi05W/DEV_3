@@ -1,7 +1,7 @@
 ﻿
 namespace SpaceLayout.Forms.ZoneForms
 {
-    partial class UserControl1
+    partial class ZoneSelectionControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -32,15 +32,14 @@ namespace SpaceLayout.Forms.ZoneForms
             this.components = new System.ComponentModel.Container();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -55,11 +54,12 @@ namespace SpaceLayout.Forms.ZoneForms
             this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
-            this.tableLayoutPanel5.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
+            this.tableLayoutPanel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -96,22 +96,6 @@ namespace SpaceLayout.Forms.ZoneForms
             this.tableLayoutPanel3.Size = new System.Drawing.Size(434, 86);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
-            // 
-            // textBox1
-            // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.ForeColor = System.Drawing.Color.Navy;
-            this.textBox1.Location = new System.Drawing.Point(3, 31);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(434, 27);
-            this.textBox1.TabIndex = 1;
-            this.textBox1.Text = "Zone Selection";
-            // 
             // tableLayoutPanel4
             // 
             this.tableLayoutPanel4.BackColor = System.Drawing.Color.White;
@@ -125,6 +109,44 @@ namespace SpaceLayout.Forms.ZoneForms
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(428, 37);
             this.tableLayoutPanel4.TabIndex = 0;
+            // 
+            // tableLayoutPanel6
+            // 
+            this.tableLayoutPanel6.ColumnCount = 2;
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel6.Controls.Add(this.button3, 0, 0);
+            this.tableLayoutPanel6.Controls.Add(this.button4, 1, 0);
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(117, 3);
+            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
+            this.tableLayoutPanel6.RowCount = 1;
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(308, 31);
+            this.tableLayoutPanel6.TabIndex = 0;
+            // 
+            // button3
+            // 
+            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.button3.BackColor = System.Drawing.Color.White;
+            this.button3.ForeColor = System.Drawing.Color.Navy;
+            this.button3.Location = new System.Drawing.Point(3, 4);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(148, 23);
+            this.button3.TabIndex = 0;
+            this.button3.Text = "Vertical";
+            this.button3.UseVisualStyleBackColor = false;
+            // 
+            // button4
+            // 
+            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.button4.BackColor = System.Drawing.Color.White;
+            this.button4.ForeColor = System.Drawing.Color.Navy;
+            this.button4.Location = new System.Drawing.Point(157, 4);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(148, 23);
+            this.button4.TabIndex = 1;
+            this.button4.Text = "Horizontal";
+            this.button4.UseVisualStyleBackColor = false;
             // 
             // tableLayoutPanel5
             // 
@@ -140,20 +162,6 @@ namespace SpaceLayout.Forms.ZoneForms
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel5.Size = new System.Drawing.Size(428, 37);
             this.tableLayoutPanel5.TabIndex = 1;
-            // 
-            // tableLayoutPanel6
-            // 
-            this.tableLayoutPanel6.ColumnCount = 2;
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel6.Controls.Add(this.button3, 0, 0);
-            this.tableLayoutPanel6.Controls.Add(this.button4, 1, 0);
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(117, 3);
-            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
-            this.tableLayoutPanel6.RowCount = 1;
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(308, 31);
-            this.tableLayoutPanel6.TabIndex = 0;
             // 
             // button1
             // 
@@ -179,29 +187,16 @@ namespace SpaceLayout.Forms.ZoneForms
             this.button2.Text = "Next";
             this.button2.UseVisualStyleBackColor = false;
             // 
-            // button3
+            // textBox1
             // 
-            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.button3.BackColor = System.Drawing.Color.White;
-            this.button3.ForeColor = System.Drawing.Color.Navy;
-            this.button3.Location = new System.Drawing.Point(3, 4);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(148, 23);
-            this.button3.TabIndex = 0;
-            this.button3.Text = "Vertical";
-            this.button3.UseVisualStyleBackColor = false;
-            // 
-            // button4
-            // 
-            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.button4.BackColor = System.Drawing.Color.White;
-            this.button4.ForeColor = System.Drawing.Color.Navy;
-            this.button4.Location = new System.Drawing.Point(157, 4);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(148, 23);
-            this.button4.TabIndex = 1;
-            this.button4.Text = "Horizontal";
-            this.button4.UseVisualStyleBackColor = false;
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.ForeColor = System.Drawing.Color.Navy;
+            this.textBox1.Location = new System.Drawing.Point(3, 31);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(434, 27);
+            this.textBox1.TabIndex = 1;
+            this.textBox1.Text = "Zone Selection";
             // 
             // dataGridView1
             // 
@@ -294,19 +289,24 @@ namespace SpaceLayout.Forms.ZoneForms
             this.Column13.HeaderText = "Color";
             this.Column13.Name = "Column13";
             // 
-            // UserControl1
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
+            // ZoneSelectionControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "UserControl1";
+            this.Name = "ZoneSelectionControl";
             this.Size = new System.Drawing.Size(440, 635);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
-            this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
+            this.tableLayoutPanel5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 

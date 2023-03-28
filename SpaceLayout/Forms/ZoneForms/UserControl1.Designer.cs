@@ -65,6 +65,7 @@ namespace SpaceLayout.Forms.ZoneForms
             // 
             // tableLayoutPanel1
             // 
+            this.tableLayoutPanel1.BackColor = System.Drawing.Color.White;
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 0, 2);
@@ -113,6 +114,7 @@ namespace SpaceLayout.Forms.ZoneForms
             // 
             // tableLayoutPanel4
             // 
+            this.tableLayoutPanel4.BackColor = System.Drawing.Color.White;
             this.tableLayoutPanel4.ColumnCount = 2;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 314F));
@@ -156,46 +158,50 @@ namespace SpaceLayout.Forms.ZoneForms
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.BackColor = System.Drawing.Color.White;
             this.button1.ForeColor = System.Drawing.Color.Navy;
             this.button1.Location = new System.Drawing.Point(3, 3);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(208, 31);
             this.button1.TabIndex = 0;
             this.button1.Text = "Previous";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             // 
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.button2.BackColor = System.Drawing.Color.White;
             this.button2.ForeColor = System.Drawing.Color.Navy;
             this.button2.Location = new System.Drawing.Point(217, 3);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(208, 31);
             this.button2.TabIndex = 1;
             this.button2.Text = "Next";
-            this.button2.UseVisualStyleBackColor = true;
+            this.button2.UseVisualStyleBackColor = false;
             // 
             // button3
             // 
             this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.button3.BackColor = System.Drawing.Color.White;
             this.button3.ForeColor = System.Drawing.Color.Navy;
             this.button3.Location = new System.Drawing.Point(3, 4);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(148, 23);
             this.button3.TabIndex = 0;
             this.button3.Text = "Vertical";
-            this.button3.UseVisualStyleBackColor = true;
+            this.button3.UseVisualStyleBackColor = false;
             // 
             // button4
             // 
             this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.button4.BackColor = System.Drawing.Color.White;
             this.button4.ForeColor = System.Drawing.Color.Navy;
             this.button4.Location = new System.Drawing.Point(157, 4);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(148, 23);
             this.button4.TabIndex = 1;
             this.button4.Text = "Horizontal";
-            this.button4.UseVisualStyleBackColor = true;
+            this.button4.UseVisualStyleBackColor = false;
             // 
             // dataGridView1
             // 

@@ -3,6 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using vdControls;
+using OpenVDF;
+using VectorDraw;
+using VectorDraw.Geometry;
+using VectorDraw.Professional.Constants;
+using VectorDraw.Professional.vdCollections;
+using VectorDraw.Professional.vdPrimaries;
+using VectorDraw.Actions;
+
 
 namespace SpaceLayout
 {
@@ -20,3 +29,4 @@ namespace SpaceLayout
         }
     }
 }
+ 

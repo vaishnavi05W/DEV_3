@@ -24,11 +24,11 @@ namespace SpaceLayout.Object
             public string Type;
             public string color;
 
-            public List<Zone> zones = new List<Zone>();
+            public List<Zone> VLinkedZone = new List<Zone>(); //Vertically linked zones
+            public List<Zone> HLinkedZone = new List<Zone>(); //Horizontally linked zones
             // public RectD RectD = new RectD();
 
-
-
+           
             public void Rectangle(double w, double h)
             {
                 Width = w;

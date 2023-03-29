@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace SpaceLayout.Forms.ZoneForms
 {
-    public partial class LoadingPage : UserControl
+    public partial class LoadingPageControl : UserControl
     {
-        public LoadingPage()
+        public LoadingPageControl()
         {
             InitializeComponent();
         }

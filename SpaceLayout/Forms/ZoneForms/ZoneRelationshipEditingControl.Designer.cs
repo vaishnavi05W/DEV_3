@@ -1,7 +1,7 @@
 ﻿
 namespace SpaceLayout.Forms.ZoneForms
 {
-    partial class ZoneRelationshipEditingForm
+    partial class ZoneRelationshipEditingControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -29,7 +29,7 @@ namespace SpaceLayout.Forms.ZoneForms
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZoneRelationshipEditingForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZoneRelationshipEditingControl));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -297,6 +297,7 @@ namespace SpaceLayout.Forms.ZoneForms
             // 
             this.Column15.HeaderText = "ID";
             this.Column15.Name = "Column15";
+            this.Column15.Width = 50;
             // 
             // Column16
             // 

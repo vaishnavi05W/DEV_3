@@ -1,7 +1,7 @@
 ﻿
 namespace SpaceLayout.Forms.ZoneForms
 {
-    partial class MainFirstPage
+    partial class MainFirstPageControl
     {
         /// <summary>
         /// Required designer variable.
@@ -29,12 +29,13 @@ namespace SpaceLayout.Forms.ZoneForms
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFirstPage));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFirstPageControl));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -62,7 +63,8 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton1,
             this.toolStripButton2,
-            this.toolStripButton3});
+            this.toolStripButton3,
+            this.toolStripButton4});
             this.toolStrip1.Location = new System.Drawing.Point(660, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(291, 25);
@@ -107,6 +109,17 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStripButton3.Size = new System.Drawing.Size(84, 23);
             this.toolStripButton3.Text = "Zone Relation";
             // 
+            // toolStripButton4
+            // 
+            this.toolStripButton4.BackColor = System.Drawing.Color.Navy;
+            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton4.ForeColor = System.Drawing.Color.White;
+            this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
+            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton4.Name = "toolStripButton4";
+            this.toolStripButton4.Size = new System.Drawing.Size(49, 19);
+            this.toolStripButton4.Text = "Output";
+            // 
             // MainFirstPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -133,5 +146,6 @@ namespace SpaceLayout.Forms.ZoneForms
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private System.Windows.Forms.ToolStripButton toolStripButton4;
     }
 }

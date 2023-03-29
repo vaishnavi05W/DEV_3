@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace SpaceLayout.Forms.ZoneForms
 {
-    public partial class MainFirstPage : Form
+    public partial class MainFirstPageControl : Form
     {
-        public MainFirstPage()
+        public MainFirstPageControl()
         {
             InitializeComponent();
         }

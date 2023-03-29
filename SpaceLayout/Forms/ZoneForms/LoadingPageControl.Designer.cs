@@ -1,7 +1,7 @@
 ﻿
 namespace SpaceLayout.Forms.ZoneForms
 {
-    partial class LoadingPage
+    partial class LoadingPageControl
     {
         /// <summary> 
         /// Required designer variable.

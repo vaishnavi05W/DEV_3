@@ -62,9 +62,9 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStripButton1,
             this.toolStripButton2,
             this.toolStripButton3});
-            this.toolStrip1.Location = new System.Drawing.Point(660, 0);
+            this.toolStrip1.Location = new System.Drawing.Point(661, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(291, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(290, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -80,6 +80,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(66, 23);
             this.toolStripButton1.Text = "Import file";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // toolStripButton2
             // 

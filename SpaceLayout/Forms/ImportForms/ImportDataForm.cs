@@ -20,6 +20,7 @@ namespace SpaceLayout.Forms.ZoneForms
 {
     public partial class ImportDataForm : UserControl
     {
+        static bool ExcelFlg = false;
         public ImportDataForm()
         {
             InitializeComponent();
@@ -40,6 +41,21 @@ namespace SpaceLayout.Forms.ZoneForms
             {
                 
 
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            ExcelFlg = true;
+        }
+
+        private void Next_Click(object sender, EventArgs e)
+        {
+            if(ExcelFlg)
+            {
+                var ZoneSelectionControl = new ZoneSelectionControl();
+                tableLayoutPanel2.Controls.Add(ZoneSelectionControl);
+                ZoneSelectionControl.Dock = DockStyle.Fill;
             }
         }
     }

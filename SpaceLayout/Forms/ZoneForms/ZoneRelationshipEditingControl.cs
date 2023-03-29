@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace SpaceLayout.Forms.ZoneForms
 {
-    public partial class ZoneRelationshipEditingForm : UserControl
+    public partial class ZoneRelationshipEditingControl : UserControl
     {
-        public ZoneRelationshipEditingForm()
+        public ZoneRelationshipEditingControl()
         {
             InitializeComponent();
         }

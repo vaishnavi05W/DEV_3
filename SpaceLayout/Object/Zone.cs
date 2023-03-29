@@ -10,11 +10,20 @@ namespace SpaceLayout.Object
     {
         public class Zone1
         {
-            public string ZoneName;
-            public string category;
-            public double width;
-            public double height;
-            public double area;
+            public string ID;
+            public string Name;
+            public string Group;
+            public string Relation;
+            public string Category;
+            public double Area;
+            public double Width;
+            public double Length;
+            public double Height;
+            public double Level;
+            public double Ratio;
+            public string Type;
+            public string color;
+
             public List<Zone> zones = new List<Zone>();
             // public RectD RectD = new RectD();
 
@@ -22,10 +31,12 @@ namespace SpaceLayout.Object
 
             public void Rectangle(double w, double h)
             {
-                width = w;
-                height = h;
-                area = w * h;
+                Width = w;
+                Height = h;
+                Area = w * h;
 
+                //        }
+                //    }
             }
         }
     }

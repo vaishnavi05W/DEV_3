@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace SpaceLayout.Forms.ZoneForms
 {
     public partial class MainFirstPageControl : Form
@@ -28,6 +29,11 @@ namespace SpaceLayout.Forms.ZoneForms
         }
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void MainFirstPageControl_Load(object sender, EventArgs e)
         {
 
         }

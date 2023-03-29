@@ -161,12 +161,6 @@
     <Compile Include="Forms\ZoneForms\ZoneSelectionControl.Designer.cs">
       <DependentUpon>ZoneSelectionControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ZoneForms\ZoneSelectionControl1.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Forms\ZoneForms\ZoneSelectionControl1.Designer.cs">
-      <DependentUpon>ZoneSelectionControl1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\ZoneForms\ZoneRelationshipControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -199,9 +193,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ZoneForms\ZoneSelectionControl.resx">
       <DependentUpon>ZoneSelectionControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ZoneForms\ZoneSelectionControl1.resx">
-      <DependentUpon>ZoneSelectionControl1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ZoneForms\ZoneRelationshipControl.resx">
       <DependentUpon>ZoneRelationshipControl.cs</DependentUpon>

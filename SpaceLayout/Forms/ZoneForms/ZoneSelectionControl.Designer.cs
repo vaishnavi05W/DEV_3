@@ -78,7 +78,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 71.42857F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1295, 635);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(441, 635);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // tableLayoutPanel3
@@ -93,7 +93,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(1289, 86);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(435, 86);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // tableLayoutPanel4
@@ -160,7 +160,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 1;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(1283, 37);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(429, 37);
             this.tableLayoutPanel5.TabIndex = 1;
             // 
             // button1
@@ -170,7 +170,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.button1.ForeColor = System.Drawing.Color.Navy;
             this.button1.Location = new System.Drawing.Point(3, 3);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(635, 31);
+            this.button1.Size = new System.Drawing.Size(208, 31);
             this.button1.TabIndex = 0;
             this.button1.Text = "Previous";
             this.button1.UseVisualStyleBackColor = false;
@@ -180,9 +180,9 @@ namespace SpaceLayout.Forms.ZoneForms
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.button2.BackColor = System.Drawing.Color.White;
             this.button2.ForeColor = System.Drawing.Color.Navy;
-            this.button2.Location = new System.Drawing.Point(644, 3);
+            this.button2.Location = new System.Drawing.Point(217, 3);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(636, 31);
+            this.button2.Size = new System.Drawing.Size(209, 31);
             this.button2.TabIndex = 1;
             this.button2.Text = "Next";
             this.button2.UseVisualStyleBackColor = false;
@@ -194,7 +194,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.textBox1.ForeColor = System.Drawing.Color.Navy;
             this.textBox1.Location = new System.Drawing.Point(3, 31);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(1289, 27);
+            this.textBox1.Size = new System.Drawing.Size(435, 27);
             this.textBox1.TabIndex = 1;
             this.textBox1.Text = "Zone Selection";
             // 
@@ -219,9 +219,8 @@ namespace SpaceLayout.Forms.ZoneForms
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(3, 93);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(1289, 447);
+            this.dataGridView1.Size = new System.Drawing.Size(435, 447);
             this.dataGridView1.TabIndex = 2;
-           // this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // Column1
             // 
@@ -300,7 +299,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "ZoneSelectionControl";
-            this.Size = new System.Drawing.Size(1295, 635);
+            this.Size = new System.Drawing.Size(441, 635);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);

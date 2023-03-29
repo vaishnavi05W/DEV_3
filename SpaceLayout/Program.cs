@@ -11,6 +11,7 @@ using VectorDraw.Professional.Constants;
 using VectorDraw.Professional.vdCollections;
 using VectorDraw.Professional.vdPrimaries;
 using VectorDraw.Actions;
+using SpaceLayout.Forms.ZoneForms;
 
 
 namespace SpaceLayout
@@ -25,7 +26,7 @@ namespace SpaceLayout
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new SpaceSyntax());
+            Application.Run(new MainFirstPageControl());
         }
     }
 }

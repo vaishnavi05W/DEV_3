@@ -6,38 +6,45 @@ using System.Threading.Tasks;
 
 namespace SpaceLayout.Object
 {
-    class Zone
+    public class Zone
     {
-        public class Zone1
+        public int ID;
+        public string Name;
+        public string Group;
+        public string Relation;
+        public string Category;
+        public double Area;
+        public double Width;
+        public double Length;
+        public double Height;
+        public double Level;
+        public double Ratio;
+        public string Type;
+        public string Color;
+
+        public Zone(string Name, int ID, string Group, string Relation, string Category, double Area, double Width, double Height, double Level, double Ratio, double Type, string Color, string type)
         {
-            public string ID;
-            public string Name;
-            public string Group;
-            public string Relation;
-            public string Category;
-            public double Area;
-            public double Width;
-            public double Length;
-            public double Height;
-            public double Level;
-            public double Ratio;
-            public string Type;
-            public string color;
-
-            public List<Zone> zones = new List<Zone>();
-            // public RectD RectD = new RectD();
+            this.Name = Name;
+            this.ID = ID;
+            this.Group = Group;
+            this.Relation = Relation;
+            this.Category = Category;
+            this.Area = Area;
+            this.Width = Width;
+            this.Height = Height;
+            this.Level = Level;
+            this.Ratio = Ratio;
+            this.Type = type;
+            this.Color = Color;
 
 
 
-            public void Rectangle(double w, double h)
-            {
-                Width = w;
-                Height = h;
-                Area = w * h;
-
-                //        }
-                //    }
-            }
         }
+        
+
+
+
     }
+
+    
 }

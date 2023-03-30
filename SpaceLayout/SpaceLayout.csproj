@@ -125,46 +125,46 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataSource\StaticCache.cs" />
-    <Compile Include="Forms\ZoneForms\MainFirstPageControl.cs">
+    <Compile Include="Forms\ImportForms\MainFirstPageForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\ZoneForms\MainFirstPageControl.Designer.cs">
-      <DependentUpon>MainFirstPageControl.cs</DependentUpon>
+    <Compile Include="Forms\ImportForms\MainFirstPageForm.Designer.cs">
+      <DependentUpon>MainFirstPageForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ZoneForms\ImportDataForm.cs">
+    <Compile Include="Forms\ImportForms\ImportDataForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\ZoneForms\ImportDataForm.Designer.cs">
+    <Compile Include="Forms\ImportForms\ImportDataForm.Designer.cs">
       <DependentUpon>ImportDataForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ZoneForms\LoadingPageControl.cs">
+    <Compile Include="Forms\ImportForms\LoadingPageControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\ZoneForms\LoadingPageControl.Designer.cs">
+    <Compile Include="Forms\ImportForms\LoadingPageControl.Designer.cs">
       <DependentUpon>LoadingPageControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ZoneForms\OutputControl1.cs">
+    <Compile Include="Forms\OutputForm\OutputControl1.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\ZoneForms\OutputControl1.Designer.cs">
+    <Compile Include="Forms\OutputForm\OutputControl1.Designer.cs">
       <DependentUpon>OutputControl1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ZoneForms\ZoneRelationshipEditingControl.cs">
+    <Compile Include="Forms\ZoneSelectionForms\ZoneRelationshipEditingControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\ZoneForms\ZoneRelationshipEditingControl.Designer.cs">
+    <Compile Include="Forms\ZoneSelectionForms\ZoneRelationshipEditingControl.Designer.cs">
       <DependentUpon>ZoneRelationshipEditingControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ZoneForms\ZoneSelectionControl.cs">
+    <Compile Include="Forms\ZoneSelectionForms\ZoneSelectionControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\ZoneForms\ZoneSelectionControl.Designer.cs">
+    <Compile Include="Forms\ZoneSelectionForms\ZoneSelectionControl.Designer.cs">
       <DependentUpon>ZoneSelectionControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ZoneForms\ZoneRelationshipControl.cs">
+    <Compile Include="Forms\ZoneSelectionForms\ZoneRelationshipControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\ZoneForms\ZoneRelationshipControl.Designer.cs">
+    <Compile Include="Forms\ZoneSelectionForms\ZoneRelationshipControl.Designer.cs">
       <DependentUpon>ZoneRelationshipControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\SpacePlanningMainPage.cs">
@@ -173,26 +173,30 @@
     <Compile Include="Forms\SpacePlanningMainPage.Designer.cs">
       <DependentUpon>SpacePlanningMainPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Object\Connector.cs" />
     <Compile Include="Object\Zone.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Forms\ZoneForms\MainFirstPageControl.resx">
-      <DependentUpon>MainFirstPageControl.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ImportForms\MainFirstPageForm.resx">
+      <DependentUpon>MainFirstPageForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ZoneForms\ImportDataForm.resx">
+    <EmbeddedResource Include="Forms\ImportForms\ImportDataForm.resx">
       <DependentUpon>ImportDataForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ZoneForms\LoadingPageControl.resx">
+    <EmbeddedResource Include="Forms\ImportForms\LoadingPageControl.resx">
       <DependentUpon>LoadingPageControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ZoneForms\OutputControl1.resx">
+    <EmbeddedResource Include="Forms\OutputForm\OutputControl1.resx">
       <DependentUpon>OutputControl1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ZoneForms\ZoneRelationshipEditingControl.resx">
+    <EmbeddedResource Include="Forms\ZoneSelectionForms\ZoneRelationshipEditingControl.resx">
       <DependentUpon>ZoneRelationshipEditingControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ZoneForms\ZoneSelectionControl.resx">
+    <EmbeddedResource Include="Forms\ZoneSelectionForms\ZoneSelectionControl.resx">
       <DependentUpon>ZoneSelectionControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ZoneForms\ZoneSelectionControl1.resx">
+      <DependentUpon>ZoneSelectionControl1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ZoneForms\ZoneRelationshipControl.resx">
       <DependentUpon>ZoneRelationshipControl.cs</DependentUpon>

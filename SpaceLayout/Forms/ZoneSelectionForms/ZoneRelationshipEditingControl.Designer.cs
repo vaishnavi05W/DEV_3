@@ -86,7 +86,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 38F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(350, 610);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1398, 610);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // textBox1
@@ -97,7 +97,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.textBox1.ForeColor = System.Drawing.Color.Navy;
             this.textBox1.Location = new System.Drawing.Point(3, 17);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(344, 27);
+            this.textBox1.Size = new System.Drawing.Size(1392, 27);
             this.textBox1.TabIndex = 0;
             this.textBox1.Text = "Zone Relationship";
             // 
@@ -111,7 +111,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStripButton2});
             this.toolStrip1.Location = new System.Drawing.Point(0, 528);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(350, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1398, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -201,7 +201,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.dataGridView1.GridColor = System.Drawing.SystemColors.Control;
             this.dataGridView1.Location = new System.Drawing.Point(3, 64);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(344, 225);
+            this.dataGridView1.Size = new System.Drawing.Size(1392, 225);
             this.dataGridView1.TabIndex = 3;
             // 
             // Column1
@@ -290,7 +290,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.dataGridView2.GridColor = System.Drawing.SystemColors.Control;
             this.dataGridView2.Location = new System.Drawing.Point(3, 295);
             this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.Size = new System.Drawing.Size(344, 225);
+            this.dataGridView2.Size = new System.Drawing.Size(1392, 225);
             this.dataGridView2.TabIndex = 4;
             // 
             // Column15
@@ -324,13 +324,13 @@ namespace SpaceLayout.Forms.ZoneForms
             this.Column20.HeaderText = "Type";
             this.Column20.Name = "Column20";
             // 
-            // ZoneRelationshipEditingForm
+            // ZoneRelationshipEditingControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "ZoneRelationshipEditingForm";
-            this.Size = new System.Drawing.Size(350, 610);
+            this.Name = "ZoneRelationshipEditingControl";
+            this.Size = new System.Drawing.Size(1398, 610);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);

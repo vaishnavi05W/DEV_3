@@ -36,7 +36,7 @@ namespace SpaceLayout.Object
             this.Ratio = Ratio;
             this.Type = type;
             this.Color = Color;
-
+        }
 
 
             public List<Zone> VLinkedZone = new List<Zone>(); //Vertically linked zones
@@ -44,12 +44,7 @@ namespace SpaceLayout.Object
             // public RectD RectD = new RectD();
 
            
-            public void Rectangle(double w, double h)
-            {
-                Width = w;
-                Height = h;
-                Area = w * h;
-
+           
     }
 
     

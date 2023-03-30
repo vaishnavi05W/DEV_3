@@ -189,6 +189,9 @@
     <EmbeddedResource Include="Forms\OutputForm\OutputControl1.resx">
       <DependentUpon>OutputControl1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ZoneSelectionForms\ZoneRelationshipControl.resx">
+      <DependentUpon>ZoneRelationshipControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ZoneSelectionForms\ZoneRelationshipEditingControl.resx">
       <DependentUpon>ZoneRelationshipEditingControl.cs</DependentUpon>
     </EmbeddedResource>

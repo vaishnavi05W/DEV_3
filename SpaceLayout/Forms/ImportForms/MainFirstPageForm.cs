@@ -34,7 +34,9 @@ namespace SpaceLayout.Forms.ZoneForms
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
-            //tableLayoutPanel2.Controls.Remove(ImportDataForm);
+            if (tableLayoutPanel2.Controls.Count > 1)
+                tableLayoutPanel2.Controls.RemoveAt(1);
+
             var ZoneSelectionControl = new ZoneSelectionControl();
             tableLayoutPanel2.Controls.Add(ZoneSelectionControl);
             ZoneSelectionControl.Dock = DockStyle.Fill;
@@ -42,9 +44,12 @@ namespace SpaceLayout.Forms.ZoneForms
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            //var ImportDataFrom = new ImportDataForm();
-            //tableLayoutPanel2.Controls.Add(ImportDataFrom);
-            //ImportDataFrom.Dock = DockStyle.Fill;
+            if (tableLayoutPanel2.Controls.Count > 1)
+                tableLayoutPanel2.Controls.RemoveAt(1);
+
+            var ImportDataFrom = new ImportDataForm();
+            tableLayoutPanel2.Controls.Add(ImportDataFrom);
+            ImportDataFrom.Dock = DockStyle.Fill;
         }
     }
 }

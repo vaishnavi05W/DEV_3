@@ -53,8 +53,14 @@ namespace SpaceLayout.Forms.ZoneForms
         {
             if(ExcelFlg)
             {
+                this.Parent.Controls.Remove(this);
+
+                //ToolStripButton btn = this.ParentForm.Controls.Find("toolStripButton2", true).FirstOrDefault() as ToolStripButton;
+                //this.Parent.Controls.Add(ZoneSelectionControl);
+                //var tbtn = this.tableLayoutPanel2.Controls.Find("toolStrip1", true);
+
                 var ZoneSelectionControl = new ZoneSelectionControl();
-                tableLayoutPanel2.Controls.Add(ZoneSelectionControl);
+                this.Parent.Controls.Add(ZoneSelectionControl);
                 ZoneSelectionControl.Dock = DockStyle.Fill;
             }
         }

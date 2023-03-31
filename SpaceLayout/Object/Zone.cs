@@ -8,6 +8,7 @@ namespace SpaceLayout.Object
 {
     public class Zone
     {
+        public int guid;
         public int ID;
         public string Name;
         public string Group;
@@ -22,8 +23,10 @@ namespace SpaceLayout.Object
         public string Type;
         public string Color;
 
-        public Zone(string Name, int ID, string Group, string Relation, string Category, double Area, double Width, double Height, double Level, double Ratio, double Type, string Color, string type)
+        public Zone(int guid, string Name, int ID, string Group, string Relation, string Category, double Area, double Width, double Height, double Level, double Ratio, double Type, string Color, string type)
         {
+
+            this.guid = guid;
             this.Name = Name;
             this.ID = ID;
             this.Group = Group;
@@ -37,13 +40,12 @@ namespace SpaceLayout.Object
             this.Type = type;
             this.Color = Color;
         }
-
+        foreach 
 
             public List<Zone> VLinkedZone = new List<Zone>(); //Vertically linked zones
             public List<Zone> HLinkedZone = new List<Zone>(); //Horizontally linked zones
             // public RectD RectD = new RectD();
-
-           
+                   
            
     }
 

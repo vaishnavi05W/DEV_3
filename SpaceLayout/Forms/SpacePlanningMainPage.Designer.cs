@@ -53,8 +53,8 @@ namespace SpaceLayout
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.28393F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.71608F));
             this.tableLayoutPanel1.Controls.Add(this.toolStripContainer1, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.vdFramedControl1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.vdScrollableControl1, 1, 1);
+           // this.tableLayoutPanel1.Controls.Add(this.vdFramedControl1, 0, 0);
+           // this.tableLayoutPanel1.Controls.Add(this.vdScrollableControl1, 1, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);

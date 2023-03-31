@@ -43,6 +43,12 @@
       <HintPath>..\..\..\..\..\..\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1002.0.1\bin\AxVDrawLib5.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="ExcelDataReader, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.3.6.0\lib\net45\ExcelDataReader.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelDataReader.DataSet, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.DataSet.3.6.0\lib\net35\ExcelDataReader.DataSet.dll</HintPath>
+    </Reference>
     <Reference Include="ObjectListView, Version=2.9.1.22349, Culture=neutral, PublicKeyToken=b1c5bf581481bcd4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1002.0.1\bin\ObjectListView.dll</HintPath>
@@ -59,6 +65,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -125,6 +132,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataSource\StaticCache.cs" />
+    <Compile Include="Entity\InputData_ModuleEntity.cs" />
+    <Compile Include="Entity\StaticCache.cs" />
     <Compile Include="Forms\ImportForms\MainFirstPageForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -173,6 +182,7 @@
     <Compile Include="Forms\SpacePlanningMainPage.Designer.cs">
       <DependentUpon>SpacePlanningMainPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Object\Project.cs" />
     <Compile Include="Object\Connector.cs" />
     <Compile Include="Object\Zone.cs" />
     <Compile Include="Program.cs" />
@@ -198,12 +208,6 @@
     <EmbeddedResource Include="Forms\ZoneSelectionForms\ZoneSelectionControl.resx">
       <DependentUpon>ZoneSelectionControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ZoneForms\ZoneSelectionControl1.resx">
-      <DependentUpon>ZoneSelectionControl1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ZoneForms\ZoneRelationshipControl.resx">
-      <DependentUpon>ZoneRelationshipControl.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -216,6 +220,7 @@
     <EmbeddedResource Include="Forms\SpacePlanningMainPage.resx">
       <DependentUpon>SpacePlanningMainPage.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -231,6 +236,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Algorithm\" />
+    <Folder Include="Forms\ZoneForms\" />
     <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

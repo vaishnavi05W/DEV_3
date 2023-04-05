@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,19 +11,35 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ExcelDataReader;
 using SpaceLayout.Entity;
+using yWorks.Graph;
+using SpaceLayout.Object;
+using yWorks.Controls;
+using yWorks.Geometry;
+using yWorks.Graph.Styles;
+using yWorks.Graph.LabelModels;
+using yWorks.Controls.Input;
+using System.Drawing.Design;
+
+
+
+
 
 namespace SpaceLayout.Forms.ZoneForms
 {
     public partial class ZoneSelectionControl : UserControl
     {
         static string DataSourceInputData = StaticCache.DataSourceBasicInfo;
+        private DataTable dtSource;
+        private IGraph graph;
+        private object color;
+
         public ZoneSelectionControl()
         {
             InitializeComponent();
             this.Load += IS_Load;
         }
 
-        DataTable dtSource;
+
         private void IS_Load(object sender, EventArgs e)
         {
             BindGrid();
@@ -58,7 +75,7 @@ namespace SpaceLayout.Forms.ZoneForms
                 // Auto-detect format, supports:
                 //  - Binary Excel files (2.0-2003 format; *.xls)
                 //  - OpenXml Excel files (2007 format; *.xlsx, *.xlsb)
-                
+
                 using (var reader = ExcelReaderFactory.CreateReader(stream))
                 {
                     // Choose one of either 1 or 2:
@@ -91,14 +108,47 @@ namespace SpaceLayout.Forms.ZoneForms
                         dtSource.Rows.Add(dr.ItemArray);
                     }
                 }
-               
-                //Bind datatable to Gridview
-                if (dtSource.Rows.Count > 0)
+                Zone zone = new Zone();
+                zone.LoadZoneFromDataTable(dtSource);
+                List<Zone> zones = zone.GetZones();
+
+                GraphControl graphControl = new GraphControl();
+                graph = graphControl.Graph;
+
+                foreach (Zone z in zones)
                 {
-                    dataGridView1.DataSource = dtSource;
+                    Zone node = (Zone)graph.CreateNode();
+                    node.Tag = z;
+
+                    node.Layout = new RectD(0, 0, z.Width, z.Height);
+                    node.style = new ShapeNodeStyle
+                    {
+
+                        Brush = new SolidBrush(Color.FromName(z.Color)),
+                        Pen = new Pen(Color.FromName(z.Color)),
+
+
+                    };
+                 
                 }
+                this.Controls.Add(graphControl);
+                graphControl.Dock = DockStyle.Fill;
             }
 
+
+
+            //Bind datatable to Gridview
+            if (dtSource.Rows.Count > 0)
+            {
+                dataGridView1.DataSource = dtSource;
+            }
+        }
+
+
+
+        public DataTable GetDataSource()
+        {
+            return dtSource;
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -110,5 +160,8 @@ namespace SpaceLayout.Forms.ZoneForms
         {
 
         }
+
+
     }
 }
+

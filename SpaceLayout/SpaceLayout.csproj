@@ -66,6 +66,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -129,10 +130,23 @@
       <HintPath>..\..\..\..\..\..\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1002.0.1\bin\VectorDraw.Serialize.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="yWorks.yFilesNET.Adapter, Version=5.4.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\yFiles.NET-Complete-5.4.0.2-Evaluation\yFiles.NET-Complete-5.4.0.2-Evaluation\lib\net40\yWorks.yFilesNET.Adapter.dll</HintPath>
+    </Reference>
+    <Reference Include="yWorks.yFilesNET.Algorithms, Version=5.4.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\yFiles.NET-Complete-5.4.0.2-Evaluation\yFiles.NET-Complete-5.4.0.2-Evaluation\lib\net40\yWorks.yFilesNET.Algorithms.dll</HintPath>
+    </Reference>
+    <Reference Include="yWorks.yFilesNET.Viewer, Version=5.4.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\yFiles.NET-Complete-5.4.0.2-Evaluation\yFiles.NET-Complete-5.4.0.2-Evaluation\lib\net40\yWorks.yFilesNET.Viewer.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataSource\StaticCache.cs" />
     <Compile Include="Entity\InputData_ModuleEntity.cs" />
+    <Compile Include="Entity\SolidColorBrush.cs" />
     <Compile Include="Entity\StaticCache.cs" />
     <Compile Include="Forms\ImportForms\MainFirstPageForm.cs">
       <SubType>Form</SubType>
@@ -208,6 +222,7 @@
     <EmbeddedResource Include="Forms\ZoneSelectionForms\ZoneSelectionControl.resx">
       <DependentUpon>ZoneSelectionControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

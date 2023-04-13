@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SpaceLayout.Forms
+namespace SpaceLayout.Forms.ZoneForms
 {
-    public partial class ZoneSelection : UserControl
+    public partial class ZoneRelationshipControl : UserControl
     {
-        public ZoneSelection()
+        public ZoneRelationshipControl()
         {
             InitializeComponent();
         }

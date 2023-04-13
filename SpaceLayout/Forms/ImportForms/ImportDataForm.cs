@@ -20,18 +20,14 @@ namespace SpaceLayout.Forms.ZoneForms
 {
     public partial class ImportDataForm : UserControl
     {
-        static bool ExcelFlg = false;
+        public bool ExcelFlg = false;
         public ImportDataForm()
         {
             InitializeComponent();
+            this.Load += IS_Load;
         }
 
-        private void tableLayoutPanel4_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)
+        private void IS_Load(object sender, EventArgs e)
         {
 
         }
@@ -39,30 +35,21 @@ namespace SpaceLayout.Forms.ZoneForms
         private void button1_Click(object sender, EventArgs e)
         {
             {
-                
+
 
             }
+        }
+
+        public bool GetExcelFlg()
+        {
+            return ExcelFlg;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             ExcelFlg = true;
+            MainFirstPageControl.ExcelFlg = ExcelFlg;
         }
 
-        private void Next_Click(object sender, EventArgs e)
-        {
-            if(ExcelFlg)
-            {
-                this.Parent.Controls.Remove(this);
-
-                //ToolStripButton btn = this.ParentForm.Controls.Find("toolStripButton2", true).FirstOrDefault() as ToolStripButton;
-                //this.Parent.Controls.Add(ZoneSelectionControl);
-                //var tbtn = this.tableLayoutPanel2.Controls.Find("toolStrip1", true);
-
-                var ZoneSelectionControl = new ZoneSelectionControl();
-                this.Parent.Controls.Add(ZoneSelectionControl);
-                ZoneSelectionControl.Dock = DockStyle.Fill;
-            }
-        }
     }
 }

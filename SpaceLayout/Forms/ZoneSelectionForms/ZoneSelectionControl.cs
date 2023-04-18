@@ -20,6 +20,7 @@ using yWorks.Graph.LabelModels;
 using yWorks.Controls.Input;
 using System.Drawing.Design;
 
+
 namespace SpaceLayout.Forms.ZoneForms
 {
     public partial class ZoneSelectionControl : UserControl
@@ -122,71 +123,90 @@ namespace SpaceLayout.Forms.ZoneForms
         {
             return dtSource;
         }
+        private Dictionary<int, bool> rowNodeCreated = new Dictionary<int, bool>();
 
         public void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            dataGridView1.ReadOnly = true;
             try
             {
                 Form f = this.ParentForm;
                 graphcontrol = f.Controls.Find("graphControl1", true).FirstOrDefault() as GraphControl;
-
-                var rand = new Random();
-                Zone zone = new Zone();
-                double width = Math.Sqrt(Convert.ToDouble(this.dataGridView1.Rows[e.RowIndex].Cells["Column6"].Value) * 2);
-                double height = (Convert.ToDouble(dataGridView1.CurrentRow.Cells["Column6"].Value) / width);
-                var node = graphcontrol.Graph.CreateNode();
-                graphcontrol.Graph.SetNodeLayout(node, new RectD(0, 0, width, height));
-
-                //var style = new ShapeNodeStyle
-                //{
-                //    Brush =  new SolidColorBrush // Blue with alpha 255
-                //    Pen = new Pen(Color.FromName(this.dataGridView1.Rows[e.RowIndex].Cells["Column13"].Value.ToString())),
-                //};
-
-                var NodeStyle = new ShapeNodeStyle
+                if (!rowNodeCreated.ContainsKey(e.RowIndex) || !rowNodeCreated[e.RowIndex])
                 {
-                    Brush = new SolidBrush(Color.FromName(this.dataGridView1.Rows[e.RowIndex].Cells["Column13"].Value.ToString())),
-                    Pen = new Pen(Color.FromName(this.dataGridView1.Rows[e.RowIndex].Cells["Column13"].Value.ToString())),
-                };
-                graphcontrol.Graph.SetStyle(node, NodeStyle);
+                   
 
-                var defaultLableStyle = new DefaultLabelStyle
+                    var rand = new Random();
+                    Zone zone = new Zone();
+                    double width = Math.Sqrt(Convert.ToDouble(this.dataGridView1.Rows[e.RowIndex].Cells["Column6"].Value) * 2);
+                    double height = (Convert.ToDouble(dataGridView1.CurrentRow.Cells["Column6"].Value) / width);
+                    var node = graphcontrol.Graph.CreateNode();
+                    graphcontrol.Graph.SetNodeLayout(node, new RectD(0, 0, width, height));
+
+
+                    //var style = new ShapeNodeStyle
+                    //{
+                    //    Brush =  new SolidColorBrush // Blue with alpha 255
+
+                    //    Pen = new Pen(Color.FromName(this.dataGridView1.Rows[e.RowIndex].Cells["Column13"].Value.ToString())),
+                    //};
+
+                    var NodeStyle = new ShapeNodeStyle
+                    {
+                        Brush = new SolidBrush(Color.FromName(this.dataGridView1.Rows[e.RowIndex].Cells["Column13"].Value.ToString())),
+                        Pen = new Pen(Color.FromName(this.dataGridView1.Rows[e.RowIndex].Cells["Column13"].Value.ToString())),
+                    };
+                    graphcontrol.Graph.SetStyle(node, NodeStyle);
+
+                    var defaultLableStyle = new DefaultLabelStyle
+                    {
+                        TextBrush = Brushes.LightGray,
+                    };
+                    string NodeLabel = this.dataGridView1.Rows[e.RowIndex].Cells["Column1"].Value.ToString() + System.Environment.NewLine + this.dataGridView1.Rows[e.RowIndex].Cells["Column6"].Value.ToString() + " " + "m\u00b2";
+                    graphcontrol.Graph.AddLabel(node, NodeLabel, InteriorLabelModel.NorthWest, defaultLableStyle, new SizeD(width, height));
+
+                    double maxX = graphcontrol.ClientSize.Width - width;
+                    double maxY = graphcontrol.ClientSize.Height - height;
+                    double x = rand.NextDouble() * maxX;
+                    double y = rand.NextDouble() * maxY;
+                    graphcontrol.Graph.SetNodeCenter(node, new PointD(x, y));
+
+                    graphcontrol.FitGraphBounds();
+                    rowNodeCreated[e.RowIndex] = true; //make it true to avoid duplicate node
+                }
+                else
                 {
-                    TextBrush = Brushes.LightGray,
-                };
-                string NodeLabel = this.dataGridView1.Rows[e.RowIndex].Cells["Column1"].Value.ToString() + System.Environment.NewLine + this.dataGridView1.Rows[e.RowIndex].Cells["Column6"].Value.ToString() + " " + "m\u00b2";
-                graphcontrol.Graph.AddLabel(node, NodeLabel, InteriorLabelModel.NorthWest, defaultLableStyle, new SizeD(width, height));
-
-                double maxX = graphcontrol.ClientSize.Width - width;
-                double maxY = graphcontrol.ClientSize.Height - height;
-                double x = rand.NextDouble() * maxX;
-                double y = rand.NextDouble() * maxY;
-                graphcontrol.Graph.SetNodeCenter(node, new PointD(x, y));
-
-                var graphEditorInputMode = new GraphEditorInputMode();
-                graphcontrol.InputMode = graphEditorInputMode;
-
-                graphEditorInputMode.ClickableItems = GraphItemTypes.Node;
-                graphEditorInputMode.MarqueeSelectableItems = GraphItemTypes.Node;
-                graphEditorInputMode.CreateEdgeInputMode.Enabled = true;
-
-                var grapEditorInputMode = new GraphEditorInputMode();
-                graphcontrol.InputMode = grapEditorInputMode;
-
-                grapEditorInputMode.ClickableItems = GraphItemTypes.Node;
-
-                graphEditorInputMode.MarqueeSelectableItems = GraphItemTypes.Node;
-
-                graphEditorInputMode.CreateEdgeInputMode.Enabled = true;
-
-                var edgeStyle = new PolylineEdgeStyle
+                    MessageBox.Show("Zone already created for this row.");
+                }
                 {
-                    Pen = new Pen(Brushes.Black, 2),
-                    TargetArrow = new Arrow { Brush = Brushes.Black, Type = ArrowType.Default }
-                };
-                graphcontrol.Graph.EdgeDefaults.Style = edgeStyle;
-                graphcontrol.FitGraphBounds();
-                grapEditorInputMode.ItemClicked += OnItemClicked;
+
+                    var graphEditorInputMode = new GraphEditorInputMode();
+                    graphEditorInputMode.AllowCreateNode = false; // restrict node creation by clicking in UI
+                    graphEditorInputMode.CreateEdgeInputMode.Enabled = true;
+                    graphcontrol.InputMode = graphEditorInputMode;
+
+                   // graphEditorInputMode.ClickableItems = GraphItemTypes.Node;
+                    //graphEditorInputMode.MarqueeSelectableItems = GraphItemTypes.Node;
+                   
+
+                    //var grapEditorInputMode = new GraphEditorInputMode();
+                    //graphcontrol.InputMode = grapEditorInputMode;
+
+                    //grapEditorInputMode.ClickableItems = GraphItemTypes.Node;
+
+                    //graphEditorInputMode.MarqueeSelectableItems = GraphItemTypes.Node;
+
+                
+
+                    var edgeStyle = new PolylineEdgeStyle
+                    {
+                        Pen = new Pen(Brushes.Black, 2),
+                        TargetArrow = new Arrow { Brush = Brushes.Black, Type = ArrowType.Default }
+                    };
+                    graphcontrol.Graph.EdgeDefaults.Style = edgeStyle;
+                    graphcontrol.FitGraphBounds();
+                   graphEditorInputMode.ItemClicked += OnItemClicked;
+                }
             }
             catch (Exception ex)
             {
@@ -200,9 +220,11 @@ namespace SpaceLayout.Forms.ZoneForms
             {
                 if (e.Item is INode node)
                 {
+                  
                     if (SourceNode == null)
                     {
                         SourceNode = node;
+
                     }
                     else if (TargetNode == null)
                     {
@@ -227,6 +249,11 @@ namespace SpaceLayout.Forms.ZoneForms
                     e.ThrowException = false;
                 }
             }
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

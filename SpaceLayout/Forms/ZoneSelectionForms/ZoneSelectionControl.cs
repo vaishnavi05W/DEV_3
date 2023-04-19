@@ -125,96 +125,7 @@ namespace SpaceLayout.Forms.ZoneForms
         }
         private Dictionary<int, bool> rowNodeCreated = new Dictionary<int, bool>();
 
-        public void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            dataGridView1.ReadOnly = true;
-            try
-            {
-                Form f = this.ParentForm;
-                graphcontrol = f.Controls.Find("graphControl1", true).FirstOrDefault() as GraphControl;
-                if (!rowNodeCreated.ContainsKey(e.RowIndex) || !rowNodeCreated[e.RowIndex])
-                {
-                   
-
-                    var rand = new Random();
-                    Zone zone = new Zone();
-                    double width = Math.Sqrt(Convert.ToDouble(this.dataGridView1.Rows[e.RowIndex].Cells["Column6"].Value) * 2);
-                    double height = (Convert.ToDouble(dataGridView1.CurrentRow.Cells["Column6"].Value) / width);
-                    var node = graphcontrol.Graph.CreateNode();
-                    graphcontrol.Graph.SetNodeLayout(node, new RectD(0, 0, width, height));
-
-
-                    //var style = new ShapeNodeStyle
-                    //{
-                    //    Brush =  new SolidColorBrush // Blue with alpha 255
-
-                    //    Pen = new Pen(Color.FromName(this.dataGridView1.Rows[e.RowIndex].Cells["Column13"].Value.ToString())),
-                    //};
-
-                    var NodeStyle = new ShapeNodeStyle
-                    {
-                        Brush = new SolidBrush(Color.FromName(this.dataGridView1.Rows[e.RowIndex].Cells["Column13"].Value.ToString())),
-                        Pen = new Pen(Color.FromName(this.dataGridView1.Rows[e.RowIndex].Cells["Column13"].Value.ToString())),
-                    };
-                    graphcontrol.Graph.SetStyle(node, NodeStyle);
-
-                    var defaultLableStyle = new DefaultLabelStyle
-                    {
-                        TextBrush = Brushes.LightGray,
-                    };
-                    string NodeLabel = this.dataGridView1.Rows[e.RowIndex].Cells["Column1"].Value.ToString() + System.Environment.NewLine + this.dataGridView1.Rows[e.RowIndex].Cells["Column6"].Value.ToString() + " " + "m\u00b2";
-                    graphcontrol.Graph.AddLabel(node, NodeLabel, InteriorLabelModel.NorthWest, defaultLableStyle, new SizeD(width, height));
-
-                    double maxX = graphcontrol.ClientSize.Width - width;
-                    double maxY = graphcontrol.ClientSize.Height - height;
-                    double x = rand.NextDouble() * maxX;
-                    double y = rand.NextDouble() * maxY;
-                    graphcontrol.Graph.SetNodeCenter(node, new PointD(x, y));
-
-                    graphcontrol.FitGraphBounds();
-                    rowNodeCreated[e.RowIndex] = true; //make it true to avoid duplicate node
-                }
-                else
-                {
-                    MessageBox.Show("Zone already created for this row.");
-                }
-                {
-
-                    var graphEditorInputMode = new GraphEditorInputMode();
-                    graphEditorInputMode.AllowCreateNode = false; // restrict node creation by clicking in UI
-                    graphEditorInputMode.CreateEdgeInputMode.Enabled = true;
-                    graphcontrol.InputMode = graphEditorInputMode;
-
-                   // graphEditorInputMode.ClickableItems = GraphItemTypes.Node;
-                    //graphEditorInputMode.MarqueeSelectableItems = GraphItemTypes.Node;
-                   
-
-                    //var grapEditorInputMode = new GraphEditorInputMode();
-                    //graphcontrol.InputMode = grapEditorInputMode;
-
-                    //grapEditorInputMode.ClickableItems = GraphItemTypes.Node;
-
-                    //graphEditorInputMode.MarqueeSelectableItems = GraphItemTypes.Node;
-
-                
-
-                    var edgeStyle = new PolylineEdgeStyle
-                    {
-                        Pen = new Pen(Brushes.Black, 2),
-                        TargetArrow = new Arrow { Brush = Brushes.Black, Type = ArrowType.Default }
-                    };
-                    graphcontrol.Graph.EdgeDefaults.Style = edgeStyle;
-                    graphcontrol.FitGraphBounds();
-                   graphEditorInputMode.ItemClicked += OnItemClicked;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-        }
-
-
+        
         private void OnItemClicked(object sender, ItemClickedEventArgs<IModelItem> e)
         {
             {
@@ -254,6 +165,104 @@ namespace SpaceLayout.Forms.ZoneForms
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex != -1)
+            {
+                string columnName = this.dataGridView1.Columns[e.ColumnIndex].Name;
+                if ((columnName == "Column1") && (!string.IsNullOrWhiteSpace(this.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString())))
+                {
+                    dataGridView1.ReadOnly = true;
+                    try
+                    {
+                        Form f = this.ParentForm;
+                        graphcontrol = f.Controls.Find("graphControl1", true).FirstOrDefault() as GraphControl;
+                        if (!rowNodeCreated.ContainsKey(e.RowIndex) || !rowNodeCreated[e.RowIndex])
+                        {
+
+
+                            var rand = new Random();
+                            Zone zone = new Zone();
+                            double width = Math.Sqrt(Convert.ToDouble(this.dataGridView1.Rows[e.RowIndex].Cells["Column6"].Value) * 2);
+                            double height = (Convert.ToDouble(dataGridView1.CurrentRow.Cells["Column6"].Value) / width);
+                            var node = graphcontrol.Graph.CreateNode();
+                            graphcontrol.Graph.SetNodeLayout(node, new RectD(0, 0, width, height));
+
+
+                            //var style = new ShapeNodeStyle
+                            //{
+                            //    Brush =  new SolidColorBrush // Blue with alpha 255
+
+                            //    Pen = new Pen(Color.FromName(this.dataGridView1.Rows[e.RowIndex].Cells["Column13"].Value.ToString())),
+                            //};
+
+                            var NodeStyle = new ShapeNodeStyle
+                            {
+                                Brush = new SolidBrush(Color.FromName(this.dataGridView1.Rows[e.RowIndex].Cells["Column13"].Value.ToString())),
+                                Pen = new Pen(Color.FromName(this.dataGridView1.Rows[e.RowIndex].Cells["Column13"].Value.ToString())),
+                            };
+                            graphcontrol.Graph.SetStyle(node, NodeStyle);
+
+                            var defaultLableStyle = new DefaultLabelStyle
+                            {
+                                TextBrush = Brushes.Black,
+                            };
+                            string NodeLabelIn = this.dataGridView1.Rows[e.RowIndex].Cells["Column1"].Value.ToString() + System.Environment.NewLine + this.dataGridView1.Rows[e.RowIndex].Cells["Column6"].Value.ToString() + " " + "m\u00b2";
+                            graphcontrol.Graph.AddLabel(node, NodeLabelIn, InteriorLabelModel.NorthWest, defaultLableStyle, new SizeD(width, height));
+                            string NodeLabelOut = this.dataGridView1.Rows[e.RowIndex].Cells["Column2"].Value.ToString();
+                            graphcontrol.Graph.AddLabel(node, NodeLabelOut, ExteriorLabelModel.South, defaultLableStyle);
+
+                            double maxX = graphcontrol.ClientSize.Width - width;
+                            double maxY = graphcontrol.ClientSize.Height - height;
+                            double x = rand.NextDouble() * maxX;
+                            double y = rand.NextDouble() * maxY;
+                            graphcontrol.Graph.SetNodeCenter(node, new PointD(x, y));
+
+                            graphcontrol.FitGraphBounds();
+                            rowNodeCreated[e.RowIndex] = true; //make it true to avoid duplicate node
+                        }
+                        else
+                        {
+                            MessageBox.Show("Zone already created for this row.");
+                        }
+                        {
+
+                            var graphEditorInputMode = new GraphEditorInputMode();
+                            graphEditorInputMode.AllowCreateNode = false; // restrict node creation by clicking in UI
+                            graphEditorInputMode.CreateEdgeInputMode.Enabled = true;
+                            graphcontrol.InputMode = graphEditorInputMode;
+
+                            // graphEditorInputMode.ClickableItems = GraphItemTypes.Node;
+                            //graphEditorInputMode.MarqueeSelectableItems = GraphItemTypes.Node;
+
+
+                            //var grapEditorInputMode = new GraphEditorInputMode();
+                            //graphcontrol.InputMode = grapEditorInputMode;
+
+                            //grapEditorInputMode.ClickableItems = GraphItemTypes.Node;
+
+                            //graphEditorInputMode.MarqueeSelectableItems = GraphItemTypes.Node;
+
+
+
+                            var edgeStyle = new PolylineEdgeStyle
+                            {
+                                Pen = new Pen(Brushes.Black, 2),
+                                TargetArrow = new Arrow { Brush = Brushes.Black, Type = ArrowType.Default }
+                            };
+                            graphcontrol.Graph.EdgeDefaults.Style = edgeStyle;
+                            graphcontrol.FitGraphBounds();
+                            graphEditorInputMode.ItemClicked += OnItemClicked;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.ToString());
+                    }
+                }
+            }
         }
     }
 }

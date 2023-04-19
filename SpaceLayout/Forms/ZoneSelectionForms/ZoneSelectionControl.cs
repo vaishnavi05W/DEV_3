@@ -21,6 +21,9 @@ using yWorks.Controls.Input;
 using System.Drawing.Design;
 
 
+
+
+
 namespace SpaceLayout.Forms.ZoneForms
 {
     public partial class ZoneSelectionControl : UserControl
@@ -174,9 +177,15 @@ namespace SpaceLayout.Forms.ZoneForms
                     graphcontrol.FitGraphBounds();
                     rowNodeCreated[e.RowIndex] = true; //make it true to avoid duplicate node
                 }
+
                 else
                 {
                     MessageBox.Show("Zone already created for this row.");
+
+                   
+
+
+
                 }
                 {
 
@@ -213,6 +222,7 @@ namespace SpaceLayout.Forms.ZoneForms
                 MessageBox.Show(ex.ToString());
             }
         }
+       
 
 
         private void OnItemClicked(object sender, ItemClickedEventArgs<IModelItem> e)
@@ -256,5 +266,6 @@ namespace SpaceLayout.Forms.ZoneForms
 
         }
     }
+
 }
 

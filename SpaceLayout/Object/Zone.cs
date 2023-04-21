@@ -18,8 +18,11 @@ namespace SpaceLayout.Object
 {
     public class Zone
     {
-        private List<Zone> zonesList;
-        internal ShapeNodeStyle style;
+        private List<Zone> ZonesList;
+        internal ShapeNodeStyle Style;
+        public List<Connector> Connectors;
+        public INode Node;
+
 
         public int ID { get; set; }
         public string Name { get; set; }
@@ -37,6 +40,8 @@ namespace SpaceLayout.Object
         public Zone Tag { get; internal set; }
         public RectD Layout { get; internal set; }
         public object Labels { get; internal set; }
+
+
 
         public void LoadZoneFromDataTable(DataTable dtSource)
         {
@@ -63,7 +68,7 @@ namespace SpaceLayout.Object
         }
         public List<Zone> GetZones()
         {
-            return zonesList;
+            return ZonesList;
         }
     }  
 }

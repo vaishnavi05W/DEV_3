@@ -132,15 +132,15 @@
     </Reference>
     <Reference Include="yWorks.yFilesNET.Adapter, Version=5.4.0.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\yFiles.NET-Complete-5.4.0.2-Evaluation\yFiles.NET-Complete-5.4.0.2-Evaluation\lib\net40\yWorks.yFilesNET.Adapter.dll</HintPath>
+      <HintPath>D:\Vaishnavi\Dev-3\yFiles.NET-Complete-5.4.0.2-Evaluation\yFiles.NET-Complete-5.4.0.2-Evaluation\lib\net40\yWorks.yFilesNET.Adapter.dll</HintPath>
     </Reference>
     <Reference Include="yWorks.yFilesNET.Algorithms, Version=5.4.0.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\yFiles.NET-Complete-5.4.0.2-Evaluation\yFiles.NET-Complete-5.4.0.2-Evaluation\lib\net40\yWorks.yFilesNET.Algorithms.dll</HintPath>
+      <HintPath>D:\Vaishnavi\Dev-3\yFiles.NET-Complete-5.4.0.2-Evaluation\yFiles.NET-Complete-5.4.0.2-Evaluation\lib\net40\yWorks.yFilesNET.Algorithms.dll</HintPath>
     </Reference>
     <Reference Include="yWorks.yFilesNET.Viewer, Version=5.4.0.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\yFiles.NET-Complete-5.4.0.2-Evaluation\yFiles.NET-Complete-5.4.0.2-Evaluation\lib\net40\yWorks.yFilesNET.Viewer.dll</HintPath>
+      <HintPath>D:\Vaishnavi\Dev-3\yFiles.NET-Complete-5.4.0.2-Evaluation\yFiles.NET-Complete-5.4.0.2-Evaluation\lib\net40\yWorks.yFilesNET.Viewer.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

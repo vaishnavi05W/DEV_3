@@ -28,7 +28,11 @@ namespace SpaceLayout.Forms.ZoneForms
         {
             InitializeComponent();
             this.Load += IS_Load;
+           
+            
         }
+
+     
 
         private void IS_Load(object sender, EventArgs e)
         {
@@ -124,7 +128,7 @@ namespace SpaceLayout.Forms.ZoneForms
                 }
                 else
                 {
-                    MessageBox.Show("Please click the 'Imoprt' button to import the data source first.");
+                    MessageBox.Show("Please click the 'Import' button to import the data source first.");
                     toolStripButton2.Enabled = false;
                     toolStripButton3.Enabled = false;
                     return;
@@ -151,6 +155,16 @@ namespace SpaceLayout.Forms.ZoneForms
             {
                 LoadRightPanel(2);
             }
+        }
+
+        private void MainFirstPageControl_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void graphControl1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

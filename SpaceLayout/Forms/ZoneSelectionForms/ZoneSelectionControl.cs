@@ -18,7 +18,15 @@ using yWorks.Geometry;
 using yWorks.Graph.Styles;
 using yWorks.Graph.LabelModels;
 using yWorks.Controls.Input;
+using yWorks.Graph.PortLocationModels;
+using yWorks.GraphML;
+using yWorks.Algorithms;
+using yWorks.Algorithms.Geometry;
+//using yWorks.Support;
+using yWorks.Annotations;
 using System.Drawing.Design;
+
+
 
 
 
@@ -30,7 +38,8 @@ namespace SpaceLayout.Forms.ZoneForms
     {
         static string DataSourceInputData = StaticCache.DataSourceBasicInfo;
         private DataTable dtSource;
-        public GraphControl graphcontrol;
+        public GraphControl graphcontrol { get; set; }
+       
         public INode SourceNode = null;
         public INode TargetNode = null;
 
@@ -38,14 +47,60 @@ namespace SpaceLayout.Forms.ZoneForms
         {
             InitializeComponent();
             this.Load += IS_Load;
+           
+
         }
 
+        private void Graph_NodeCreated(object sender, yWorks.Utils.ItemEventArgs<INode> e)
+        {
+            Console.WriteLine(sender.ToString());
+            Console.WriteLine(e.Item.ToString());
+        }
 
         private void IS_Load(object sender, EventArgs e)
         {
             BindGrid();
-
+            Form f = this.ParentForm;
+            graphcontrol = f.Controls.Find("graphControl1", true).FirstOrDefault() as GraphControl;
+            graphcontrol.Graph.NodeCreated += Graph_NodeCreated;
+            graphcontrol.Graph.EdgeCreated += Graph_EdgeCreated;
+            graphcontrol.Selection.ItemSelectionChanged += graphcontrol_SelectionChanged;
+            graphcontrol.MouseDoubleClick += Graphcontrol_MouseDoubleClick;
+            //graphcontrol.Graph.
         }
+
+        private void Graphcontrol_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            foreach (var node in graphcontrol.Selection.SelectedNodes) { 
+            
+            Console.WriteLine("-----"+node.ToString());
+            
+            
+            }
+        }
+
+        private void graphcontrol_SelectionChanged(object sender, EventArgs e)
+        {
+            // Get the selected nodes
+            Console.WriteLine(sender.ToString());
+            Console.WriteLine(e.ToString());
+         //   GraphSelection graphControl = (GraphSelection)sender;
+          //  IEnumerable<INode> selectedNodes = graphControl.Selection.SelectedNodes;
+            
+        }
+        public class Selection
+        {
+            public HashSet<INode> Nodes { get; } = new HashSet<INode>();
+            public HashSet<IEdge> Edges { get; } = new HashSet<IEdge>();
+        }
+
+        private void Graph_EdgeCreated(object sender, yWorks.Utils.ItemEventArgs<IEdge> e)
+        {
+           // Connector zone linking
+           
+              
+        }
+
         private void BindGrid()
         {
             //Check required excel is exists or not
@@ -180,8 +235,8 @@ namespace SpaceLayout.Forms.ZoneForms
                     dataGridView1.ReadOnly = true;
                     try
                     {
-                        Form f = this.ParentForm;
-                        graphcontrol = f.Controls.Find("graphControl1", true).FirstOrDefault() as GraphControl;
+                        
+                       
                         if (!rowNodeCreated.ContainsKey(e.RowIndex) || !rowNodeCreated[e.RowIndex])
                         {
 
@@ -192,6 +247,8 @@ namespace SpaceLayout.Forms.ZoneForms
                             double height = (Convert.ToDouble(dataGridView1.CurrentRow.Cells["Column6"].Value) / width);
                             var node = graphcontrol.Graph.CreateNode();
                             graphcontrol.Graph.SetNodeLayout(node, new RectD(0, 0, width, height));
+
+                            node.Tag = zone;
 
 
                             //var style = new ShapeNodeStyle

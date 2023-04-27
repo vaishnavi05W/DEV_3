@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AxInterop.SHDocVw">
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\AxInterop.SHDocVw.dll</HintPath>
+    </Reference>
     <Reference Include="AxVDgridLib, Version=10.1002.0.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1002.0.1\bin\AxVDgridLib.dll</HintPath>
@@ -48,6 +51,92 @@
     </Reference>
     <Reference Include="ExcelDataReader.DataSet, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
       <HintPath>..\packages\ExcelDataReader.DataSet.3.6.0\lib\net35\ExcelDataReader.DataSet.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.SHDocVw">
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Interop.SHDocVw.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Nevron.Chart, Version=23.3.9.12, Culture=neutral, PublicKeyToken=2961c51bb98125d2, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.Chart.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.Chart.ThinWeb, Version=23.3.9.12, Culture=neutral, PublicKeyToken=e35134330ba499ca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.Chart.ThinWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.Chart.WebForm, Version=23.3.9.12, Culture=neutral, PublicKeyToken=346753153ef91008, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.Chart.WebForm.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.Chart.WinForm, Version=23.3.9.12, Culture=neutral, PublicKeyToken=c9bd8998e981e4ee, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.Chart.WinForm.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.Chart.Wpf, Version=23.3.9.12, Culture=neutral, PublicKeyToken=1d109cb19821cc7d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.Chart.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.Diagram, Version=23.3.9.12, Culture=neutral, PublicKeyToken=58d0c39aedb7cb73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.Diagram.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.Diagram.Designer">
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.Diagram.Designer.exe</HintPath>
+    </Reference>
+    <Reference Include="Nevron.Diagram.Shapes, Version=23.3.9.12, Culture=neutral, PublicKeyToken=532a56b211affb14, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.Diagram.Shapes.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.Diagram.ThinWeb, Version=23.3.9.12, Culture=neutral, PublicKeyToken=68aed445f4a1ebb5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.Diagram.ThinWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.Diagram.WebForm, Version=23.3.9.12, Culture=neutral, PublicKeyToken=95bcc3d41b0512e9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.Diagram.WebForm.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.Diagram.WinForm, Version=23.3.9.12, Culture=neutral, PublicKeyToken=8232c9976c3abc48, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.Diagram.WinForm.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.Examples.Framework.WebForm, Version=23.3.9.12, Culture=neutral, PublicKeyToken=9c5766f558c6f9aa, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.Examples.Framework.WebForm.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.Examples.Framework.WinForm">
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.Examples.Framework.WinForm.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.GraphicsGL, Version=23.3.9.12, Culture=neutral, PublicKeyToken=2f17c6a71f852d32, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.GraphicsGL.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.Nov.Diagram, Version=22.10.19.12, Culture=neutral, PublicKeyToken=b33b1a04bb5ca8ad, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Nevron Software\Nevron Open Vision 2022.3\Bin\Net472\Nevron.Nov.Diagram.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.Presentation, Version=23.3.9.12, Culture=neutral, PublicKeyToken=6656c5d1103e75cc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.Presentation.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.System, Version=23.3.9.12, Culture=neutral, PublicKeyToken=6a987feae5e496fd, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.System.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.ThinWeb, Version=23.3.9.12, Culture=neutral, PublicKeyToken=b08120edebea5ee3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.ThinWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.UI.WebForm.Controls, Version=23.3.9.12, Culture=neutral, PublicKeyToken=b5bb1156a58c1618, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.UI.WebForm.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.UI.WinForm.Docking, Version=23.3.9.12, Culture=neutral, PublicKeyToken=446d8963349a628a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.UI.WinForm.Docking.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.UI.WinForm.Skins, Version=23.3.9.12, Culture=neutral, PublicKeyToken=231d012f86497c6a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.UI.WinForm.Skins.dll</HintPath>
     </Reference>
     <Reference Include="ObjectListView, Version=2.9.1.22349, Culture=neutral, PublicKeyToken=b1c5bf581481bcd4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -129,18 +218,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1002.0.1\bin\VectorDraw.Serialize.dll</HintPath>
       <Private>False</Private>
-    </Reference>
-    <Reference Include="yWorks.yFilesNET.Adapter, Version=5.4.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\Vaishnavi\Dev-3\yFiles.NET-Complete-5.4.0.2-Evaluation\yFiles.NET-Complete-5.4.0.2-Evaluation\lib\net40\yWorks.yFilesNET.Adapter.dll</HintPath>
-    </Reference>
-    <Reference Include="yWorks.yFilesNET.Algorithms, Version=5.4.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\Vaishnavi\Dev-3\yFiles.NET-Complete-5.4.0.2-Evaluation\yFiles.NET-Complete-5.4.0.2-Evaluation\lib\net40\yWorks.yFilesNET.Algorithms.dll</HintPath>
-    </Reference>
-    <Reference Include="yWorks.yFilesNET.Viewer, Version=5.4.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\Vaishnavi\Dev-3\yFiles.NET-Complete-5.4.0.2-Evaluation\yFiles.NET-Complete-5.4.0.2-Evaluation\lib\net40\yWorks.yFilesNET.Viewer.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

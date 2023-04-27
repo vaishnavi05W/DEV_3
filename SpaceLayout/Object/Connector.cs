@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using yWorks.Algorithms;
+//using yWorks.Algorithms;
 
 namespace SpaceLayout.Object
 {
@@ -20,7 +20,7 @@ namespace SpaceLayout.Object
         public int Type; // vertical,horizontal
         public double Length; //width
         public Color color; // change color of line to define the difference
-        yWorks.Graph.IEdge edge;
+        //yWorks.Graph.IEdge edge;
     }
 }
 

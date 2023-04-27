@@ -11,26 +11,20 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ExcelDataReader;
 using SpaceLayout.Entity;
-using yWorks.Graph;
-using SpaceLayout.Object;
-using yWorks.Controls;
-using yWorks.Geometry;
-using yWorks.Graph.Styles;
-using yWorks.Graph.LabelModels;
-using yWorks.Controls.Input;
-using yWorks.Graph.PortLocationModels;
-using yWorks.GraphML;
-using yWorks.Algorithms;
-using yWorks.Algorithms.Geometry;
-//using yWorks.Support;
-using yWorks.Annotations;
+
+
+using Nevron.Diagram.WinForm;
+using Nevron.Diagram;
+using Nevron.Diagram.DataStructures;
+
+using Nevron.GraphicsCore;
 using System.Drawing.Design;
 
-
-
-
-
-
+using Nevron.Dom;
+using Nevron.Diagram.Layout;
+using SpaceLayout.Object;
+using Nevron.Diagram.Batches;
+using Nevron.Diagram.ThinWeb;
 
 namespace SpaceLayout.Forms.ZoneForms
 {
@@ -38,68 +32,87 @@ namespace SpaceLayout.Forms.ZoneForms
     {
         static string DataSourceInputData = StaticCache.DataSourceBasicInfo;
         private DataTable dtSource;
-        public GraphControl graphcontrol { get; set; }
-       
-        public INode SourceNode = null;
-        public INode TargetNode = null;
 
+        // public GraphControl chartControl { get; set; }
+        public NDrawingView Ndv;
+        public NDrawingDocument Ndd;
+        public NGraph graph;
+
+        public NRectangleShape SourceNode = null;
+        public NRectangleShape TargetNode = null;
+        NDrawingDocument document = new NDrawingDocument();
+      
+       
         public ZoneSelectionControl()
         {
             InitializeComponent();
             this.Load += IS_Load;
-           
+            Ndd= new NDrawingDocument();
+         
+          
+
+            // Add the diagram view to the form
+            this.Controls.Add(Ndv);
+
+            //chartControl.ItemClick += chartControl_MouseClick;
 
         }
 
-        private void Graph_NodeCreated(object sender, yWorks.Utils.ItemEventArgs<INode> e)
+        private void ChartControl_NodeCreated(NNodeEventArgs args)
         {
-            Console.WriteLine(sender.ToString());
-            Console.WriteLine(e.Item.ToString());
+            Console.WriteLine(args.Node.ToString());
         }
 
         private void IS_Load(object sender, EventArgs e)
         {
             BindGrid();
+
             Form f = this.ParentForm;
-            graphcontrol = f.Controls.Find("graphControl1", true).FirstOrDefault() as GraphControl;
-            graphcontrol.Graph.NodeCreated += Graph_NodeCreated;
-            graphcontrol.Graph.EdgeCreated += Graph_EdgeCreated;
-            graphcontrol.Selection.ItemSelectionChanged += graphcontrol_SelectionChanged;
-            graphcontrol.MouseDoubleClick += Graphcontrol_MouseDoubleClick;
-            //graphcontrol.Graph.
-        }
-
-        private void Graphcontrol_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            foreach (var node in graphcontrol.Selection.SelectedNodes) { 
-            
-            Console.WriteLine("-----"+node.ToString());
-            
-            
+            Ndv = f.Controls.Find("nDrawingView1", true).FirstOrDefault() as NDrawingView;
+            if (Ndv != null)
+            {
+                Ndd = Ndv.Document;
             }
-        }
-
-        private void graphcontrol_SelectionChanged(object sender, EventArgs e)
-        {
-            // Get the selected nodes
-            Console.WriteLine(sender.ToString());
-            Console.WriteLine(e.ToString());
-         //   GraphSelection graphControl = (GraphSelection)sender;
-          //  IEnumerable<INode> selectedNodes = graphControl.Selection.SelectedNodes;
-            
-        }
-        public class Selection
-        {
-            public HashSet<INode> Nodes { get; } = new HashSet<INode>();
-            public HashSet<IEdge> Edges { get; } = new HashSet<IEdge>();
-        }
-
-        private void Graph_EdgeCreated(object sender, yWorks.Utils.ItemEventArgs<IEdge> e)
-        {
-           // Connector zone linking
            
-              
+            //chartControl.Controller.Selection.Changed += chartControl_SelectionChanged;
+            //chartControl.Controller.DoubleClick += chartControl_DoubleClick;
+            //chartControl.Document.NodeCreated += ChartControl_NodeCreated;
+            //chartControl.Document.UndoRedoService.Pause();
+            //chartControl.Document.UndoRedoService.ChangesRegistry.Clear();
+            //chartControl.Document.UndoRedoService.Resume();
         }
+
+        //private void chartcontrol_MouseDoubleClick(object sender, MouseEventArgs e)
+        //{
+        //    foreach (var node in chartControl.Selection.SelectedNodes) { 
+
+        //    Console.WriteLine("-----"+node.ToString());
+
+
+        //    }
+        //}
+
+        //private void graphcontrol_SelectionChanged(object sender, EventArgs e)
+        //{
+        //    // Get the selected nodes
+        //    Console.WriteLine(sender.ToString());
+        //    Console.WriteLine(e.ToString());
+        // //   GraphSelection graphControl = (GraphSelection)sender;
+        //  //  IEnumerable<INode> selectedNodes = graphControl.Selection.SelectedNodes;
+
+        //}
+        //public class Selection
+        //{
+        //    public HashSet<INode> Nodes { get; } = new HashSet<INode>();
+        //    public HashSet<IEdge> Edges { get; } = new HashSet<IEdge>();
+        //}
+
+        //private void Graph_EdgeCreated(object sender, yWorks.Utils.ItemEventArgs<IEdge> e)
+        //{
+        //   // Connector zone linking
+
+
+        //}
 
         private void BindGrid()
         {
@@ -112,7 +125,7 @@ namespace SpaceLayout.Forms.ZoneForms
             dtSource = new DataTable();
             dtSource.Columns.Add("ID");
             dtSource.Columns.Add("Name");
-           // dtSource.Columns.Add("Department");
+            // dtSource.Columns.Add("Department");
             dtSource.Columns.Add("Group");
             dtSource.Columns.Add("Relation");
             dtSource.Columns.Add("Category");
@@ -125,8 +138,8 @@ namespace SpaceLayout.Forms.ZoneForms
             dtSource.Columns.Add("Ratio");
             dtSource.Columns.Add("Type");
 
-            List<InputData_ModuleEntity> result;
-            List<string> temp;
+            //List<InputData_ModuleEntity> result;
+            //List<string> temp;
             using (var stream = File.Open(DataSourceInputData, FileMode.Open, FileAccess.Read))
             {
                 // Auto-detect format, supports:
@@ -183,29 +196,31 @@ namespace SpaceLayout.Forms.ZoneForms
         }
         private Dictionary<int, bool> rowNodeCreated = new Dictionary<int, bool>();
 
-        
-        private void OnItemClicked(object sender, ItemClickedEventArgs<IModelItem> e)
-        {
-            {
-                if (e.Item is INode node)
-                {
-                  
-                    if (SourceNode == null)
-                    {
-                        SourceNode = node;
 
-                    }
-                    else if (TargetNode == null)
-                    {
-                        TargetNode = node;
-                        var edge = graphcontrol.Graph.CreateEdge(SourceNode, TargetNode);
-                        graphcontrol.Selection.Clear();
-                        SourceNode = null;
-                        TargetNode = null;
-                    }
-                }
-            };
-        }
+        //private void chartControl_MouseClick(object sender, Nevron.Diagram.WinForm.NMouseEventArgs e)
+        //{
+        //NRectangleShape clickedNode = Ndv.HitTest(e.Location);
+
+        //    if (clickedNode != null && clickedNode is NRectangleShape shapeNode)
+        //    {
+        //        if (SourceNode == null)
+        //        {
+        //            SourceNode = shapeNode;
+        //        }
+        //        else if (TargetNode == null)
+        //        {
+        //            TargetNode = shapeNode;
+
+        //            NLineShape edge = new NLineShape();
+        //            //chartControl.Document..AddChild(edge);
+        //            edge.FromShape = SourceNode;
+        //            edge.ToShape = TargetNode;
+
+        //            SourceNode = null;
+        //            TargetNode = null;
+        //        }
+        //    }
+        //}
 
         private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
@@ -233,88 +248,73 @@ namespace SpaceLayout.Forms.ZoneForms
                 if ((columnName == "Column1") && (!string.IsNullOrWhiteSpace(this.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString())))
                 {
                     dataGridView1.ReadOnly = true;
-                    try
+                    try 
                     {
-                        
-                       
                         if (!rowNodeCreated.ContainsKey(e.RowIndex) || !rowNodeCreated[e.RowIndex])
                         {
-
-
+                            NDrawingDocument document = new NDrawingDocument();
+                            NLayer activeLayer = document.ActiveLayer;
+                            NGraph graph = new NGraph();
                             var rand = new Random();
                             Zone zone = new Zone();
-                            double width = Math.Sqrt(Convert.ToDouble(this.dataGridView1.Rows[e.RowIndex].Cells["Column6"].Value) * 2);
-                            double height = (Convert.ToDouble(dataGridView1.CurrentRow.Cells["Column6"].Value) / width);
-                            var node = graphcontrol.Graph.CreateNode();
-                            graphcontrol.Graph.SetNodeLayout(node, new RectD(0, 0, width, height));
+                            float width = (float)Math.Sqrt(Convert.ToDouble(this.dataGridView1.Rows[e.RowIndex].Cells["Column6"].Value) * 2);
+                            float height = (float)(Convert.ToDouble(dataGridView1.CurrentRow.Cells["Column6"].Value) / width);
 
-                            node.Tag = zone;
-
-
-                            //var style = new ShapeNodeStyle
-                            //{
-                            //    Brush =  new SolidColorBrush // Blue with alpha 255
-
-                            //    Pen = new Pen(Color.FromName(this.dataGridView1.Rows[e.RowIndex].Cells["Column13"].Value.ToString())),
-                            //};
-
-                            var NodeStyle = new ShapeNodeStyle
+                            NRectangleF rect = new NRectangleF(0, 0, width, height);
+                            NRectangleShape node = new NRectangleShape(rect)
                             {
-                                Brush = new SolidBrush(Color.FromName(this.dataGridView1.Rows[e.RowIndex].Cells["Column13"].Value.ToString())),
-                                Pen = new Pen(Color.FromName(this.dataGridView1.Rows[e.RowIndex].Cells["Column13"].Value.ToString())),
+                                Tag = zone
                             };
-                            graphcontrol.Graph.SetStyle(node, NodeStyle);
-
-                            var defaultLableStyle = new DefaultLabelStyle
+                            node.Style = new NStyle
                             {
-                                TextBrush = Brushes.Black,
+                                FillStyle = new NColorFillStyle(Color.FromName(this.dataGridView1.Rows[e.RowIndex].Cells["Column13"].Value.ToString())),
                             };
+
                             string NodeLabelIn = this.dataGridView1.Rows[e.RowIndex].Cells["Column1"].Value.ToString() + System.Environment.NewLine + this.dataGridView1.Rows[e.RowIndex].Cells["Column6"].Value.ToString() + " " + "m\u00b2";
-                            graphcontrol.Graph.AddLabel(node, NodeLabelIn, InteriorLabelModel.NorthWest, defaultLableStyle, new SizeD(width, height));
+                            // graphcontrol.Graph.AddLabel(node, NodeLabelIn, InteriorLabelModel.NorthWest, defaultLableStyle, new SizeD(width, height));
                             string NodeLabelOut = this.dataGridView1.Rows[e.RowIndex].Cells["Column2"].Value.ToString();
-                            graphcontrol.Graph.AddLabel(node, NodeLabelOut, ExteriorLabelModel.South, defaultLableStyle);
+                            //graphcontrol.Graph.AddLabel(node, NodeLabelOut, ExteriorLabelModel.South, defaultLableStyle);
+                            node.Text = NodeLabelIn;
 
-                            double maxX = graphcontrol.ClientSize.Width - width;
-                            double maxY = graphcontrol.ClientSize.Height - height;
-                            double x = rand.NextDouble() * maxX;
-                            double y = rand.NextDouble() * maxY;
-                            graphcontrol.Graph.SetNodeCenter(node, new PointD(x, y));
+                            //graph.Nodes.Add(node);
+                            Ndd.ActiveLayer.AddChild(node);
 
-                            graphcontrol.FitGraphBounds();
+                            node.Location = new NPointF(500, 500);
+                          
+
+                            Random rnd = new Random();
+                            if (Ndv != null)
+                            {
+                                int x = rnd.Next((int)Ndv.ViewportOrigin.X, (int)Ndv.ViewportOrigin.X + (int)Ndv.ViewportSize.Width - (int)rect.Width);
+                                int y = rnd.Next((int)Ndv.ViewportOrigin.Y, (int)Ndv.ViewportOrigin.Y + (int)Ndv.ViewportSize.Height - (int)rect.Height);
+                                node.Location = new NPointF(x, y);
+                            }
+                           
+                           
+
+                            //double maxX = graphcontrol.ClientSize.Width - width;
+                            //double maxY = graphcontrol.ClientSize.Height - height;
+                            //double x = rand.NextDouble() * maxX;
+                            //double y = rand.NextDouble() * maxY;
+                            //graphcontrol.Graph.SetNodeCenter(node, new PointD(x, y));
+
+                            //graphcontrol.FitGraphBounds();
                             rowNodeCreated[e.RowIndex] = true; //make it true to avoid duplicate node
                         }
                         else
                         {
                             MessageBox.Show("Zone already created for this row.");
                         }
+                       
                         {
 
-                            var graphEditorInputMode = new GraphEditorInputMode();
-                            graphEditorInputMode.AllowCreateNode = false; // restrict node creation by clicking in UI
-                            graphEditorInputMode.CreateEdgeInputMode.Enabled = true;
-                            graphcontrol.InputMode = graphEditorInputMode;
-
-                            // graphEditorInputMode.ClickableItems = GraphItemTypes.Node;
-                            //graphEditorInputMode.MarqueeSelectableItems = GraphItemTypes.Node;
-
-
-                            //var grapEditorInputMode = new GraphEditorInputMode();
-                            //graphcontrol.InputMode = grapEditorInputMode;
-
-                            //grapEditorInputMode.ClickableItems = GraphItemTypes.Node;
-
-                            //graphEditorInputMode.MarqueeSelectableItems = GraphItemTypes.Node;
-
-
-
-                            var edgeStyle = new PolylineEdgeStyle
-                            {
-                                Pen = new Pen(Brushes.Black, 2),
-                                TargetArrow = new Arrow { Brush = Brushes.Black, Type = ArrowType.Default }
-                            };
-                            graphcontrol.Graph.EdgeDefaults.Style = edgeStyle;
-                            graphcontrol.FitGraphBounds();
-                            graphEditorInputMode.ItemClicked += OnItemClicked;
+                            //var graphEditorInputMode = new GraphEditorInputMode();
+                            //graphEditorInputMode.AllowCreateNode = false; // restrict node creation by clicking in UI
+                            //graphEditorInputMode.CreateEdgeInputMode.Enabled = true;
+                            //graphcontrol.InputMode = graphEditorInputMode;
+                            //graphcontrol.Graph.EdgeDefaults.Style = edgeStyle;
+                            //graphcontrol.FitGraphBounds();
+                           // Ndv.MouseClick += OnItemClicked;
                         }
                     }
                     catch (Exception ex)
@@ -324,7 +324,11 @@ namespace SpaceLayout.Forms.ZoneForms
                 }
             }
         }
-    }
 
+        //private void OnItemClicked(object sender, MouseEventArgs e)
+        //{
+        //    if(e.Ite)
+        //}
+    }
 }
 

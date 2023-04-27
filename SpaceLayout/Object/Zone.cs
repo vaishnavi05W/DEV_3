@@ -4,24 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using yWorks.Graph;
-using yWorks.Geometry;
-using yWorks.Controls;
+//using yWorks.Graph;
+//using yWorks.Geometry;
+//using yWorks.Controls;
 using System.Data;
 using VectorDraw.Serialize.Properties;
 using ExcelDataReader;
 using SpaceLayout.Entity;
 using SpaceLayout.DataSource;
-using yWorks.Graph.Styles;
+//using yWorks.Graph.Styles;
 
 namespace SpaceLayout.Object
 {
     public class Zone
     {
         private List<Zone> ZonesList;
-        internal ShapeNodeStyle Style;
+        //internal ShapeNodeStyle Style;
         public List<Connector> Connectors;
-        public INode Node;
+        //public INode Node;
 
 
         public int ID { get; set; }
@@ -38,7 +38,7 @@ namespace SpaceLayout.Object
         public double Ratio { get; set; }
         public string Type { get; set; }
         public Zone Tag { get; internal set; }
-        public RectD Layout { get; internal set; }
+        //public RectD Layout { get; internal set; }
         public object Labels { get; internal set; }
 
 

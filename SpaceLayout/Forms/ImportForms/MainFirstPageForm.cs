@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Nevron.Diagram;
+using Nevron.Dom;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,32 +9,45 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using yWorks.Controls.Input;
-using yWorks.Controls;
-using SpaceLayout.Entity;
-using yWorks.Graph;
-using SpaceLayout.Object;
-using yWorks.Geometry;
-using yWorks.Graph.Styles;
-using yWorks.Graph.LabelModels;
 
 namespace SpaceLayout.Forms.ZoneForms
 {
     public partial class MainFirstPageControl : Form
     {
-        private IGraph graph;
+        //private IGraph graph;
         public static bool ExcelFlg = false;
         public static DataTable dtZoneSelection = null;
+        private INNode node;
 
         public MainFirstPageControl()
         {
             InitializeComponent();
             this.Load += IS_Load;
-           
+            nDrawingView1.BeginInit();
+
+            // display the document in the view
+            nDrawingView1.Document = nDrawingDocument1;
+
+            // do not show ports
+            nDrawingView1.GlobalVisibility.ShowPorts = false;
+
+            // hide the grid
+            nDrawingView1.Grid.Visible = false;
+
+            // fit the document in the viewport 
+            nDrawingView1.ViewLayout = ViewLayout.Fit;
+
+            // apply padding to the document bounds
+            nDrawingView1.DocumentPadding = new Nevron.Diagram.NMargins(10);
+
+            // init document
+            nDrawingDocument1.BeginInit();
             
+
+
         }
 
-     
+
 
         private void IS_Load(object sender, EventArgs e)
         {
@@ -163,6 +178,16 @@ namespace SpaceLayout.Forms.ZoneForms
         }
 
         private void graphControl1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void nDrawingView1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
         }

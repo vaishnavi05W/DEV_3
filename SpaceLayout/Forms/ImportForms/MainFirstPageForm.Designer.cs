@@ -40,7 +40,8 @@ namespace SpaceLayout.Forms.ZoneForms
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.btnPrevious = new System.Windows.Forms.Button();
             this.btnNext = new System.Windows.Forms.Button();
-            this.graphControl1 = new yWorks.Controls.GraphControl();
+            this.nDrawingView1 = new Nevron.Diagram.WinForm.NDrawingView();
+            this.nDrawingDocument1 = new Nevron.Diagram.NDrawingDocument();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -54,7 +55,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 68.9899F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 31.0101F));
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.graphControl1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.nDrawingView1, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.ForeColor = System.Drawing.Color.White;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
@@ -64,6 +65,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(951, 606);
             this.tableLayoutPanel1.TabIndex = 0;
+            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
             // tableLayoutPanel2
             // 
@@ -73,7 +75,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 3);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(658, 2);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 4;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.695309F));
@@ -148,7 +150,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton4.Margin = new System.Windows.Forms.Padding(1);
             this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(49, 23);
+            this.toolStripButton4.Size = new System.Drawing.Size(49, 19);
             this.toolStripButton4.Text = "Output";
             // 
             // tableLayoutPanel3
@@ -160,7 +162,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.tableLayoutPanel3.Controls.Add(this.btnNext, 1, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(2, 565);
-            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -172,7 +174,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.btnPrevious.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnPrevious.ForeColor = System.Drawing.Color.Navy;
             this.btnPrevious.Location = new System.Drawing.Point(2, 2);
-            this.btnPrevious.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnPrevious.Margin = new System.Windows.Forms.Padding(2);
             this.btnPrevious.Name = "btnPrevious";
             this.btnPrevious.Size = new System.Drawing.Size(139, 31);
             this.btnPrevious.TabIndex = 0;
@@ -185,7 +187,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.btnNext.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnNext.ForeColor = System.Drawing.Color.Navy;
             this.btnNext.Location = new System.Drawing.Point(145, 2);
-            this.btnNext.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnNext.Margin = new System.Windows.Forms.Padding(2);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(140, 31);
             this.btnNext.TabIndex = 1;
@@ -193,19 +195,24 @@ namespace SpaceLayout.Forms.ZoneForms
             this.btnNext.UseVisualStyleBackColor = true;
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
-            // graphControl1
+            // nDrawingView1
             // 
-            this.graphControl1.BackColor = System.Drawing.Color.White;
-            this.graphControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.graphControl1.DoubleClickSize = new yWorks.Geometry.SizeD(4D, 4D);
-            this.graphControl1.DoubleClickTime = System.TimeSpan.Parse("00:00:00.5000000");
-            this.graphControl1.DragSize = new yWorks.Geometry.SizeD(4D, 4D);
-            this.graphControl1.Location = new System.Drawing.Point(2, 2);
-            this.graphControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.graphControl1.Name = "graphControl1";
-            this.graphControl1.Size = new System.Drawing.Size(652, 602);
-            this.graphControl1.TabIndex = 2;
-            this.graphControl1.Click += new System.EventHandler(this.graphControl1_Click);
+            this.nDrawingView1.AllowDrop = true;
+            this.nDrawingView1.DesignTimeState = ((Nevron.Diagram.NBinaryState)(resources.GetObject("nDrawingView1.DesignTimeState")));
+            this.nDrawingView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.nDrawingView1.Document = this.nDrawingDocument1;
+            this.nDrawingView1.Location = new System.Drawing.Point(2, 2);
+            this.nDrawingView1.Margin = new System.Windows.Forms.Padding(2);
+            this.nDrawingView1.Name = "nDrawingView1";
+            this.nDrawingView1.RenderTechnology = Nevron.GraphicsCore.RenderTechnology.GDIPlus;
+            this.nDrawingView1.Size = new System.Drawing.Size(652, 602);
+            this.nDrawingView1.TabIndex = 2;
+            this.nDrawingView1.Text = "nDrawingView1";
+            this.nDrawingView1.Click += new System.EventHandler(this.nDrawingView1_Click);
+            // 
+            // nDrawingDocument1
+            // 
+            this.nDrawingDocument1.DesignTimeState = ((Nevron.Diagram.NBinaryState)(resources.GetObject("nDrawingDocument1.DesignTimeState")));
             // 
             // MainFirstPageControl
             // 
@@ -241,6 +248,8 @@ namespace SpaceLayout.Forms.ZoneForms
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Button btnPrevious;
         private System.Windows.Forms.Button btnNext;
-        private yWorks.Controls.GraphControl graphControl1;
+        private Nevron.Diagram.WinForm.NDrawingView nDrawingView1;
+        private Nevron.Diagram.NDrawingDocument nDrawingDocument1;
+        // private yWorks.Controls.GraphControl graphControl1;
     }
 }

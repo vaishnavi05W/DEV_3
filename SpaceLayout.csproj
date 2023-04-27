@@ -1,0 +1,339 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{614DFB1F-5C91-4C61-9872-AB9CB127DAEA}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>SpaceLayout</RootNamespace>
+    <AssemblyName>SpaceLayout</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AxInterop.SHDocVw">
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\AxInterop.SHDocVw.dll</HintPath>
+    </Reference>
+    <Reference Include="AxVDgridLib, Version=10.1002.0.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1002.0.1\bin\AxVDgridLib.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="AxVDrawLib5, Version=10.1002.0.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1002.0.1\bin\AxVDrawLib5.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ExcelDataReader, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.3.6.0\lib\net45\ExcelDataReader.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelDataReader.DataSet, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.DataSet.3.6.0\lib\net35\ExcelDataReader.DataSet.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.SHDocVw">
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Interop.SHDocVw.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Nevron.Chart, Version=23.3.9.12, Culture=neutral, PublicKeyToken=2961c51bb98125d2, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.Chart.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.Chart.ThinWeb, Version=23.3.9.12, Culture=neutral, PublicKeyToken=e35134330ba499ca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.Chart.ThinWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.Chart.WebForm, Version=23.3.9.12, Culture=neutral, PublicKeyToken=346753153ef91008, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.Chart.WebForm.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.Chart.WinForm, Version=23.3.9.12, Culture=neutral, PublicKeyToken=c9bd8998e981e4ee, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.Chart.WinForm.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.Chart.Wpf, Version=23.3.9.12, Culture=neutral, PublicKeyToken=1d109cb19821cc7d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.Chart.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.Diagram, Version=23.3.9.12, Culture=neutral, PublicKeyToken=58d0c39aedb7cb73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.Diagram.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.Diagram.Designer">
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.Diagram.Designer.exe</HintPath>
+    </Reference>
+    <Reference Include="Nevron.Diagram.Shapes, Version=23.3.9.12, Culture=neutral, PublicKeyToken=532a56b211affb14, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.Diagram.Shapes.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.Diagram.ThinWeb, Version=23.3.9.12, Culture=neutral, PublicKeyToken=68aed445f4a1ebb5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.Diagram.ThinWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.Diagram.WebForm, Version=23.3.9.12, Culture=neutral, PublicKeyToken=95bcc3d41b0512e9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.Diagram.WebForm.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.Diagram.WinForm, Version=23.3.9.12, Culture=neutral, PublicKeyToken=8232c9976c3abc48, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.Diagram.WinForm.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.Examples.Framework.WebForm, Version=23.3.9.12, Culture=neutral, PublicKeyToken=9c5766f558c6f9aa, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.Examples.Framework.WebForm.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.Examples.Framework.WinForm">
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.Examples.Framework.WinForm.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.GraphicsGL, Version=23.3.9.12, Culture=neutral, PublicKeyToken=2f17c6a71f852d32, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.GraphicsGL.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.Nov.Diagram, Version=22.10.19.12, Culture=neutral, PublicKeyToken=b33b1a04bb5ca8ad, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Nevron Software\Nevron Open Vision 2022.3\Bin\Net472\Nevron.Nov.Diagram.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.Presentation, Version=23.3.9.12, Culture=neutral, PublicKeyToken=6656c5d1103e75cc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.Presentation.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.System, Version=23.3.9.12, Culture=neutral, PublicKeyToken=6a987feae5e496fd, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.System.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.ThinWeb, Version=23.3.9.12, Culture=neutral, PublicKeyToken=b08120edebea5ee3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.ThinWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.UI.WebForm.Controls, Version=23.3.9.12, Culture=neutral, PublicKeyToken=b5bb1156a58c1618, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.UI.WebForm.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.UI.WinForm.Docking, Version=23.3.9.12, Culture=neutral, PublicKeyToken=446d8963349a628a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.UI.WinForm.Docking.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.UI.WinForm.Skins, Version=23.3.9.12, Culture=neutral, PublicKeyToken=231d012f86497c6a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.UI.WinForm.Skins.dll</HintPath>
+    </Reference>
+    <Reference Include="ObjectListView, Version=2.9.1.22349, Culture=neutral, PublicKeyToken=b1c5bf581481bcd4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1002.0.1\bin\ObjectListView.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="OpenVDF, Version=10.1002.1.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1002.0.1\bin\OpenVDF.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RenderFormats, Version=10.1002.1.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\vdAnyCPUSxS.1002\RenderFormats.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="vdDXF, Version=10.1002.1.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1002.0.1\bin\vdDXF.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="vdFramedControl, Version=10.1002.1.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1002.0.1\bin\vdFramedControl.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VDrawBaseControl, Version=10.1002.1.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1002.0.1\bin\VDrawBaseControl.dll</HintPath>
+    </Reference>
+    <Reference Include="vdrawWpfControlLibrary, Version=10.1002.1.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1002.0.1\bin\vdrawWpfControlLibrary.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="vdRay, Version=10.1002.1.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1002.0.1\bin\vdRay.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="vdScrollableControl, Version=10.1002.1.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1002.0.1\bin\vdScrollableControl.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VectorDraw.Actions, Version=10.1002.1.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1002.0.1\bin\VectorDraw.Actions.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VectorDraw.Geometry, Version=10.1002.1.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1002.0.1\bin\VectorDraw.Geometry.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VectorDraw.Professional, Version=10.1002.1.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1002.0.1\bin\VectorDraw.Professional.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VectorDraw.Render, Version=10.1002.1.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1002.0.1\bin\VectorDraw.Render.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VectorDraw.Serialize, Version=10.1002.1.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1002.0.1\bin\VectorDraw.Serialize.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataSource\StaticCache.cs" />
+    <Compile Include="Entity\InputData_ModuleEntity.cs" />
+    <Compile Include="Entity\SolidColorBrush.cs" />
+    <Compile Include="Entity\StaticCache.cs" />
+    <Compile Include="Forms\ImportForms\MainFirstPageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ImportForms\MainFirstPageForm.Designer.cs">
+      <DependentUpon>MainFirstPageForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ImportForms\ImportDataForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\ImportForms\ImportDataForm.Designer.cs">
+      <DependentUpon>ImportDataForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ImportForms\LoadingPageControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\ImportForms\LoadingPageControl.Designer.cs">
+      <DependentUpon>LoadingPageControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\OutputForm\OutputControl1.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\OutputForm\OutputControl1.Designer.cs">
+      <DependentUpon>OutputControl1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ZoneSelectionForms\ZoneRelationshipEditingControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\ZoneSelectionForms\ZoneRelationshipEditingControl.Designer.cs">
+      <DependentUpon>ZoneRelationshipEditingControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ZoneSelectionForms\ZoneSelectionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\ZoneSelectionForms\ZoneSelectionControl.Designer.cs">
+      <DependentUpon>ZoneSelectionControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ZoneSelectionForms\ZoneRelationshipControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\ZoneSelectionForms\ZoneRelationshipControl.Designer.cs">
+      <DependentUpon>ZoneRelationshipControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SpacePlanningMainPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SpacePlanningMainPage.Designer.cs">
+      <DependentUpon>SpacePlanningMainPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Object\Undo.cs" />
+    <Compile Include="Object\Project.cs" />
+    <Compile Include="Object\Connector.cs" />
+    <Compile Include="Object\Zone.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\ImportForms\MainFirstPageForm.resx">
+      <DependentUpon>MainFirstPageForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ImportForms\ImportDataForm.resx">
+      <DependentUpon>ImportDataForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ImportForms\LoadingPageControl.resx">
+      <DependentUpon>LoadingPageControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\OutputForm\OutputControl1.resx">
+      <DependentUpon>OutputControl1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ZoneSelectionForms\ZoneRelationshipControl.resx">
+      <DependentUpon>ZoneRelationshipControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ZoneSelectionForms\ZoneRelationshipEditingControl.resx">
+      <DependentUpon>ZoneRelationshipEditingControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ZoneSelectionForms\ZoneSelectionControl.resx">
+      <DependentUpon>ZoneSelectionControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Forms\SpacePlanningMainPage.resx">
+      <DependentUpon>SpacePlanningMainPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Algorithm\" />
+    <Folder Include="Forms\ZoneForms\" />
+    <Folder Include="Resources\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>"$(VDRAWDEV)vdlic.exe"  "$(TargetPath)" -c</PostBuildEvent>
+  </PropertyGroup>
+</Project>

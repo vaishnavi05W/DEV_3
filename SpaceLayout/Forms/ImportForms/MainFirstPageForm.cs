@@ -9,6 +9,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using Nevron.GraphicsCore;
+using Nevron.Diagram;
+using Nevron.Diagram.Shapes;
+using Nevron.Diagram.WinForm;
 
 namespace SpaceLayout.Forms.ZoneForms
 {
@@ -23,6 +36,22 @@ namespace SpaceLayout.Forms.ZoneForms
         {
             InitializeComponent();
             this.Load += IS_Load;
+       
+        }
+
+
+
+        private void IS_Load(object sender, EventArgs e)
+        {
+            CrateModuleDatatable();
+            btnPrevious.Visible = false;
+            btnNext.Visible = false;
+
+            toolStripButton2.Enabled = false;
+            toolStripButton3.Enabled = false;
+
+
+            // begin view init
             nDrawingView1.BeginInit();
 
             // display the document in the view
@@ -42,21 +71,15 @@ namespace SpaceLayout.Forms.ZoneForms
 
             // init document
             nDrawingDocument1.BeginInit();
-            
 
 
-        }
+            // end nDrawingDocument1 init
+            nDrawingDocument1.EndInit();
+
+            //end view init
+            nDrawingView1.EndInit();
 
 
-
-        private void IS_Load(object sender, EventArgs e)
-        {
-            CrateModuleDatatable();
-            btnPrevious.Visible = false;
-            btnNext.Visible = false;
-
-            toolStripButton2.Enabled = false;
-            toolStripButton3.Enabled = false;
         }
 
         private void CrateModuleDatatable()
@@ -188,6 +211,11 @@ namespace SpaceLayout.Forms.ZoneForms
         }
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void toolStripButton4_Click(object sender, EventArgs e)
         {
 
         }

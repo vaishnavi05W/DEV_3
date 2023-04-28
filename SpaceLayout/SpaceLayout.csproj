@@ -249,6 +249,12 @@
     <Compile Include="Forms\OutputForm\OutputControl1.Designer.cs">
       <DependentUpon>OutputControl1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\TestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TestForm.Designer.cs">
+      <DependentUpon>TestForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ZoneSelectionForms\ZoneRelationshipEditingControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -290,6 +296,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\OutputForm\OutputControl1.resx">
       <DependentUpon>OutputControl1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TestForm.resx">
+      <DependentUpon>TestForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ZoneSelectionForms\ZoneRelationshipControl.resx">
       <DependentUpon>ZoneRelationshipControl.cs</DependentUpon>

@@ -26,7 +26,8 @@ namespace SpaceLayout
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainFirstPageControl());
+             Application.Run(new MainFirstPageControl());
+         //   Application.Run(new SpaceLayout.Forms.TestForm());
         }
     }
 }

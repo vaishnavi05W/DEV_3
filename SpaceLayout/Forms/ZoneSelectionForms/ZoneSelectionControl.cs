@@ -25,6 +25,7 @@ using Nevron.Diagram.Layout;
 using SpaceLayout.Object;
 using Nevron.Diagram.Batches;
 using Nevron.Diagram.ThinWeb;
+using Nevron.Diagram.Extensions;
 
 namespace SpaceLayout.Forms.ZoneForms
 {
@@ -40,14 +41,19 @@ namespace SpaceLayout.Forms.ZoneForms
 
         public NRectangleShape SourceNode = null;
         public NRectangleShape TargetNode = null;
-        NDrawingDocument document = new NDrawingDocument();
-      
+        private NPersistencyManager persistencyManager;
+
        
+
         public ZoneSelectionControl()
         {
             InitializeComponent();
+            this.persistencyManager = new NPersistencyManager();
+           
+           // drawing = (NDrawingDocument)persistencyManager.LoadDocumentFromFile("c:\\temp\\drawing1.ndx");
+            
             this.Load += IS_Load;
-            Ndd= new NDrawingDocument();
+            
          
           
 
@@ -195,6 +201,9 @@ namespace SpaceLayout.Forms.ZoneForms
             return dtSource;
         }
         private Dictionary<int, bool> rowNodeCreated = new Dictionary<int, bool>();
+        private NDrawingDocument drawing;
+
+        //public NDrawingDocument Drawing { get => drawing; set => drawing = value; }
 
 
         //private void chartControl_MouseClick(object sender, Nevron.Diagram.WinForm.NMouseEventArgs e)
@@ -252,13 +261,25 @@ namespace SpaceLayout.Forms.ZoneForms
                     {
                         if (!rowNodeCreated.ContainsKey(e.RowIndex) || !rowNodeCreated[e.RowIndex])
                         {
-                            NDrawingDocument document = new NDrawingDocument();
-                            NLayer activeLayer = document.ActiveLayer;
+
+                            Ndv.BeginInit();
+                            Ndd.BeginInit();
+
+
+
+                          
+                            NLayer activeLayer = Ndd.ActiveLayer;
                             NGraph graph = new NGraph();
                             var rand = new Random();
                             Zone zone = new Zone();
                             float width = (float)Math.Sqrt(Convert.ToDouble(this.dataGridView1.Rows[e.RowIndex].Cells["Column6"].Value) * 2);
                             float height = (float)(Convert.ToDouble(dataGridView1.CurrentRow.Cells["Column6"].Value) / width);
+
+
+
+                         
+
+
 
                             NRectangleF rect = new NRectangleF(0, 0, width, height);
                             NRectangleShape node = new NRectangleShape(rect)
@@ -277,20 +298,21 @@ namespace SpaceLayout.Forms.ZoneForms
                             node.Text = NodeLabelIn;
 
                             //graph.Nodes.Add(node);
-                            Ndd.ActiveLayer.AddChild(node);
-
-                            node.Location = new NPointF(500, 500);
+                           
                           
 
                             Random rnd = new Random();
-                            if (Ndv != null)
-                            {
+                            
                                 int x = rnd.Next((int)Ndv.ViewportOrigin.X, (int)Ndv.ViewportOrigin.X + (int)Ndv.ViewportSize.Width - (int)rect.Width);
                                 int y = rnd.Next((int)Ndv.ViewportOrigin.Y, (int)Ndv.ViewportOrigin.Y + (int)Ndv.ViewportSize.Height - (int)rect.Height);
                                 node.Location = new NPointF(x, y);
-                            }
+
+
+
+                               
                            
-                           
+                                activeLayer.AddChild(node);
+                             
 
                             //double maxX = graphcontrol.ClientSize.Width - width;
                             //double maxY = graphcontrol.ClientSize.Height - height;
@@ -300,6 +322,8 @@ namespace SpaceLayout.Forms.ZoneForms
 
                             //graphcontrol.FitGraphBounds();
                             rowNodeCreated[e.RowIndex] = true; //make it true to avoid duplicate node
+                            Ndv.EndInit();
+                            Ndd.EndInit();
                         }
                         else
                         {
@@ -323,6 +347,21 @@ namespace SpaceLayout.Forms.ZoneForms
                     }
                 }
             }
+        }
+        //savebutton
+        private void button3_Click(object sender, EventArgs e)
+        {
+            persistencyManager.SaveDocumentToFile(Ndd, "c:\\temp\\drawing1.ndx");
+
+            //MessageBox.Show("save");
+        
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+           Ndd= persistencyManager.LoadDrawingFromFile( "c:\\temp\\drawing1.ndx");
+
+            //MessageBox.Show("Import");
         }
 
         //private void OnItemClicked(object sender, MouseEventArgs e)

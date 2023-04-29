@@ -26,6 +26,7 @@ using SpaceLayout.Object;
 using Nevron.Diagram.Batches;
 using Nevron.Diagram.ThinWeb;
 using Nevron.Diagram.Extensions;
+using Nevron.Serialization;
 
 namespace SpaceLayout.Forms.ZoneForms
 {
@@ -282,24 +283,25 @@ namespace SpaceLayout.Forms.ZoneForms
 
 
                             NRectangleF rect = new NRectangleF(0, 0, width, height);
-                            NRectangleShape node = new NRectangleShape(rect)
-                            {
-                                Tag = zone
-                            };
+                            NRectangleShape node = new NRectangleShape(rect);
+                            node.Tag = zone;
+                            node.Id = zone.ID;
                             node.Style = new NStyle
                             {
                                 FillStyle = new NColorFillStyle(Color.FromName(this.dataGridView1.Rows[e.RowIndex].Cells["Column13"].Value.ToString())),
                             };
 
                             string NodeLabelIn = this.dataGridView1.Rows[e.RowIndex].Cells["Column1"].Value.ToString() + System.Environment.NewLine + this.dataGridView1.Rows[e.RowIndex].Cells["Column6"].Value.ToString() + " " + "m\u00b2";
-                            // graphcontrol.Graph.AddLabel(node, NodeLabelIn, InteriorLabelModel.NorthWest, defaultLableStyle, new SizeD(width, height));
+                            //graphcontrol.Graph.AddLabel(node, NodeLabelIn, InteriorLabelModel.NorthWest, defaultLableStyle, new SizeD(width, height));
                             string NodeLabelOut = this.dataGridView1.Rows[e.RowIndex].Cells["Column2"].Value.ToString();
                             //graphcontrol.Graph.AddLabel(node, NodeLabelOut, ExteriorLabelModel.South, defaultLableStyle);
                             node.Text = NodeLabelIn;
+                            
+
 
                             //graph.Nodes.Add(node);
-                           
-                          
+
+
 
                             Random rnd = new Random();
                             
@@ -351,16 +353,30 @@ namespace SpaceLayout.Forms.ZoneForms
         //savebutton
         private void button3_Click(object sender, EventArgs e)
         {
-            persistencyManager.SaveDocumentToFile(Ndd, "c:\\temp\\drawing1.ndx");
+            //Ndd.EndUpdate();
+            // create a rectangle
+            NRectangleShape rect = new NRectangleShape(10, 10, 20, 20);
 
-            //MessageBox.Show("save");
+            // create a new persistent document NPersistentDocument
+            NPersistentDocument document = new NPersistentDocument("My document");
+
+            // create a new section which will store the rect
+            document.Sections.Add(new NPersistentSection("Rectangle", rect));
+
+            // set the document to the manager
+            persistencyManager.PersistentDocument = document;
+
+            // save the document to a file
+            persistencyManager.SaveToFile("c:\\temp\\mysavefile.ndx", PersistencyFormat.XML, null);
+
+         
         
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
            Ndd= persistencyManager.LoadDrawingFromFile( "c:\\temp\\drawing1.ndx");
-
+           Ndv.Document = drawing;
             //MessageBox.Show("Import");
         }
 
@@ -368,6 +384,6 @@ namespace SpaceLayout.Forms.ZoneForms
         //{
         //    if(e.Ite)
         //}
-    }
 }
+    }
 

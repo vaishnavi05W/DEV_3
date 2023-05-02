@@ -16,6 +16,8 @@ using SpaceLayout.Entity;
 using Nevron.Diagram.WinForm;
 using Nevron.Diagram;
 using Nevron.Diagram.DataStructures;
+using Nevron.Xml;
+using Nevron.Nov.Diagram.Editors;
 
 using Nevron.GraphicsCore;
 using System.Drawing.Design;
@@ -27,6 +29,8 @@ using Nevron.Diagram.Batches;
 using Nevron.Diagram.ThinWeb;
 using Nevron.Diagram.Extensions;
 using Nevron.Serialization;
+using Nevron.Diagram.Filters;
+using Nevron.Chart.Windows;
 
 namespace SpaceLayout.Forms.ZoneForms
 {
@@ -39,12 +43,17 @@ namespace SpaceLayout.Forms.ZoneForms
         public NDrawingView Ndv;
         public NDrawingDocument Ndd;
         public NGraph graph;
+        private Dictionary<int, bool> rowNodecreated = new Dictionary<int, bool>();
+        private NNode startnode;
+        private NNode endnode;
 
-        public NRectangleShape SourceNode = null;
-        public NRectangleShape TargetNode = null;
+        public NRectangleShape startNode = null;
+        public NRectangleShape endNode = null;
         private NPersistencyManager persistencyManager;
+        
 
-       
+
+
 
         public ZoneSelectionControl()
         {
@@ -98,7 +107,7 @@ namespace SpaceLayout.Forms.ZoneForms
 
         //    }
         //}
-
+        
         //private void graphcontrol_SelectionChanged(object sender, EventArgs e)
         //{
         //    // Get the selected nodes
@@ -203,6 +212,7 @@ namespace SpaceLayout.Forms.ZoneForms
         }
         private Dictionary<int, bool> rowNodeCreated = new Dictionary<int, bool>();
         private NDrawingDocument drawing;
+      
 
         //public NDrawingDocument Drawing { get => drawing; set => drawing = value; }
 
@@ -314,7 +324,22 @@ namespace SpaceLayout.Forms.ZoneForms
                                
                            
                                 activeLayer.AddChild(node);
-                             
+                            if (startNode == null)
+                            {
+                                startNode = node;
+                            }
+                            else if (endNode == null)
+                            {
+                                endNode = node;
+                                NLineShape connector = new NLineShape(startNode.PinPoint, endNode.PinPoint);
+                                connector.Style = new NStyle();
+                                connector.Style.StrokeStyle = new NStrokeStyle(2, Color.Black);
+                                activeLayer.AddChild(connector);
+                                startNode = null;
+                                endNode = null;
+                            }
+
+
 
                             //double maxX = graphcontrol.ClientSize.Width - width;
                             //double maxY = graphcontrol.ClientSize.Height - height;
@@ -324,6 +349,7 @@ namespace SpaceLayout.Forms.ZoneForms
 
                             //graphcontrol.FitGraphBounds();
                             rowNodeCreated[e.RowIndex] = true; //make it true to avoid duplicate node
+                           
                             Ndv.EndInit();
                             Ndd.EndInit();
                         }
@@ -334,9 +360,10 @@ namespace SpaceLayout.Forms.ZoneForms
                        
                         {
 
-                            //var graphEditorInputMode = new GraphEditorInputMode();
+                            //GraphEditorInputMode graphEditorInputMode = new GraphEditorInputMode();
                             //graphEditorInputMode.AllowCreateNode = false; // restrict node creation by clicking in UI
                             //graphEditorInputMode.CreateEdgeInputMode.Enabled = true;
+                           // Ndv.InputMode = graphEditorInputMode;
                             //graphcontrol.InputMode = graphEditorInputMode;
                             //graphcontrol.Graph.EdgeDefaults.Style = edgeStyle;
                             //graphcontrol.FitGraphBounds();
@@ -355,23 +382,45 @@ namespace SpaceLayout.Forms.ZoneForms
         {
             //Ndd.EndUpdate();
             // create a rectangle
-            NRectangleShape rect = new NRectangleShape(10, 10, 20, 20);
+            //  NRectangleShape rect = new NRectangleShape(10, 10, 20, 20);
 
             // create a new persistent document NPersistentDocument
-            NPersistentDocument document = new NPersistentDocument("My document");
+            try
+            {
+              
 
-            // create a new section which will store the rect
-            document.Sections.Add(new NPersistentSection("Rectangle", rect));
+                NPersistentDocument document = new NPersistentDocument("My document");
+                // NPersistentSection documentSection = new NPersistentSection("DrawingDocument", Ndd);
+                //document.Sections.Add(documentSection);
 
-            // set the document to the manager
-            persistencyManager.PersistentDocument = document;
+                // Add the drawing document and the drawing view to the section
+                NPersistentSection documentSection = new NPersistentSection("DrawingDocument", Ndd);
+                document.Sections.Add(documentSection);
 
-            // save the document to a file
-            persistencyManager.SaveToFile("c:\\temp\\mysavefile.ndx", PersistencyFormat.XML, null);
+                NPersistentSection nodesSection = new NPersistentSection("Graph", null);
+                document.Sections.Add(nodesSection);
+
+                //NPersistentSection graphsection = new NPersistentSection("Graph", null);
+                //document.Sections.Add(graphsection);
+
+                // create a new section which will store the rect
+                // document.Sections.Add(new NPersistentSection("Rectangle", rect));
+
+                // set the document to the manager
+                persistencyManager.PersistentDocument = document;
+
+                // save the document to a file
+                persistencyManager.SaveToFile("c:\\temp\\mysavefile.ndx", PersistencyFormat.XML,null);
+                MessageBox.Show("Save successful");
+            }
+            catch(Exception ex)
+            { MessageBox.Show(ex.ToString());
+            }
 
          
         
         }
+       
 
         private void button4_Click(object sender, EventArgs e)
         {

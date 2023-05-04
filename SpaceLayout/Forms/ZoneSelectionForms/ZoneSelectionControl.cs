@@ -11,13 +11,18 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ExcelDataReader;
 using SpaceLayout.Entity;
-
-
+using Nevron.Xml;
+using Nevron.UI.WinForm.Controls;
 using Nevron.Diagram.WinForm;
 using Nevron.Diagram;
 using Nevron.Diagram.DataStructures;
-using Nevron.Xml;
+using Nevron.Diagram.Shapes;
+
+
 using Nevron.Nov.Diagram.Editors;
+using Nevron.Nov.Diagram.DrawingTools;
+using Nevron.Diagram.Designer;
+
 
 using Nevron.GraphicsCore;
 using System.Drawing.Design;
@@ -324,6 +329,8 @@ namespace SpaceLayout.Forms.ZoneForms
                                
                            
                                 activeLayer.AddChild(node);
+
+
                             if (startNode == null)
                             {
                                 startNode = node;
@@ -380,25 +387,24 @@ namespace SpaceLayout.Forms.ZoneForms
         //savebutton
         private void button3_Click(object sender, EventArgs e)
         {
-            //Ndd.EndUpdate();
-            // create a rectangle
-            //  NRectangleShape rect = new NRectangleShape(10, 10, 20, 20);
-
-            // create a new persistent document NPersistentDocument
+        
+        
+        
+       
             try
             {
-              
+
 
                 NPersistentDocument document = new NPersistentDocument("My document");
-                // NPersistentSection documentSection = new NPersistentSection("DrawingDocument", Ndd);
-                //document.Sections.Add(documentSection);
+        // NPersistentSection documentSection = new NPersistentSection("DrawingDocument", Ndd);
+        //document.Sections.Add(documentSection);
 
-                // Add the drawing document and the drawing view to the section
-                NPersistentSection documentSection = new NPersistentSection("DrawingDocument", Ndd);
-                document.Sections.Add(documentSection);
+        // Add the drawing document and the drawing view to the section
+        NPersistentSection documentSection = new NPersistentSection("DrawingDocument", Ndd);
+        document.Sections.Add(documentSection);
 
                 NPersistentSection nodesSection = new NPersistentSection("Graph", null);
-                document.Sections.Add(nodesSection);
+        document.Sections.Add(nodesSection);
 
                 //NPersistentSection graphsection = new NPersistentSection("Graph", null);
                 //document.Sections.Add(graphsection);
@@ -410,29 +416,56 @@ namespace SpaceLayout.Forms.ZoneForms
                 persistencyManager.PersistentDocument = document;
 
                 // save the document to a file
-                persistencyManager.SaveToFile("c:\\temp\\mysavefile.ndx", PersistencyFormat.XML,null);
+                persistencyManager.SaveToFile("c:\\temp\\mysavefile.cndx", PersistencyFormat.CustomXML,null);
                 MessageBox.Show("Save successful");
+
             }
             catch(Exception ex)
             { MessageBox.Show(ex.ToString());
             }
 
-         
-        
+
+
+
+
+
         }
-       
+
 
         private void button4_Click(object sender, EventArgs e)
         {
-           Ndd= persistencyManager.LoadDrawingFromFile( "c:\\temp\\drawing1.ndx");
-           Ndv.Document = drawing;
-            //MessageBox.Show("Import");
+           // // Create the connector shape
+            
+           // NConnectorShape connector = new NConnectorShape();
+           //Tool
+           // // Set the connector style
+           // connector.StyleSheetName = "MyConnectorStyle";
+           // connector.StyleSheet.Apply(connector);
+
+           // // Connect the nodes
+           // connector.StartPlug.Connect(node1.Ports.GetChildAt(0) as NPort);
+           // connector.EndPlug.Connect(node2.Ports.GetChildAt(0) as NPort);
+
+           // // Add the connector to the active layer
+           // diagramControl.Document.ActiveLayer.AddChild(connector);
+
+           // // Refresh the view
+           // diagramControl.Refresh();
+
         }
+
+
+
+
+        //{
+        //   Ndd= persistencyManager.LoadDrawingFromFile( "c:\\temp\\drawing1.ndx");
+        //   Ndv.Document = drawing;
+        //    //MessageBox.Show("Import");
+    }
 
         //private void OnItemClicked(object sender, MouseEventArgs e)
         //{
         //    if(e.Ite)
         //}
 }
-    }
-
+    

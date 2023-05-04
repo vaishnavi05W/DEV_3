@@ -42,28 +42,32 @@ namespace SpaceLayout.Forms.ZoneForms
             this.btnNext = new System.Windows.Forms.Button();
             this.nDrawingView1 = new Nevron.Diagram.WinForm.NDrawingView();
             this.nDrawingDocument1 = new Nevron.Diagram.NDrawingDocument();
+            this.nDiagramCommandBarsManager1 = new Nevron.Diagram.WinForm.Commands.NDiagramCommandBarsManager();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nDiagramCommandBarsManager1)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.BackColor = System.Drawing.Color.White;
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 68.9899F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 31.0101F));
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.nDrawingView1, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.ForeColor = System.Drawing.Color.White;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 215);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(951, 606);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(951, 391);
             this.tableLayoutPanel1.TabIndex = 0;
             this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
@@ -82,7 +86,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 83.38194F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.708324F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.214421F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(291, 602);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(291, 387);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // toolStrip1
@@ -96,7 +100,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStripButton4});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(291, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(291, 18);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -110,7 +114,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.DarkViolet;
             this.toolStripButton1.Margin = new System.Windows.Forms.Padding(1);
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(66, 23);
+            this.toolStripButton1.Size = new System.Drawing.Size(66, 16);
             this.toolStripButton1.Text = "Import file";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
@@ -124,7 +128,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Margin = new System.Windows.Forms.Padding(1);
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(89, 23);
+            this.toolStripButton2.Size = new System.Drawing.Size(89, 16);
             this.toolStripButton2.Text = "Zone Selection";
             this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
@@ -137,7 +141,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton3.Margin = new System.Windows.Forms.Padding(1);
             this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(84, 23);
+            this.toolStripButton3.Size = new System.Drawing.Size(84, 16);
             this.toolStripButton3.Text = "Zone Relation";
             this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
             // 
@@ -162,12 +166,12 @@ namespace SpaceLayout.Forms.ZoneForms
             this.tableLayoutPanel3.Controls.Add(this.btnPrevious, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.btnNext, 1, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(2, 565);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(2, 364);
             this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(287, 35);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(287, 21);
             this.tableLayoutPanel3.TabIndex = 1;
             // 
             // btnPrevious
@@ -177,7 +181,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.btnPrevious.Location = new System.Drawing.Point(2, 2);
             this.btnPrevious.Margin = new System.Windows.Forms.Padding(2);
             this.btnPrevious.Name = "btnPrevious";
-            this.btnPrevious.Size = new System.Drawing.Size(139, 31);
+            this.btnPrevious.Size = new System.Drawing.Size(139, 17);
             this.btnPrevious.TabIndex = 0;
             this.btnPrevious.Text = "Previous";
             this.btnPrevious.UseVisualStyleBackColor = true;
@@ -190,7 +194,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.btnNext.Location = new System.Drawing.Point(145, 2);
             this.btnNext.Margin = new System.Windows.Forms.Padding(2);
             this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(140, 31);
+            this.btnNext.Size = new System.Drawing.Size(140, 17);
             this.btnNext.TabIndex = 1;
             this.btnNext.Text = "Next";
             this.btnNext.UseVisualStyleBackColor = true;
@@ -206,7 +210,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.nDrawingView1.Margin = new System.Windows.Forms.Padding(2);
             this.nDrawingView1.Name = "nDrawingView1";
             this.nDrawingView1.RenderTechnology = Nevron.GraphicsCore.RenderTechnology.GDIPlus;
-            this.nDrawingView1.Size = new System.Drawing.Size(652, 602);
+            this.nDrawingView1.Size = new System.Drawing.Size(652, 387);
             this.nDrawingView1.TabIndex = 2;
             this.nDrawingView1.Text = "nDrawingView1";
             this.nDrawingView1.Click += new System.EventHandler(this.nDrawingView1_Click);
@@ -214,6 +218,41 @@ namespace SpaceLayout.Forms.ZoneForms
             // nDrawingDocument1
             // 
             this.nDrawingDocument1.DesignTimeState = ((Nevron.Diagram.NBinaryState)(resources.GetObject("nDrawingDocument1.DesignTimeState")));
+            // 
+            // nDiagramCommandBarsManager1
+            // 
+            this.nDiagramCommandBarsManager1.AutoRefresh = true;
+            this.nDiagramCommandBarsManager1.LibraryBrowser = null;
+            this.nDiagramCommandBarsManager1.Palette.Border = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))));
+            this.nDiagramCommandBarsManager1.Palette.Caption = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(86)))), ((int)(((byte)(86)))));
+            this.nDiagramCommandBarsManager1.Palette.CaptionText = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.nDiagramCommandBarsManager1.Palette.CheckedDark = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(235)))), ((int)(((byte)(198)))));
+            this.nDiagramCommandBarsManager1.Palette.CheckedLight = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(69)))));
+            this.nDiagramCommandBarsManager1.Palette.Control = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.nDiagramCommandBarsManager1.Palette.ControlBorder = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.nDiagramCommandBarsManager1.Palette.ControlDark = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
+            this.nDiagramCommandBarsManager1.Palette.ControlLight = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.nDiagramCommandBarsManager1.Palette.ControlText = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.nDiagramCommandBarsManager1.Palette.Highlight = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(158)))), ((int)(((byte)(0)))));
+            this.nDiagramCommandBarsManager1.Palette.HighlightDark = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(174)))), ((int)(((byte)(46)))));
+            this.nDiagramCommandBarsManager1.Palette.HighlightLight = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(236)))), ((int)(((byte)(201)))));
+            this.nDiagramCommandBarsManager1.Palette.HighlightText = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.nDiagramCommandBarsManager1.Palette.Menu = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.nDiagramCommandBarsManager1.Palette.MenuText = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.nDiagramCommandBarsManager1.Palette.PressedDark = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(69)))));
+            this.nDiagramCommandBarsManager1.Palette.PressedLight = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(235)))), ((int)(((byte)(198)))));
+            this.nDiagramCommandBarsManager1.Palette.Scheme = Nevron.UI.WinForm.Controls.ColorScheme.VistaPlus;
+            this.nDiagramCommandBarsManager1.Palette.SecondaryBorder = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
+            this.nDiagramCommandBarsManager1.Palette.SelectedBorder = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.nDiagramCommandBarsManager1.Palette.Window = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(245)))));
+            this.nDiagramCommandBarsManager1.Palette.WindowText = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.nDiagramCommandBarsManager1.PanAndZoomControl = null;
+            this.nDiagramCommandBarsManager1.ParentControl = this;
+            this.nDiagramCommandBarsManager1.PropertyBrowser = null;
+            this.nDiagramCommandBarsManager1.RefreshInterval = 300;
+            this.nDiagramCommandBarsManager1.Shortcut = new Nevron.UI.WinForm.Controls.NShortcut(69, 196608);
+            this.nDiagramCommandBarsManager1.StatusBar = null;
+            this.nDiagramCommandBarsManager1.View = this.nDrawingView1;
             // 
             // MainFirstPageControl
             // 
@@ -233,6 +272,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.nDiagramCommandBarsManager1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -251,6 +291,7 @@ namespace SpaceLayout.Forms.ZoneForms
         private System.Windows.Forms.Button btnNext;
         private Nevron.Diagram.WinForm.NDrawingView nDrawingView1;
         private Nevron.Diagram.NDrawingDocument nDrawingDocument1;
+        private Nevron.Diagram.WinForm.Commands.NDiagramCommandBarsManager nDiagramCommandBarsManager1;
         // private yWorks.Controls.GraphControl graphControl1;
     }
 }

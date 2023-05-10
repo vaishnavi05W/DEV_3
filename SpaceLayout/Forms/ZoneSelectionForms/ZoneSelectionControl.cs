@@ -36,6 +36,8 @@ using Nevron.Diagram.Extensions;
 using Nevron.Serialization;
 using Nevron.Diagram.Filters;
 using Nevron.Chart.Windows;
+using Nevron.Chart;
+using Nevron.UI;
 
 namespace SpaceLayout.Forms.ZoneForms
 {
@@ -55,10 +57,9 @@ namespace SpaceLayout.Forms.ZoneForms
         public NRectangleShape startNode = null;
         public NRectangleShape endNode = null;
         private NPersistencyManager persistencyManager;
-        
 
-
-
+        List<Connector_Main> connector;
+        List<Zone_Main> zone;
 
         public ZoneSelectionControl()
         {
@@ -68,9 +69,9 @@ namespace SpaceLayout.Forms.ZoneForms
            // drawing = (NDrawingDocument)persistencyManager.LoadDocumentFromFile("c:\\temp\\drawing1.ndx");
             
             this.Load += IS_Load;
-            
-         
-          
+
+            connector = new List<Connector_Main>();
+            zone  = new List<Zone_Main>();
 
             // Add the diagram view to the form
             this.Controls.Add(Ndv);
@@ -94,7 +95,7 @@ namespace SpaceLayout.Forms.ZoneForms
             {
                 Ndd = Ndv.Document;
             }
-           
+            //Ndv.EventSinkService.NodeMouseDown += EventSinkService_NodeMouseDown;
             //chartControl.Controller.Selection.Changed += chartControl_SelectionChanged;
             //chartControl.Controller.DoubleClick += chartControl_DoubleClick;
             //chartControl.Document.NodeCreated += ChartControl_NodeCreated;
@@ -267,14 +268,15 @@ namespace SpaceLayout.Forms.ZoneForms
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex != -1)
+            try
             {
-                string columnName = this.dataGridView1.Columns[e.ColumnIndex].Name;
-                if ((columnName == "Column1") && (!string.IsNullOrWhiteSpace(this.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString())))
+                if (e.ColumnIndex != -1)
                 {
-                    dataGridView1.ReadOnly = true;
-                    try 
+                    string columnName = this.dataGridView1.Columns[e.ColumnIndex].Name;
+                    if ((columnName == "Column1") && (!string.IsNullOrWhiteSpace(this.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString())))
                     {
+                        dataGridView1.ReadOnly = true;
+
                         if (!rowNodeCreated.ContainsKey(e.RowIndex) || !rowNodeCreated[e.RowIndex])
                         {
 
@@ -283,7 +285,7 @@ namespace SpaceLayout.Forms.ZoneForms
 
 
 
-                          
+
                             NLayer activeLayer = Ndd.ActiveLayer;
                             NGraph graph = new NGraph();
                             var rand = new Random();
@@ -293,7 +295,7 @@ namespace SpaceLayout.Forms.ZoneForms
 
 
 
-                         
+
 
 
 
@@ -306,47 +308,95 @@ namespace SpaceLayout.Forms.ZoneForms
                                 FillStyle = new NColorFillStyle(Color.FromName(this.dataGridView1.Rows[e.RowIndex].Cells["Column13"].Value.ToString())),
                             };
 
-                            string NodeLabelIn = this.dataGridView1.Rows[e.RowIndex].Cells["Column1"].Value.ToString() + System.Environment.NewLine + this.dataGridView1.Rows[e.RowIndex].Cells["Column6"].Value.ToString() + " " + "m\u00b2";
+                            string NodeLabelIn = this.dataGridView1.Rows[e.RowIndex].Cells["Column1"].Value.ToString() 
+                                + System.Environment.NewLine + this.dataGridView1.Rows[e.RowIndex].Cells["Column6"].Value.ToString() + " " + "m\u00b2";
                             //graphcontrol.Graph.AddLabel(node, NodeLabelIn, InteriorLabelModel.NorthWest, defaultLableStyle, new SizeD(width, height));
                             string NodeLabelOut = this.dataGridView1.Rows[e.RowIndex].Cells["Column2"].Value.ToString();
                             //graphcontrol.Graph.AddLabel(node, NodeLabelOut, ExteriorLabelModel.South, defaultLableStyle);
                             node.Text = NodeLabelIn;
-                            
 
+
+                            //node.Ports.GetChildByName("Bottom");
+                            //Nevron.Chart.NLabel l = new Nevron.Chart.NLabel();
+                            //l.Text = NodeLabelOut;
+                            //l.Bounds = new NRectangleF((float)(Convert.ToInt32(node.Bounds.LeftBottom) - 20), (float)(Convert.ToInt32(node.Bounds.RightTop) - 0), 140, 20);
+                            //node.Labels.AddChild(l);
+                            //Create an NLabel
+                           // NLabel label = new NLabel("Hello, world!");
+                            //NCustomRangeLabel customRangeLabel = new NCustomRangeLabel();
 
                             //graph.Nodes.Add(node);
+                            // node.Labels
 
 
+                            //Random rnd = new Random();
 
+                            //int x = rnd.Next((int)Ndv.ViewportOrigin.X, (int)Ndv.ViewportOrigin.X + (int)Ndv.ViewportSize.Width - (int)rect.Width);
+                            //int y = rnd.Next((int)Ndv.ViewportOrigin.Y, (int)Ndv.ViewportOrigin.Y + (int)Ndv.ViewportSize.Height - (int)rect.Height);
+                            //node.Location = new NPointF(x, y);
+
+                            int maxWidth = Convert.ToInt32(Ndv.Document.Width);
+                            int maxHeight = Convert.ToInt32(Ndv.Document.Height);
+
+                            // Generate random position and size for the shape
                             Random rnd = new Random();
-                            
-                                int x = rnd.Next((int)Ndv.ViewportOrigin.X, (int)Ndv.ViewportOrigin.X + (int)Ndv.ViewportSize.Width - (int)rect.Width);
-                                int y = rnd.Next((int)Ndv.ViewportOrigin.Y, (int)Ndv.ViewportOrigin.Y + (int)Ndv.ViewportSize.Height - (int)rect.Height);
-                                node.Location = new NPointF(x, y);
+                            int x = rnd.Next(maxWidth);
+                            int y = rnd.Next(maxHeight);
+                            int w = rnd.Next(50, 150);
+                            int h = rnd.Next(50, 150);
 
-
-
-                               
-                           
-                                activeLayer.AddChild(node);
-
-
-                            if (startNode == null)
+                            // Ensure that the shape bounds are within the view bounds
+                            if (x + width > maxWidth)
                             {
-                                startNode = node;
+                                x = maxWidth - w;
                             }
-                            else if (endNode == null)
+                            if (y + height > maxHeight)
                             {
-                                endNode = node;
-                                NLineShape connector = new NLineShape(startNode.PinPoint, endNode.PinPoint);
-                                connector.Style = new NStyle();
-                                connector.Style.StrokeStyle = new NStrokeStyle(2, Color.Black);
-                                activeLayer.AddChild(connector);
-                                startNode = null;
-                                endNode = null;
+                                y = maxHeight - h;
                             }
 
+                            node.Location = new NPointF(x, y);
+                            node.CreateShapeElements(ShapeElementsMask.Ports);
+                            NRotatedBoundsPort port1 = new NRotatedBoundsPort(node.UniqueId, ContentAlignment.TopCenter);
+                            NRotatedBoundsPort port2 = new NRotatedBoundsPort(node.UniqueId, ContentAlignment.MiddleLeft);
+                            NRotatedBoundsPort port3= new NRotatedBoundsPort(node.UniqueId, ContentAlignment.BottomCenter);
+                            NRotatedBoundsPort port4 = new NRotatedBoundsPort(node.UniqueId, ContentAlignment.MiddleRight);
+                            node.Ports.AddChild(port1);
+                            node.Ports.AddChild(port2);
+                            node.Ports.AddChild(port3);
+                            node.Ports.AddChild(port4);
+                            node.Ports.DefaultInwardPortUniqueId = port1.UniqueId;
+                            node.Ports.DefaultInwardPortUniqueId = port2.UniqueId;
+                            node.Ports.DefaultInwardPortUniqueId = port3.UniqueId;
+                            node.Ports.DefaultInwardPortUniqueId = port4.UniqueId;
+                            //NPortCollection ports = new NPortCollection();
+                            //node.Ports.AddChild(ports);
 
+                            //NPort InPort = node.Ports.DefaultInwardPort as NPort;
+                            // NPort OutPort = node.Ports.DefaultOutwardPort as NPort;
+                            //Guid guid = Guid.NewGuid();
+                            //NPort port = new NPort(guid);
+                            //port.Name = guid.ToString();
+                            //ports.AddChild(port);
+
+
+                            //node.Ports.po
+                            activeLayer.AddChild(node);
+
+                            //if (startNode == null)
+                            //{
+                            //    startNode = node;
+                            //}
+                            //else if (endNode == null)
+                            //{
+                            //    endNode = node;
+                            //    NLineShape connector = new NLineShape(startNode.PinPoint, endNode.PinPoint);
+                            //    connector.Style = new NStyle();
+                            //    connector.Style.StrokeStyle = new NStrokeStyle(2, Color.Black);
+                            //    activeLayer.AddChild(connector);
+                            //    startNode = null;
+                            //    endNode = null;
+                            //}
 
                             //double maxX = graphcontrol.ClientSize.Width - width;
                             //double maxY = graphcontrol.ClientSize.Height - height;
@@ -356,55 +406,168 @@ namespace SpaceLayout.Forms.ZoneForms
 
                             //graphcontrol.FitGraphBounds();
                             rowNodeCreated[e.RowIndex] = true; //make it true to avoid duplicate node
-                           
                             Ndv.EndInit();
                             Ndd.EndInit();
+
+                           //Ndv.Document.Click += OnItemClicked;
+
                         }
                         else
                         {
                             MessageBox.Show("Zone already created for this row.");
                         }
-                       
+
                         {
 
                             //GraphEditorInputMode graphEditorInputMode = new GraphEditorInputMode();
                             //graphEditorInputMode.AllowCreateNode = false; // restrict node creation by clicking in UI
                             //graphEditorInputMode.CreateEdgeInputMode.Enabled = true;
-                           // Ndv.InputMode = graphEditorInputMode;
+                            // Ndv.InputMode = graphEditorInputMode;
                             //graphcontrol.InputMode = graphEditorInputMode;
                             //graphcontrol.Graph.EdgeDefaults.Style = edgeStyle;
                             //graphcontrol.FitGraphBounds();
-                           // Ndv.MouseClick += OnItemClicked;
+                            // Ndv.MouseClick += OnItemClicked;
+                            //Ndv.EventSinkService.NodeMouseDown += EventSinkService_NodeMouseDown;
                         }
                     }
-                    catch (Exception ex)
+                       
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void ZoneConnectorData(string flg) //flg: 1 = save, 2 =  load
+        {
+            Ndv.Refresh();
+            if (flg == "1")
+            {
+                foreach (NLineShape edge in Ndv.Document.Descendants(NFilters.Shape1D, -1))
+                {
+                    // Check if the shape is a line and has a source and target shape
+                    if (edge is NLineShape line && line.FromShape != null && line.ToShape != null)
                     {
-                        MessageBox.Show(ex.ToString());
+                        if (line.StartPlug.Shape.FromShape is NRectangleShape && line.EndPlug.Shape.ToShape is NRectangleShape)
+                        {
+                            DataRow drFrom = GetShapeDataFromDataSource((NRectangleShape)line.FromShape);
+                            DataRow drTo = GetShapeDataFromDataSource((NRectangleShape)line.ToShape);
+                            Zone_Main z1 = GetZoneData(drFrom);
+                            Zone_Main z2 = GetZoneData(drTo);
+
+                            connector.Add(GetConnectorData(z1, z2, line));
+                        }
+                    }
+                }
+
+                foreach (NRectangleShape shape in Ndv.Document.Descendants(NFilters.Shape2D, -1))
+                {
+                    DataRow dr = GetShapeDataFromDataSource(shape);
+                    if(dr != null)
+                    {
+                        zone.Add(GetZoneData(dr));
+                    }
+                 }
+                
+            } 
+            else if (flg == "2")
+            {
+                foreach (NLineShape edge in Ndv.Document.Descendants(NFilters.Shape1D, -1))
+                {
+                    // Check if the shape is a line and has a source and target shape
+                    if (edge is NLineShape line && line.FromShape != null && line.ToShape != null)
+                    {
+                        if (line.FromShape is NRectangleShape && line.ToShape is NRectangleShape)
+                        {
+                            DataRow drFrom = GetShapeDataFromDataSource((NRectangleShape)line.FromShape);
+                            DataRow drTo = GetShapeDataFromDataSource((NRectangleShape)line.ToShape);
+                            Zone_Main z1 = GetZoneData(drFrom);
+                            Zone_Main z2 = GetZoneData(drTo);
+
+                            connector.Add(GetConnectorData(z1, z2, line));
+                        }
+                    }
+                }
+
+                foreach (NRectangleShape shape in Ndv.Document.Descendants(NFilters.Shape2D, -1))
+                {
+                    DataRow dr = GetShapeDataFromDataSource(shape);
+                    if (dr != null)
+                    {
+                        zone.Add(GetZoneData(dr));
                     }
                 }
             }
+            else
+            {
+
+            }
         }
+        
+        private DataRow GetShapeDataFromDataSource(NRectangleShape shape)
+        {
+            NShape a = shape.FromShape;
+            string[] NodeText = shape.Text.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+            DataRow row = dtSource.AsEnumerable().Where(r => r.Field<string>("ID") == NodeText[0].ToString()).SingleOrDefault();
+            return row;
+        }
+        private Zone_Main GetZoneData(DataRow dr)
+        {
+            List<string> EndNodes = new List<string>();
+            string relation = string.Empty;
+            foreach (var data in connector)
+            {
+                if (Convert.ToInt32(dr[0]) == data.Zone21.ID)
+                    EndNodes.Add(data.Zone22.ID.ToString());
+            }
+            relation = String.Join(",", EndNodes.ToArray());
+
+            Zone_Main zone_data = new Zone_Main(Convert.ToInt32(dr[0])
+                         , dr[1].ToString()
+                         , dr[2].ToString()
+                         , relation
+                         , dr[4].ToString()
+                         , dr[5].ToString()
+                         , dr[6] is DBNull ? 0 : Convert.ToDouble(dr[6])
+                         , dr[7] is DBNull ? 0 : Convert.ToDouble(dr[7])
+                         , dr[8] is DBNull ? 0 : Convert.ToDouble(dr[8])
+                         , dr[9] is DBNull ? 0 : Convert.ToDouble(dr[9])
+                         , Convert.ToInt32(dr[10])
+                         , dr[11] is DBNull ? 0 : Convert.ToDouble(dr[11])
+                         , dr[12].ToString());
+
+            return zone_data;
+        }
+
+        private Connector_Main GetConnectorData(Zone_Main z1, Zone_Main z2, NLineShape line)
+        {
+            Connector_Main connector_data = new Connector_Main(z1
+                               , z2
+                               , 0 //put zero for temporary 
+                               , Convert.ToDouble(line.Length)
+                               , line.StyleSheet.Style.StrokeStyle.Color
+                               );
+
+            return connector_data;
+        }
+        
         //savebutton
         private void button3_Click(object sender, EventArgs e)
         {
-        
-        
-        
-       
             try
             {
-
-
+                ZoneConnectorData("1");
                 NPersistentDocument document = new NPersistentDocument("My document");
-        // NPersistentSection documentSection = new NPersistentSection("DrawingDocument", Ndd);
-        //document.Sections.Add(documentSection);
+                // NPersistentSection documentSection = new NPersistentSection("DrawingDocument", Ndd);
+                //document.Sections.Add(documentSection);
 
-        // Add the drawing document and the drawing view to the section
-        NPersistentSection documentSection = new NPersistentSection("DrawingDocument", Ndd);
-        document.Sections.Add(documentSection);
+                // Add the drawing document and the drawing view to the section
+                NPersistentSection documentSection = new NPersistentSection("DrawingDocument", Ndd);
+                document.Sections.Add(documentSection);
 
                 NPersistentSection nodesSection = new NPersistentSection("Graph", null);
-        document.Sections.Add(nodesSection);
+                document.Sections.Add(nodesSection);
 
                 //NPersistentSection graphsection = new NPersistentSection("Graph", null);
                 //document.Sections.Add(graphsection);
@@ -415,42 +578,60 @@ namespace SpaceLayout.Forms.ZoneForms
                 // set the document to the manager
                 persistencyManager.PersistentDocument = document;
 
+                
                 // save the document to a file
                 persistencyManager.SaveToFile("c:\\temp\\mysavefile.cndx", PersistencyFormat.CustomXML,null);
                 MessageBox.Show("Save successful");
 
             }
             catch(Exception ex)
-            { MessageBox.Show(ex.ToString());
+            { 
+                MessageBox.Show(ex.ToString());
             }
-
-
-
-
-
-
         }
 
 
         private void button4_Click(object sender, EventArgs e)
         {
-           // // Create the connector shape
-            
-           // NConnectorShape connector = new NConnectorShape();
-           //Tool
-           // // Set the connector style
-           // connector.StyleSheetName = "MyConnectorStyle";
-           // connector.StyleSheet.Apply(connector);
+            //testing for load fucntion
+            try
+            {
+                //Ndd = new NDrawingDocument();
+                // Create a drawing document
+                NDrawingDocument drawing = new NDrawingDocument();
 
-           // // Connect the nodes
-           // connector.StartPlug.Connect(node1.Ports.GetChildAt(0) as NPort);
-           // connector.EndPlug.Connect(node2.Ports.GetChildAt(0) as NPort);
+                // create a new persistency manager
+                NPersistencyManager persistencyManager = new NPersistencyManager();
 
-           // // Add the connector to the active layer
-           // diagramControl.Document.ActiveLayer.AddChild(connector);
+                // load a drawing from the XML file
+                drawing = persistencyManager.LoadDrawingFromFile("c:\\temp\\mysavefile.cndx");
 
-           // // Refresh the view
-           // diagramControl.Refresh();
+                // display the drawing
+                Ndv.Document= drawing;
+
+                ZoneConnectorData("2");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            // // Create the connector shape
+
+            // NConnectorShape connector = new NConnectorShape();
+            //Tool
+            // // Set the connector style
+            // connector.StyleSheetName = "MyConnectorStyle";
+            // connector.StyleSheet.Apply(connector);
+
+            // // Connect the nodes
+            // connector.StartPlug.Connect(node1.Ports.GetChildAt(0) as NPort);
+            // connector.EndPlug.Connect(node2.Ports.GetChildAt(0) as NPort);
+
+            // // Add the connector to the active layer
+            // diagramControl.Document.ActiveLayer.AddChild(connector);
+
+            // // Refresh the view
+            // diagramControl.Refresh();
 
         }
 
@@ -463,9 +644,5 @@ namespace SpaceLayout.Forms.ZoneForms
         //    //MessageBox.Show("Import");
     }
 
-        //private void OnItemClicked(object sender, MouseEventArgs e)
-        //{
-        //    if(e.Ite)
-        //}
 }
     

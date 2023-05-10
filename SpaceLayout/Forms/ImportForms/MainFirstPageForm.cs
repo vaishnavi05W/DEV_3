@@ -22,6 +22,7 @@ using Nevron.GraphicsCore;
 using Nevron.Diagram;
 using Nevron.Diagram.Shapes;
 using Nevron.Diagram.WinForm;
+using Nevron.Nov.UI;
 
 namespace SpaceLayout.Forms.ZoneForms
 {
@@ -47,6 +48,7 @@ namespace SpaceLayout.Forms.ZoneForms
             btnPrevious.Visible = false;
             btnNext.Visible = false;
 
+            
             toolStripButton2.Enabled = false;
             toolStripButton3.Enabled = false;
 
@@ -58,7 +60,7 @@ namespace SpaceLayout.Forms.ZoneForms
             nDrawingView1.Document = nDrawingDocument1;
 
             // do not show ports
-            nDrawingView1.GlobalVisibility.ShowPorts = false;
+            nDrawingView1.GlobalVisibility.ShowPorts = true;
 
             // hide the grid
             nDrawingView1.Grid.Visible = false;

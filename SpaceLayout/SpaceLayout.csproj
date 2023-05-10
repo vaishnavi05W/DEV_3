@@ -345,10 +345,12 @@
     <Compile Include="Forms\SpacePlanningMainPage.Designer.cs">
       <DependentUpon>SpacePlanningMainPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Object\Connector_Main.cs" />
     <Compile Include="Object\Undo.cs" />
     <Compile Include="Object\Project.cs" />
     <Compile Include="Object\Connector.cs" />
     <Compile Include="Object\Zone.cs" />
+    <Compile Include="Object\Zone_Main.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\ImportForms\MainFirstPageForm.resx">

@@ -17,7 +17,7 @@ using Nevron.Diagram.WinForm;
 using Nevron.Diagram;
 using Nevron.Diagram.DataStructures;
 using Nevron.Diagram.Shapes;
-
+using System.Xml;
 
 using Nevron.Nov.Diagram.Editors;
 using Nevron.Nov.Diagram.DrawingTools;
@@ -38,6 +38,7 @@ using Nevron.Diagram.Filters;
 using Nevron.Chart.Windows;
 using Nevron.Chart;
 using Nevron.UI;
+using System.Xml.Serialization;
 
 namespace SpaceLayout.Forms.ZoneForms
 {
@@ -557,6 +558,9 @@ namespace SpaceLayout.Forms.ZoneForms
         {
             try
             {
+                
+                //CreateXMLNodes1();
+
                 ZoneConnectorData("1");
                 NPersistentDocument document = new NPersistentDocument("My document");
                 // NPersistentSection documentSection = new NPersistentSection("DrawingDocument", Ndd);
@@ -581,6 +585,7 @@ namespace SpaceLayout.Forms.ZoneForms
                 
                 // save the document to a file
                 persistencyManager.SaveToFile("c:\\temp\\mysavefile.cndx", PersistencyFormat.CustomXML,null);
+                AppendXMLNodes();
                 MessageBox.Show("Save successful");
 
             }
@@ -636,6 +641,158 @@ namespace SpaceLayout.Forms.ZoneForms
         }
 
 
+        private void AppendXMLNodes()
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load("c:\\temp\\mysavefile.cndx");
+
+            XmlElement zroot = xmlDoc.CreateElement("Zone");
+
+            xmlDoc.DocumentElement.AppendChild(zroot);
+
+            XmlElement croot = xmlDoc.CreateElement("Connector");
+
+            xmlDoc.DocumentElement.AppendChild(croot);
+
+            foreach (var result in zone)
+            {
+                XmlElement ZoneID = xmlDoc.CreateElement("ZoneID");
+                ZoneID.InnerText = result.ID.ToString();
+                zroot.AppendChild(ZoneID);
+
+                XmlElement ZoneName = xmlDoc.CreateElement("Name");
+                ZoneName.InnerText = result.Name.ToString();
+
+                XmlElement Group = xmlDoc.CreateElement("Group");
+                Group.InnerText = result.Group.ToString();
+
+                XmlElement Relation = xmlDoc.CreateElement("Relation");
+                Relation.InnerText = result.Relation.ToString();
+
+                XmlElement Category = xmlDoc.CreateElement("Category");
+                Category.InnerText = result.Category.ToString();
+
+                XmlElement Color = xmlDoc.CreateElement("Color");
+                Color.InnerText =  result.Color.ToString();
+
+                XmlElement Area = xmlDoc.CreateElement("Area");
+                Area.InnerText = result.Area.ToString();
+
+                XmlElement Width = xmlDoc.CreateElement("Width");
+                Width.InnerText = result.Width.ToString();
+
+                XmlElement Length = xmlDoc.CreateElement("Length");
+                Length.InnerText = result.Length.ToString();
+
+                XmlElement Height = xmlDoc.CreateElement("Height");
+                Height.InnerText = result.Height.ToString();
+
+                XmlElement Floor = xmlDoc.CreateElement("Floor");
+                Floor.InnerText = result.Floor.ToString();
+
+                XmlElement Ratio = xmlDoc.CreateElement("Ratio");
+                Ratio.InnerText = result.Ratio.ToString();
+
+                XmlElement Type = xmlDoc.CreateElement("Type");
+                Type.InnerText = result.Type.ToString();
+
+               
+                ZoneID.AppendChild(ZoneName);
+                ZoneID.AppendChild(Group);
+                ZoneID.AppendChild(Relation);
+                ZoneID.AppendChild(Category);
+                ZoneID.AppendChild(Color);
+                ZoneID.AppendChild(Area);
+                ZoneID.AppendChild(Width);
+                ZoneID.AppendChild(Length);
+                ZoneID.AppendChild(Height);
+                ZoneID.AppendChild(Floor);
+                ZoneID.AppendChild(Ratio);
+                ZoneID.AppendChild(Type);
+            }
+
+            //foreach (var result in connector)
+            //{
+            //    XmlElement Zone = xmlDoc.CreateElement("ZoneID");
+            //    ZoneID.InnerText = result.ID.ToString();
+            //    zroot.AppendChild(ZoneID);
+
+            //    XmlElement ZoneName = xmlDoc.CreateElement("Name");
+            //    ZoneName.InnerText = result.Name.ToString();
+
+            //    XmlElement Group = xmlDoc.CreateElement("Group");
+            //    Group.InnerText = result.Group.ToString();
+
+            //    XmlElement Relation = xmlDoc.CreateElement("Relation");
+            //    Relation.InnerText = result.Relation.ToString();
+
+            //    XmlElement Category = xmlDoc.CreateElement("Category");
+            //    Category.InnerText = result.Category.ToString();
+
+            //    XmlElement Color = xmlDoc.CreateElement("Color");
+            //    Color.InnerText = result.Color.ToString();
+
+            //    XmlElement Area = xmlDoc.CreateElement("Area");
+            //    Area.InnerText = result.Area.ToString();
+
+            //    XmlElement Width = xmlDoc.CreateElement("Width");
+            //    Width.InnerText = result.Width.ToString();
+
+            //    XmlElement Length = xmlDoc.CreateElement("Length");
+            //    Length.InnerText = result.Length.ToString();
+
+            //    XmlElement Height = xmlDoc.CreateElement("Height");
+            //    Height.InnerText = result.Height.ToString();
+
+            //    XmlElement Floor = xmlDoc.CreateElement("Floor");
+            //    Floor.InnerText = result.Floor.ToString();
+
+            //    XmlElement Ratio = xmlDoc.CreateElement("Ratio");
+            //    Ratio.InnerText = result.Ratio.ToString();
+
+            //    XmlElement Type = xmlDoc.CreateElement("Type");
+            //    Type.InnerText = result.Type.ToString();
+
+
+            //    ZoneID.AppendChild(ZoneName);
+            //    ZoneID.AppendChild(Group);
+            //    ZoneID.AppendChild(Relation);
+            //    ZoneID.AppendChild(Category);
+            //    ZoneID.AppendChild(Color);
+            //    ZoneID.AppendChild(Area);
+            //    ZoneID.AppendChild(Width);
+            //    ZoneID.AppendChild(Length);
+            //    ZoneID.AppendChild(Height);
+            //    ZoneID.AppendChild(Floor);
+            //    ZoneID.AppendChild(Ratio);
+            //    ZoneID.AppendChild(Type);
+            //}
+
+            xmlDoc.Save("c:\\temp\\mysavefile.cndx");
+          
+        }
+        //private void CreateXMLNodes1()
+        //{
+        //    // Create an XML document
+        //    XmlDocument xmlDoc = new XmlDocument();
+
+        //    // Create the root element
+        //    XmlElement root = xmlDoc.CreateElement("Zone");
+        //    xmlDoc.AppendChild(root);
+
+        //    // Create a child element with an attribute
+        //    XmlElement child = xmlDoc.CreateElement("1");
+        //    XmlAttribute attr = xmlDoc.CreateAttribute("Name");
+        //    attr.Value = "staff study,office";
+        //    child.Attributes.Append(attr);
+
+        //    XmlAttribute attr2 = xmlDoc.CreateAttribute("Area");
+        //    attr2.Value = "3983.44";
+        //    child.Attributes.Append(attr2);
+
+        //    // Add the child element to the root element
+        //    root.AppendChild(child);
+        //}
 
 
         //{

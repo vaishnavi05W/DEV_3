@@ -66,13 +66,13 @@ namespace SpaceLayout.Forms.ZoneForms
         {
             InitializeComponent();
             this.persistencyManager = new NPersistencyManager();
-           
-           // drawing = (NDrawingDocument)persistencyManager.LoadDocumentFromFile("c:\\temp\\drawing1.ndx");
-            
+
+            // drawing = (NDrawingDocument)persistencyManager.LoadDocumentFromFile("c:\\temp\\drawing1.ndx");
+
             this.Load += IS_Load;
 
             connector = new List<Connector_Main>();
-            zone  = new List<Zone_Main>();
+            zone = new List<Zone_Main>();
 
             // Add the diagram view to the form
             this.Controls.Add(Ndv);
@@ -114,7 +114,7 @@ namespace SpaceLayout.Forms.ZoneForms
 
         //    }
         //}
-        
+
         //private void graphcontrol_SelectionChanged(object sender, EventArgs e)
         //{
         //    // Get the selected nodes
@@ -219,7 +219,7 @@ namespace SpaceLayout.Forms.ZoneForms
         }
         private Dictionary<int, bool> rowNodeCreated = new Dictionary<int, bool>();
         private NDrawingDocument drawing;
-      
+
 
         //public NDrawingDocument Drawing { get => drawing; set => drawing = value; }
 
@@ -309,7 +309,7 @@ namespace SpaceLayout.Forms.ZoneForms
                                 FillStyle = new NColorFillStyle(Color.FromName(this.dataGridView1.Rows[e.RowIndex].Cells["Column13"].Value.ToString())),
                             };
 
-                            string NodeLabelIn = this.dataGridView1.Rows[e.RowIndex].Cells["Column1"].Value.ToString() 
+                            string NodeLabelIn = this.dataGridView1.Rows[e.RowIndex].Cells["Column1"].Value.ToString()
                                 + System.Environment.NewLine + this.dataGridView1.Rows[e.RowIndex].Cells["Column6"].Value.ToString() + " " + "m\u00b2";
                             //graphcontrol.Graph.AddLabel(node, NodeLabelIn, InteriorLabelModel.NorthWest, defaultLableStyle, new SizeD(width, height));
                             string NodeLabelOut = this.dataGridView1.Rows[e.RowIndex].Cells["Column2"].Value.ToString();
@@ -323,7 +323,7 @@ namespace SpaceLayout.Forms.ZoneForms
                             //l.Bounds = new NRectangleF((float)(Convert.ToInt32(node.Bounds.LeftBottom) - 20), (float)(Convert.ToInt32(node.Bounds.RightTop) - 0), 140, 20);
                             //node.Labels.AddChild(l);
                             //Create an NLabel
-                           // NLabel label = new NLabel("Hello, world!");
+                            // NLabel label = new NLabel("Hello, world!");
                             //NCustomRangeLabel customRangeLabel = new NCustomRangeLabel();
 
                             //graph.Nodes.Add(node);
@@ -360,7 +360,7 @@ namespace SpaceLayout.Forms.ZoneForms
                             node.CreateShapeElements(ShapeElementsMask.Ports);
                             NRotatedBoundsPort port1 = new NRotatedBoundsPort(node.UniqueId, ContentAlignment.TopCenter);
                             NRotatedBoundsPort port2 = new NRotatedBoundsPort(node.UniqueId, ContentAlignment.MiddleLeft);
-                            NRotatedBoundsPort port3= new NRotatedBoundsPort(node.UniqueId, ContentAlignment.BottomCenter);
+                            NRotatedBoundsPort port3 = new NRotatedBoundsPort(node.UniqueId, ContentAlignment.BottomCenter);
                             NRotatedBoundsPort port4 = new NRotatedBoundsPort(node.UniqueId, ContentAlignment.MiddleRight);
                             node.Ports.AddChild(port1);
                             node.Ports.AddChild(port2);
@@ -410,7 +410,7 @@ namespace SpaceLayout.Forms.ZoneForms
                             Ndv.EndInit();
                             Ndd.EndInit();
 
-                           //Ndv.Document.Click += OnItemClicked;
+                            //Ndv.Document.Click += OnItemClicked;
 
                         }
                         else
@@ -431,7 +431,7 @@ namespace SpaceLayout.Forms.ZoneForms
                             //Ndv.EventSinkService.NodeMouseDown += EventSinkService_NodeMouseDown;
                         }
                     }
-                       
+
                 }
             }
             catch (Exception ex)
@@ -465,13 +465,13 @@ namespace SpaceLayout.Forms.ZoneForms
                 foreach (NRectangleShape shape in Ndv.Document.Descendants(NFilters.Shape2D, -1))
                 {
                     DataRow dr = GetShapeDataFromDataSource(shape);
-                    if(dr != null)
+                    if (dr != null)
                     {
                         zone.Add(GetZoneData(dr));
                     }
-                 }
-                
-            } 
+                }
+
+            }
             else if (flg == "2")
             {
                 foreach (NLineShape edge in Ndv.Document.Descendants(NFilters.Shape1D, -1))
@@ -505,7 +505,7 @@ namespace SpaceLayout.Forms.ZoneForms
 
             }
         }
-        
+
         private DataRow GetShapeDataFromDataSource(NRectangleShape shape)
         {
             NShape a = shape.FromShape;
@@ -519,8 +519,12 @@ namespace SpaceLayout.Forms.ZoneForms
             string relation = string.Empty;
             foreach (var data in connector)
             {
-                if (Convert.ToInt32(dr[0]) == data.Zone21.ID)
-                    EndNodes.Add(data.Zone22.ID.ToString());
+                if (data.Zone21 != null)
+                {
+                    if (Convert.ToInt32(dr[0]) == data.Zone21.ID)
+                        EndNodes.Add(data.Zone22.ID.ToString());
+                }
+                
             }
             relation = String.Join(",", EndNodes.ToArray());
 
@@ -552,13 +556,13 @@ namespace SpaceLayout.Forms.ZoneForms
 
             return connector_data;
         }
-        
+
         //savebutton
         private void button3_Click(object sender, EventArgs e)
         {
             try
             {
-                
+
                 //CreateXMLNodes1();
 
                 ZoneConnectorData("1");
@@ -582,15 +586,15 @@ namespace SpaceLayout.Forms.ZoneForms
                 // set the document to the manager
                 persistencyManager.PersistentDocument = document;
 
-                
+
                 // save the document to a file
-                persistencyManager.SaveToFile("c:\\temp\\mysavefile.cndx", PersistencyFormat.CustomXML,null);
+                persistencyManager.SaveToFile("c:\\temp\\mysavefile.cndx", PersistencyFormat.CustomXML, null);
                 AppendXMLNodes();
                 MessageBox.Show("Save successful");
 
             }
-            catch(Exception ex)
-            { 
+            catch (Exception ex)
+            {
                 MessageBox.Show(ex.ToString());
             }
         }
@@ -612,7 +616,7 @@ namespace SpaceLayout.Forms.ZoneForms
                 drawing = persistencyManager.LoadDrawingFromFile("c:\\temp\\mysavefile.cndx");
 
                 // display the drawing
-                Ndv.Document= drawing;
+                Ndv.Document = drawing;
 
                 ZoneConnectorData("2");
             }
@@ -673,7 +677,7 @@ namespace SpaceLayout.Forms.ZoneForms
                 Category.InnerText = result.Category.ToString();
 
                 XmlElement Color = xmlDoc.CreateElement("Color");
-                Color.InnerText =  result.Color.ToString();
+                Color.InnerText = result.Color.ToString();
 
                 XmlElement Area = xmlDoc.CreateElement("Area");
                 Area.InnerText = result.Area.ToString();
@@ -696,7 +700,7 @@ namespace SpaceLayout.Forms.ZoneForms
                 XmlElement Type = xmlDoc.CreateElement("Type");
                 Type.InnerText = result.Type.ToString();
 
-               
+
                 ZoneID.AppendChild(ZoneName);
                 ZoneID.AppendChild(Group);
                 ZoneID.AppendChild(Relation);
@@ -713,93 +717,128 @@ namespace SpaceLayout.Forms.ZoneForms
 
             //foreach (var result in connector)
             //{
-            //    XmlElement Zone = xmlDoc.CreateElement("ZoneID");
-            //    ZoneID.InnerText = result.ID.ToString();
-            //    zroot.AppendChild(ZoneID);
+            //    // Create a new XML element for the connector
+            //    XmlElement connectorElement = xmlDoc.CreateElement("Connector");
 
-            //    XmlElement ZoneName = xmlDoc.CreateElement("Name");
-            //    ZoneName.InnerText = result.Name.ToString();
+            //    // Add the ID and type attributes to the connector element
+            //    connectorElement.SetAttribute("ID", connector.ID.ToString());
+            //    connectorElement.SetAttribute("Type", connector.Type.ToString());
 
-            //    XmlElement Group = xmlDoc.CreateElement("Group");
-            //    Group.InnerText = result.Group.ToString();
+            //    // Add the start and end zone elements to the connector element
+            //    XmlElement startZoneElement = xmlDoc.CreateElement("StartZone");
+            //    startZoneElement.SetAttribute("ID", connector.Zone21.ID.ToString());
+            //    startZoneElement.SetAttribute("Name", connector.Zone21.Name);
+            //    connectorElement.AppendChild(startZoneElement);
 
-            //    XmlElement Relation = xmlDoc.CreateElement("Relation");
-            //    Relation.InnerText = result.Relation.ToString();
+            //    XmlElement endZoneElement = xmlDoc.CreateElement("EndZone");
+            //    endZoneElement.SetAttribute("ID", connector.Zone22.ID.ToString());
+            //    endZoneElement.SetAttribute("Name", connector.Zone22.Name);
+            //    connectorElement.AppendChild(endZoneElement);
 
-            //    XmlElement Category = xmlDoc.CreateElement("Category");
-            //    Category.InnerText = result.Category.ToString();
+            //    // Add the length and color elements to the connector element
+            //    XmlElement lengthElement = xmlDoc.CreateElement("Length");
+            //    lengthElement.InnerText = connector.Length.ToString();
+            //    connectorElement.AppendChild(lengthElement);
 
-            //    XmlElement Color = xmlDoc.CreateElement("Color");
-            //    Color.InnerText = result.Color.ToString();
+            //    XmlElement colorElement = xmlDoc.CreateElement("Color");
+            //    colorElement.InnerText = connector.Color.ToString();
+            //    connectorElement.AppendChild(colorElement);
 
-            //    XmlElement Area = xmlDoc.CreateElement("Area");
-            //    Area.InnerText = result.Area.ToString();
+            //    // Add the connector element to the XML file
+            //    croot.AppendChild(connectorElement);
+            //}
+            xmlDoc.Save("c:\\temp\\mysavefile.cndx");
+            foreach (var result in connector)
+            {
+                //XmlElement Zone = xmlDoc.CreateElement("ZoneID");
+                //ZoneID.InnerText = result.Zone21.ID.ToString();
+                //zroot.AppendChild(ZoneID);
 
-            //    XmlElement Width = xmlDoc.CreateElement("Width");
-            //    Width.InnerText = result.Width.ToString();
+                //XmlElement ZoneName = xmlDoc.CreateElement("Name");
+                //ZoneName.InnerText = result.Zone21.Name.ToString();
 
-            //    XmlElement Length = xmlDoc.CreateElement("Length");
-            //    Length.InnerText = result.Length.ToString();
+                //    XmlElement Group = xmlDoc.CreateElement("Group");
+                //    Group.InnerText = result.Group.ToString();
 
-            //    XmlElement Height = xmlDoc.CreateElement("Height");
-            //    Height.InnerText = result.Height.ToString();
+                XmlElement Relation = xmlDoc.CreateElement("Relation");
+                Relation.InnerText = result.Zone21.ToString();
 
-            //    XmlElement Floor = xmlDoc.CreateElement("Floor");
-            //    Floor.InnerText = result.Floor.ToString();
+                //    XmlElement Category = xmlDoc.CreateElement("Category");
+                //    Category.InnerText = result.Category.ToString();
 
-            //    XmlElement Ratio = xmlDoc.CreateElement("Ratio");
-            //    Ratio.InnerText = result.Ratio.ToString();
+                //    XmlElement Color = xmlDoc.CreateElement("Color");
+                //    Color.InnerText = result.Color.ToString();
 
-            //    XmlElement Type = xmlDoc.CreateElement("Type");
-            //    Type.InnerText = result.Type.ToString();
+                //    XmlElement Area = xmlDoc.CreateElement("Area");
+                //    Area.InnerText = result.Area.ToString();
+
+                //    XmlElement Width = xmlDoc.CreateElement("Width");
+                //    Width.InnerText = result.Width.ToString();
+
+                //    XmlElement Length = xmlDoc.CreateElement("Length");
+                //    Length.InnerText = result.Length.ToString();
+
+                //    XmlElement Height = xmlDoc.CreateElement("Height");
+                //    Height.InnerText = result.Height.ToString();
+
+                //    XmlElement Floor = xmlDoc.CreateElement("Floor");
+                //    Floor.InnerText = result.Floor.ToString();
+
+                //    XmlElement Ratio = xmlDoc.CreateElement("Ratio");
+                //    Ratio.InnerText = result.Ratio.ToString();
+
+                //    XmlElement Type = xmlDoc.CreateElement("Type");
+                //    Type.InnerText = result.Type.ToString();
+
+                xmlDoc.Save("c:\\temp\\mysavefile.cndx");
+                //    ZoneID.AppendChild(ZoneName);
+                //    ZoneID.AppendChild(Group);
+                //    ZoneID.AppendChild(Relation);
+                //    ZoneID.AppendChild(Category);
+                //    ZoneID.AppendChild(Color);
+                //    ZoneID.AppendChild(Area);
+                //    ZoneID.AppendChild(Width);
+                //    ZoneID.AppendChild(Length);
+                //    ZoneID.AppendChild(Height);
+                //    ZoneID.AppendChild(Floor);
+                //    ZoneID.AppendChild(Ratio);
+                //    ZoneID.AppendChild(Type);
+                //}
 
 
-            //    ZoneID.AppendChild(ZoneName);
-            //    ZoneID.AppendChild(Group);
-            //    ZoneID.AppendChild(Relation);
-            //    ZoneID.AppendChild(Category);
-            //    ZoneID.AppendChild(Color);
-            //    ZoneID.AppendChild(Area);
-            //    ZoneID.AppendChild(Width);
-            //    ZoneID.AppendChild(Length);
-            //    ZoneID.AppendChild(Height);
-            //    ZoneID.AppendChild(Floor);
-            //    ZoneID.AppendChild(Ratio);
-            //    ZoneID.AppendChild(Type);
+
+            }
+            //private void CreateXMLNodes1()
+            //{
+            //    // Create an XML document
+            //    XmlDocument xmlDoc = new XmlDocument();
+
+            //    // Create the root element
+            //    XmlElement root = xmlDoc.CreateElement("Zone");
+            //    xmlDoc.AppendChild(root);
+
+            //    // Create a child element with an attribute
+            //    XmlElement child = xmlDoc.CreateElement("1");
+            //    XmlAttribute attr = xmlDoc.CreateAttribute("Name");
+            //    attr.Value = "staff study,office";
+            //    child.Attributes.Append(attr);
+
+            //    XmlAttribute attr2 = xmlDoc.CreateAttribute("Area");
+            //    attr2.Value = "3983.44";
+            //    child.Attributes.Append(attr2);
+
+            //    // Add the child element to the root element
+            //    root.AppendChild(child);
             //}
 
-            xmlDoc.Save("c:\\temp\\mysavefile.cndx");
-          
+
+            //{
+            //   Ndd= persistencyManager.LoadDrawingFromFile( "c:\\temp\\drawing1.ndx");
+            //   Ndv.Document = drawing;
+            //    //MessageBox.Show("Import");
         }
-        //private void CreateXMLNodes1()
-        //{
-        //    // Create an XML document
-        //    XmlDocument xmlDoc = new XmlDocument();
-
-        //    // Create the root element
-        //    XmlElement root = xmlDoc.CreateElement("Zone");
-        //    xmlDoc.AppendChild(root);
-
-        //    // Create a child element with an attribute
-        //    XmlElement child = xmlDoc.CreateElement("1");
-        //    XmlAttribute attr = xmlDoc.CreateAttribute("Name");
-        //    attr.Value = "staff study,office";
-        //    child.Attributes.Append(attr);
-
-        //    XmlAttribute attr2 = xmlDoc.CreateAttribute("Area");
-        //    attr2.Value = "3983.44";
-        //    child.Attributes.Append(attr2);
-
-        //    // Add the child element to the root element
-        //    root.AppendChild(child);
-        //}
 
 
-        //{
-        //   Ndd= persistencyManager.LoadDrawingFromFile( "c:\\temp\\drawing1.ndx");
-        //   Ndv.Document = drawing;
-        //    //MessageBox.Show("Import");
     }
-
 }
     

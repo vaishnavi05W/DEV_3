@@ -16,14 +16,24 @@ namespace SpaceLayout.Object
 
         public Zone_Main Zone21 { get; set; }//start node
         public Zone_Main Zone22 { get; set; } // end node
+        
+      
         public int Type { get; set; } // vertical,horizontal
         public double Length { get; set; }//width
 
         public Color Color { get; set; }
 
+        
+
         public Color color { get; set; } // change color of line to define the difference
-                                         //yWorks.Graph.IEdge edge;
+        public object ID { get; internal set; }
+
+        //yWorks.Graph.IEdge edge;
         public NRoutableConnector connector;
+        private Zone_Main z1;
+        private Zone_Main z2;
+        private int v1;
+        private double v2;
 
         public Connector_Main(Zone_Main zone21, Zone_Main zone22, int type, double length, Color color)
         {
@@ -32,6 +42,7 @@ namespace SpaceLayout.Object
             this.Type = type;
             this.Length = length;
             this.Color = color;
+           
 
             //connector = new NRoutableConnector();
             //connector.StyleSheetName = NDR.NameConnectorsStyleSheet;
@@ -40,5 +51,7 @@ namespace SpaceLayout.Object
             //connector.Style.StartArrowheadStyle.Shape = ArrowheadShape.None;
             //connector.Style.EndArrowheadStyle.Shape = ArrowheadShape.None;
         }
+
+       
     }
 }

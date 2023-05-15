@@ -601,48 +601,43 @@ namespace SpaceLayout.Forms.ZoneForms
 
 
         private void button4_Click(object sender, EventArgs e)
-        
-       {
+        {
             //testing for load fucntion
             try
             {
-                //Ndd = new NDrawingDocument();
-                // Create a drawing document
-                NDrawingDocument drawing = new NDrawingDocument();
+                string FileName = string.Empty;
+                OpenFileDialog ofd = new OpenFileDialog();
 
-                // create a new persistency manager
-                NPersistencyManager persistencyManager = new NPersistencyManager();
+                ofd.InitialDirectory = @"C:\temp\";
+                ofd.RestoreDirectory = true;
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    if (!String.IsNullOrWhiteSpace(ofd.FileName) && Path.GetExtension(ofd.FileName) == ".cndx")
+                    {
+                        // Create a drawing document
+                        NDrawingDocument drawing = new NDrawingDocument();
 
-                // load a drawing from the XML file
-                drawing = persistencyManager.LoadDrawingFromFile("c:\\temp\\mysavefile.cndx");
+                        // create a new persistency manager
+                        NPersistencyManager persistencyManager = new NPersistencyManager();
 
-                // display the drawing
-                Ndv.Document = drawing;
+                        // load a drawing from the XML file
+                        drawing = persistencyManager.LoadDrawingFromFile(ofd.FileName);
 
-                ZoneConnectorData("2");
+                        // display the drawing
+                        Ndv.Document = drawing;
+
+                        ZoneConnectorData("2");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please import cndx file!");
+                    }
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
-            // // Create the connector shape
-
-            // NConnectorShape connector = new NConnectorShape();
-            //Tool
-            // // Set the connector style
-            // connector.StyleSheetName = "MyConnectorStyle";
-            // connector.StyleSheet.Apply(connector);
-
-            // // Connect the nodes
-            // connector.StartPlug.Connect(node1.Ports.GetChildAt(0) as NPort);
-            // connector.EndPlug.Connect(node2.Ports.GetChildAt(0) as NPort);
-
-            // // Add the connector to the active layer
-            // diagramControl.Document.ActiveLayer.AddChild(connector);
-
-            // // Refresh the view
-            // diagramControl.Refresh();
-
         }
 
 

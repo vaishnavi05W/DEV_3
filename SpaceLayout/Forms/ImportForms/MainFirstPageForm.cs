@@ -23,6 +23,15 @@ using Nevron.Diagram;
 using Nevron.Diagram.Shapes;
 using Nevron.Diagram.WinForm;
 using Nevron.Nov.UI;
+using Nevron.Diagram.WinForm.Commands;
+using Nevron.UI.WinForm.Controls;
+using Nevron.UI.WinForm;
+using System.Diagnostics;
+using Nevron.Diagram.Layout;
+using Nevron.UI;
+using Nevron.GraphicsCore;
+
+
 
 namespace SpaceLayout.Forms.ZoneForms
 {
@@ -65,6 +74,10 @@ namespace SpaceLayout.Forms.ZoneForms
             // hide the grid
             nDrawingView1.Grid.Visible = false;
 
+            nDrawingView1.HorizontalRuler.Visible = false;
+            nDrawingView1.VerticalRuler.Visible = false;
+            
+
             // fit the document in the viewport 
             nDrawingView1.ViewLayout = ViewLayout.Fit;
 
@@ -81,9 +94,18 @@ namespace SpaceLayout.Forms.ZoneForms
             //end view init
             nDrawingView1.EndInit();
 
+            // get the NDiagramCommandBarsManager instance
+            //NDiagramCommandBarsManager commandBarsManager = nDiagramCommandBarsManager1;
+            //nDiagramCommandBarsManager1.CommandManager.GetAllCommands();
+
+           
+         
+
+            
+
 
         }
-
+             
         private void CrateModuleDatatable()
         {
             dtZoneSelection = new DataTable();
@@ -196,6 +218,7 @@ namespace SpaceLayout.Forms.ZoneForms
                 LoadRightPanel(2);
             }
         }
+      
 
         private void MainFirstPageControl_Load(object sender, EventArgs e)
         {

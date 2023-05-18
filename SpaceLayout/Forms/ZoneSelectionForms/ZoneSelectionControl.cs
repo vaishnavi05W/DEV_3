@@ -39,6 +39,7 @@ using Nevron.Chart.Windows;
 using Nevron.Chart;
 using Nevron.UI;
 using System.Xml.Serialization;
+using Nevron.Diagram.Layout;
 
 namespace SpaceLayout.Forms.ZoneForms
 {
@@ -588,7 +589,7 @@ namespace SpaceLayout.Forms.ZoneForms
 
 
                 // save the document to a file
-                persistencyManager.SaveToFile("c:\\temp\\mysavefile.cndx", PersistencyFormat.CustomXML, null);
+                persistencyManager.SaveToFile("c:\\temp\\Drawingfile.cndx", PersistencyFormat.CustomXML, null);
                 AppendXMLNodes();
                 MessageBox.Show("Save successful");
 
@@ -644,7 +645,7 @@ namespace SpaceLayout.Forms.ZoneForms
         private void AppendXMLNodes()
         {
             XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load("c:\\temp\\mysavefile.cndx");
+            xmlDoc.Load("c:\\temp\\Drawingfile.cndx");
 
             XmlElement zroot = xmlDoc.CreateElement("Zone");
 

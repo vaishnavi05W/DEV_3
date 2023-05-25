@@ -1,37 +1,17 @@
 ﻿using Nevron.Diagram;
 using Nevron.Dom;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Nevron.GraphicsCore;
-using Nevron.Diagram;
-using Nevron.Diagram.Shapes;
 using Nevron.Diagram.WinForm;
-using Nevron.Nov.UI;
-using Nevron.Diagram.WinForm.Commands;
-using Nevron.UI.WinForm.Controls;
-using Nevron.UI.WinForm;
-using System.Diagnostics;
-using Nevron.Diagram.Layout;
-using Nevron.UI;
 using Nevron.GraphicsCore;
-
-
+using Nevron.UI.WinForm.Controls;
+using System.Drawing;
+using System.ComponentModel;
+using System.Collections;
+using System.Diagnostics;
+using System.IO;
+using System.Text;
 
 namespace SpaceLayout.Forms.ZoneForms
 {
@@ -41,12 +21,18 @@ namespace SpaceLayout.Forms.ZoneForms
         public static bool ExcelFlg = false;
         public static DataTable dtZoneSelection = null;
         private INNode node;
+        private MouseEventHandler nDrawingView1_MouseWheel;
+
+        public static object CommandBarsManager { get; internal set; }
+        public object m_ZoomRect { get; private set; }
 
         public MainFirstPageControl()
         {
             InitializeComponent();
             this.Load += IS_Load;
-       
+            nDrawingView1.MouseWheel += NDrawingView1_MouseWheel;
+
+
         }
 
 
@@ -77,6 +63,7 @@ namespace SpaceLayout.Forms.ZoneForms
             nDrawingView1.HorizontalRuler.Visible = false;
             nDrawingView1.VerticalRuler.Visible = false;
             
+            
 
             // fit the document in the viewport 
             nDrawingView1.ViewLayout = ViewLayout.Fit;
@@ -95,17 +82,17 @@ namespace SpaceLayout.Forms.ZoneForms
             nDrawingView1.EndInit();
 
             // get the NDiagramCommandBarsManager instance
-            //NDiagramCommandBarsManager commandBarsManager = nDiagramCommandBarsManager1;
-            //nDiagramCommandBarsManager1.CommandManager.GetAllCommands();
-
-           
-         
-
             
 
 
+
+
+
+
+
+
         }
-             
+
         private void CrateModuleDatatable()
         {
             dtZoneSelection = new DataTable();
@@ -201,7 +188,10 @@ namespace SpaceLayout.Forms.ZoneForms
                 LoadRightPanel(3);
             }
         }
-
+        private void ImportData()
+        {
+         
+        }
         private void btnPrevious_Click(object sender, EventArgs e)
         {
             var contrName = tableLayoutPanel2.GetControlFromPosition(0, 1).Name;
@@ -218,7 +208,28 @@ namespace SpaceLayout.Forms.ZoneForms
                 LoadRightPanel(2);
             }
         }
-      
+        private void NDrawingView1_MouseWheel(object sender, MouseEventArgs e)
+        {
+            // Zooming logic
+            float zoom = nDrawingView1.Document.ActiveLayer.MaxShowZoomFactor;
+
+            // Check the direction of the mouse wheel
+            if (e.Delta > 0)
+            {
+                // Zoom in
+                zoom += 0.1f;
+            }
+            else if (e.Delta < 0)
+            {
+                // Zoom out
+                zoom -= 0.1f;
+            }
+
+            // Set the updated zoom factor
+            nDrawingView1.Document.ActiveLayer.MaxShowZoomFactor = zoom;
+        }
+
+
 
         private void MainFirstPageControl_Load(object sender, EventArgs e)
         {

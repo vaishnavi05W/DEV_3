@@ -8,7 +8,8 @@ namespace SpaceLayout.Object
 {
     public class Zone_Main
     {
-        public Zone_Main(int ID, string Name, string Group,string Relation, string Category,string Color, double Area, double Width, double Lenght, double Height, int Floor, double Ratio, string Type)
+        public Zone_Main(int ID, string Name, string Group,string Relation, string Category,string Color, double Area, double Width, double Lenght, 
+            double Height, int Floor, double Ratio, string Type)
         {
             this.ID = ID;
             this.Name = Name;

@@ -18,7 +18,8 @@ using Nevron.Diagram;
 using Nevron.Diagram.DataStructures;
 using Nevron.Diagram.Shapes;
 using System.Xml;
-
+using Nevron.Diagram.Templates;
+using Nevron.Diagram.WinForm.Commands;
 using Nevron.Nov.Diagram.Editors;
 using Nevron.Nov.Diagram.DrawingTools;
 using Nevron.Diagram.Designer;
@@ -40,6 +41,7 @@ using Nevron.Chart;
 using Nevron.UI;
 using System.Xml.Serialization;
 using Nevron.Diagram.Layout;
+using NSelection = Nevron.Diagram.WinForm.NSelection;
 
 namespace SpaceLayout.Forms.ZoneForms
 {
@@ -55,11 +57,14 @@ namespace SpaceLayout.Forms.ZoneForms
         private Dictionary<int, bool> rowNodecreated = new Dictionary<int, bool>();
         private NNode startnode;
         private NNode endnode;
+        NGroup group = new NGroup();
 
         public NRectangleShape startNode = null;
         public NRectangleShape endNode = null;
         private NPersistencyManager persistencyManager;
-
+        private NGroupBox groupPropertiesGroup;
+        private NCheckBox autoDestroyCheckBox;
+        private NCheckBox canBeEmptyCheckBox;
         List<Connector_Main> connector;
         List<Zone_Main> zone;
 
@@ -67,6 +72,10 @@ namespace SpaceLayout.Forms.ZoneForms
         {
             InitializeComponent();
             this.persistencyManager = new NPersistencyManager();
+            this.groupPropertiesGroup = new NGroupBox();
+            this.autoDestroyCheckBox = new NCheckBox();
+            this.canBeEmptyCheckBox = new NCheckBox(); this.groupPropertiesGroup.SuspendLayout();
+            this.SuspendLayout();
 
             // drawing = (NDrawingDocument)persistencyManager.LoadDocumentFromFile("c:\\temp\\drawing1.ndx");
 
@@ -97,46 +106,10 @@ namespace SpaceLayout.Forms.ZoneForms
             {
                 Ndd = Ndv.Document;
             }
-            //Ndv.EventSinkService.NodeMouseDown += EventSinkService_NodeMouseDown;
-            //chartControl.Controller.Selection.Changed += chartControl_SelectionChanged;
-            //chartControl.Controller.DoubleClick += chartControl_DoubleClick;
-            //chartControl.Document.NodeCreated += ChartControl_NodeCreated;
-            //chartControl.Document.UndoRedoService.Pause();
-            //chartControl.Document.UndoRedoService.ChangesRegistry.Clear();
-            //chartControl.Document.UndoRedoService.Resume();
+            
         }
 
-        //private void chartcontrol_MouseDoubleClick(object sender, MouseEventArgs e)
-        //{
-        //    foreach (var node in chartControl.Selection.SelectedNodes) { 
-
-        //    Console.WriteLine("-----"+node.ToString());
-
-
-        //    }
-        //}
-
-        //private void graphcontrol_SelectionChanged(object sender, EventArgs e)
-        //{
-        //    // Get the selected nodes
-        //    Console.WriteLine(sender.ToString());
-        //    Console.WriteLine(e.ToString());
-        // //   GraphSelection graphControl = (GraphSelection)sender;
-        //  //  IEnumerable<INode> selectedNodes = graphControl.Selection.SelectedNodes;
-
-        //}
-        //public class Selection
-        //{
-        //    public HashSet<INode> Nodes { get; } = new HashSet<INode>();
-        //    public HashSet<IEdge> Edges { get; } = new HashSet<IEdge>();
-        //}
-
-        //private void Graph_EdgeCreated(object sender, yWorks.Utils.ItemEventArgs<IEdge> e)
-        //{
-        //   // Connector zone linking
-
-
-        //}
+        
 
         private void BindGrid()
         {
@@ -289,6 +262,8 @@ namespace SpaceLayout.Forms.ZoneForms
 
 
                             NLayer activeLayer = Ndd.ActiveLayer;
+
+
                             NGraph graph = new NGraph();
                             var rand = new Random();
                             Zone zone = new Zone();
@@ -317,25 +292,6 @@ namespace SpaceLayout.Forms.ZoneForms
                             //graphcontrol.Graph.AddLabel(node, NodeLabelOut, ExteriorLabelModel.South, defaultLableStyle);
                             node.Text = NodeLabelIn;
 
-
-                            //node.Ports.GetChildByName("Bottom");
-                            //Nevron.Chart.NLabel l = new Nevron.Chart.NLabel();
-                            //l.Text = NodeLabelOut;
-                            //l.Bounds = new NRectangleF((float)(Convert.ToInt32(node.Bounds.LeftBottom) - 20), (float)(Convert.ToInt32(node.Bounds.RightTop) - 0), 140, 20);
-                            //node.Labels.AddChild(l);
-                            //Create an NLabel
-                            // NLabel label = new NLabel("Hello, world!");
-                            //NCustomRangeLabel customRangeLabel = new NCustomRangeLabel();
-
-                            //graph.Nodes.Add(node);
-                            // node.Labels
-
-
-                            //Random rnd = new Random();
-
-                            //int x = rnd.Next((int)Ndv.ViewportOrigin.X, (int)Ndv.ViewportOrigin.X + (int)Ndv.ViewportSize.Width - (int)rect.Width);
-                            //int y = rnd.Next((int)Ndv.ViewportOrigin.Y, (int)Ndv.ViewportOrigin.Y + (int)Ndv.ViewportSize.Height - (int)rect.Height);
-                            //node.Location = new NPointF(x, y);
 
                             int maxWidth = Convert.ToInt32(Ndv.Document.Width);
                             int maxHeight = Convert.ToInt32(Ndv.Document.Height);
@@ -384,6 +340,8 @@ namespace SpaceLayout.Forms.ZoneForms
 
                             //node.Ports.po
                             activeLayer.AddChild(node);
+                          
+
 
                             //if (startNode == null)
                             //{
@@ -439,6 +397,75 @@ namespace SpaceLayout.Forms.ZoneForms
             {
                 MessageBox.Show(ex.ToString());
             }
+        }
+       private void UpdateControlsState()
+       {
+            if (Ndv.Selection.NodesCount != 1)
+            {
+                groupPropertiesGroup.Enabled = false;
+                return;
+            }
+            NGroup group = (Ndv.Selection.AnchorNode as NGroup);
+                 if (group == null)
+                 {
+                           groupPropertiesGroup.Enabled = false;
+                            return;
+                 }
+                 groupPropertiesGroup.Enabled = true;
+            canBeEmptyCheckBox.Checked = group.CanBeEmpty;
+            autoDestroyCheckBox.Checked = group.AutoDestroy;
+       }
+        private void SelectNodesForGrouping(List<NShape> nodes)
+        {
+            // Assuming Ndd is the diagram instance and view is the view instance
+            NSelection selection = Ndv.Selection;
+            selection.Nodes.Clear();
+            foreach (NShape shape in nodes)
+            {
+                selection.Nodes.Add(shape);
+            }
+
+            Ndv.Refresh();
+        }
+
+
+        private NGroup CreateGroup(string name)
+        {
+            NGroup group = new NGroup();
+            group.Name = name;
+
+            // Assuming Ndd is the diagram instance and ActiveLayer is the desired layer
+
+            Ndd.ActiveLayer.AddChild(group);
+            CreateGroupPorts(group);
+            AddColorsAndRectangleShape(group);
+            group.UpdateModelBounds();
+            return group;
+        }
+        
+        private void CreateGroupPorts(NGroup group)
+        {
+            group.CreateShapeElements(ShapeElementsMask.Ports);
+            NRotatedBoundsPort port = new NRotatedBoundsPort(new NContentAlignment(ContentAlignment.TopCenter));
+            port.Name = "port";
+            group.Ports.AddChild(port);
+
+
+
+        }
+        private void AddColorsAndRectangleShape(NGroup group)
+        {
+            // Assuming you have predefined colors and rectangle shape dimensions
+            NColorFillStyle Fill = new NColorFillStyle(Color.Blue);
+            NStrokeStyle stroke = new NStrokeStyle(Color.Black);
+            float width = 100;
+            float height = 50;
+
+            NRectangleShape rect = new NRectangleShape(0, 0, (float)width, (float)height);
+            rect.Style.FillStyle = Fill;
+            rect.Style.StrokeStyle = stroke;
+
+            group.Shapes.AddChild(rect);
         }
 
         private void ZoneConnectorData(string flg) //flg: 1 = save, 2 =  load
@@ -568,8 +595,7 @@ namespace SpaceLayout.Forms.ZoneForms
 
                 ZoneConnectorData("1");
                 NPersistentDocument document = new NPersistentDocument("My document");
-                // NPersistentSection documentSection = new NPersistentSection("DrawingDocument", Ndd);
-                //document.Sections.Add(documentSection);
+                
 
                 // Add the drawing document and the drawing view to the section
                 NPersistentSection documentSection = new NPersistentSection("DrawingDocument", Ndd);
@@ -577,13 +603,6 @@ namespace SpaceLayout.Forms.ZoneForms
 
                 NPersistentSection nodesSection = new NPersistentSection("Graph", null);
                 document.Sections.Add(nodesSection);
-
-                //NPersistentSection graphsection = new NPersistentSection("Graph", null);
-                //document.Sections.Add(graphsection);
-
-                // create a new section which will store the rect
-                // document.Sections.Add(new NPersistentSection("Rectangle", rect));
-
                 // set the document to the manager
                 persistencyManager.PersistentDocument = document;
 
@@ -834,37 +853,114 @@ namespace SpaceLayout.Forms.ZoneForms
 
 
         }
-            //private void CreateXMLNodes1()
-            //{
-            //    // Create an XML document
-            //    XmlDocument xmlDoc = new XmlDocument();
 
-            //    // Create the root element
-            //    XmlElement root = xmlDoc.CreateElement("Zone");
-            //    xmlDoc.AppendChild(root);
+       
 
-            //    // Create a child element with an attribute
-            //    XmlElement child = xmlDoc.CreateElement("1");
-            //    XmlAttribute attr = xmlDoc.CreateAttribute("Name");
-            //    attr.Value = "staff study,office";
-            //    child.Attributes.Append(attr);
-
-            //    XmlAttribute attr2 = xmlDoc.CreateAttribute("Area");
-            //    attr2.Value = "3983.44";
-            //    child.Attributes.Append(attr2);
-
-            //    // Add the child element to the root element
-            //    root.AppendChild(child);
-            //}
+        //private void button1_Click(object sender, EventArgs e)
+        //{
 
 
-            //{
-            //   Ndd= persistencyManager.LoadDrawingFromFile( "c:\\temp\\drawing1.ndx");
-            //   Ndv.Document = drawing;
-            //    //MessageBox.Show("Import");
-        }
+        //    // Get the active view
+        //    NDrawingDocument document = MainFirstPageControl.CommandBarsManager.Document as NDrawingDocument;
+
+        //    if (document.ActiveLayer.Selection.Nodes.Count == 2)
+        //    {
+        //        // Get the first selected shape
+        //        NShape shape1 = document.ActiveView.Selection.Nodes[0] as NShape;
+
+        //        // Get the second selected shape
+        //        NShape shape2 = document.ActiveView.Selection.Nodes[1] as NShape;
+
+        //        // Create a connector line
+        //        NLineShape connector = new NLineShape(shape1.PinPoint, shape2.PinPoint);
+
+        //        // Add the connector line to the active layer
+        //        document.ActiveLayer.AddChild(connector);
+
+        //        // Refresh the view
+        //        document.ActiveView.Refresh();
+        //    }
+        //    else
+        //    {
+        //        // Show an error message if two shapes are not selected
+        //        MessageBox.Show("Please select two shapes to create a connector line.");
+        //    }
+        //}
+
+        //private void button2_Click(object sender, EventArgs e)
+        //{
+        //        // Get the active drawing document
+        //        NDrawingDocument document = MainFirstPageControl.Document as NDrawingDocument;
+
+        //        // Check if the document and active layer are valid
+        //        if (document != null && document.ActiveLayer != null)
+        //        {
+        //            NNodeList nodes = document.ActiveLayer.Children(NFilters.Shape2D);
+        //            if (nodes.Count != 0)
+        //            {
+        //                // Create an instance of NImageExporter
+        //                NImageExporter imageExporter = new NImageExporter(document);
+        //                imageExporter.KnownBoundsTable.Add("All nodes", NFunctions.ComputeNodesBounds(nodes, null));
+
+
+        //            {
+        //                // Specify the desired image format and save the image
+        //                string imagePath = "path/to/save/image.jpg";
+        //                imageExporter.SaveImage(imagePath, ENImageFormat.Jpeg);
+
+        //                MessageBox.Show("Image exported successfully.");
+        //            }
+
+
+        //            // Show the image exporter dialog
+        //            imageExporter.ShowDialog();
+        //            }
+        //            else
+        //            {
+        //                // Show an error message if there are no nodes in the active layer
+        //                MessageBox.Show("No nodes found in the active layer.");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            // Show an error message if the active drawing document or active layer is not available
+        //            MessageBox.Show("No active drawing document or active layer found.");
+        //        }
 
 
     }
+    }
+        //private void CreateXMLNodes1()
+        //{
+        //    // Create an XML document
+        //    XmlDocument xmlDoc = new XmlDocument();
+
+        //    // Create the root element
+        //    XmlElement root = xmlDoc.CreateElement("Zone");
+        //    xmlDoc.AppendChild(root);
+
+        //    // Create a child element with an attribute
+        //    XmlElement child = xmlDoc.CreateElement("1");
+        //    XmlAttribute attr = xmlDoc.CreateAttribute("Name");
+        //    attr.Value = "staff study,office";
+        //    child.Attributes.Append(attr);
+
+        //    XmlAttribute attr2 = xmlDoc.CreateAttribute("Area");
+        //    attr2.Value = "3983.44";
+        //    child.Attributes.Append(attr2);
+
+        //    // Add the child element to the root element
+        //    root.AppendChild(child);
+        //}
+
+
+        //{
+        //   Ndd= persistencyManager.LoadDrawingFromFile( "c:\\temp\\drawing1.ndx");
+        //   Ndv.Document = drawing;
+        //    //MessageBox.Show("Import");
+    
+
+
+    
 
     

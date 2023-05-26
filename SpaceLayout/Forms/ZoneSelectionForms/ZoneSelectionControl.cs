@@ -452,6 +452,7 @@ namespace SpaceLayout.Forms.ZoneForms
 
 
 
+
         }
         private void AddColorsAndRectangleShape(NGroup group)
         {
@@ -464,6 +465,7 @@ namespace SpaceLayout.Forms.ZoneForms
             NRectangleShape rect = new NRectangleShape(0, 0, (float)width, (float)height);
             rect.Style.FillStyle = Fill;
             rect.Style.StrokeStyle = stroke;
+          
 
             group.Shapes.AddChild(rect);
         }
@@ -731,38 +733,7 @@ namespace SpaceLayout.Forms.ZoneForms
                 ZoneID.AppendChild(Type);
             }
 
-            //foreach (var result in connector)
-            //{
-            //    // Create a new XML element for the connector
-            //    XmlElement connectorElement = xmlDoc.CreateElement("Connector");
-
-            //    // Add the ID and type attributes to the connector element
-            //    connectorElement.SetAttribute("ID", connector.ID.ToString());
-            //    connectorElement.SetAttribute("Type", connector.Type.ToString());
-
-            //    // Add the start and end zone elements to the connector element
-            //    XmlElement startZoneElement = xmlDoc.CreateElement("StartZone");
-            //    startZoneElement.SetAttribute("ID", connector.Zone21.ID.ToString());
-            //    startZoneElement.SetAttribute("Name", connector.Zone21.Name);
-            //    connectorElement.AppendChild(startZoneElement);
-
-            //    XmlElement endZoneElement = xmlDoc.CreateElement("EndZone");
-            //    endZoneElement.SetAttribute("ID", connector.Zone22.ID.ToString());
-            //    endZoneElement.SetAttribute("Name", connector.Zone22.Name);
-            //    connectorElement.AppendChild(endZoneElement);
-
-            //    // Add the length and color elements to the connector element
-            //    XmlElement lengthElement = xmlDoc.CreateElement("Length");
-            //    lengthElement.InnerText = connector.Length.ToString();
-            //    connectorElement.AppendChild(lengthElement);
-
-            //    XmlElement colorElement = xmlDoc.CreateElement("Color");
-            //    colorElement.InnerText = connector.Color.ToString();
-            //    connectorElement.AppendChild(colorElement);
-
-            //    // Add the connector element to the XML file
-            //    croot.AppendChild(connectorElement);
-            //}
+           
             xmlDoc.Save("c:\\temp\\mysavefile.cndx");
             foreach (var result in connector)
             {

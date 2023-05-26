@@ -98,15 +98,13 @@ namespace SpaceLayout.Forms.ZoneForms
 
         private void IS_Load(object sender, EventArgs e)
         {
-            BindGrid();
-
             Form f = this.ParentForm;
             Ndv = f.Controls.Find("nDrawingView1", true).FirstOrDefault() as NDrawingView;
             if (Ndv != null)
             {
                 Ndd = Ndv.Document;
             }
-            
+            BindGrid();
         }
 
         
@@ -122,8 +120,9 @@ namespace SpaceLayout.Forms.ZoneForms
             dtSource = new DataTable();
             dtSource.Columns.Add("ID");
             dtSource.Columns.Add("Name");
-            // dtSource.Columns.Add("Department");
+            //dtSource.Columns.Add("Department");
             dtSource.Columns.Add("Group");
+            dtSource.Columns.Add("GroupColor");
             dtSource.Columns.Add("Relation");
             dtSource.Columns.Add("Category");
             dtSource.Columns.Add("Color");
@@ -134,7 +133,7 @@ namespace SpaceLayout.Forms.ZoneForms
             dtSource.Columns.Add("Floor");
             dtSource.Columns.Add("Ratio");
             dtSource.Columns.Add("Type");
-
+            
             //List<InputData_ModuleEntity> result;
             //List<string> temp;
             using (var stream = File.Open(DataSourceInputData, FileMode.Open, FileAccess.Read))
@@ -181,10 +180,40 @@ namespace SpaceLayout.Forms.ZoneForms
             if (dtSource.Rows.Count > 0)
             {
                 dataGridView1.DataSource = dtSource;
-
+                MainFunction(dtSource);
                 // Form MainFirstPage = new MainFirstPageControl(dtSource);
                 //CreateNodes(dtSource);
             }
+        }
+
+        public void MainFunction(DataTable dtMain)
+        {
+            try
+            {
+                NGroup maingp = new NGroup();
+                string groupname = string.Empty;
+                foreach (DataRow dr in dtMain.Rows)
+                {
+                    if(groupname != dr["Group"].ToString())
+                    {
+                        groupname = dr["Group"].ToString();
+                        if (!String.IsNullOrEmpty(groupname))
+                        {
+                            DataTable dtGroup = dtMain.Select("Group = '" + groupname + "'").CopyToDataTable();
+                            if (dtGroup.Rows.Count > 0)
+                            {
+                                maingp = CreateGroup(dtGroup);
+                                Ndd.ActiveLayer.AddChild(maingp);
+                            }
+                        }
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show(e.Message.ToString());
+            }
+           
         }
 
         public DataTable GetDataSource()
@@ -257,25 +286,12 @@ namespace SpaceLayout.Forms.ZoneForms
 
                             Ndv.BeginInit();
                             Ndd.BeginInit();
-
-
-
-
                             NLayer activeLayer = Ndd.ActiveLayer;
-
-
                             NGraph graph = new NGraph();
                             var rand = new Random();
                             Zone zone = new Zone();
                             float width = (float)Math.Sqrt(Convert.ToDouble(this.dataGridView1.Rows[e.RowIndex].Cells["Column6"].Value) * 2);
                             float height = (float)(Convert.ToDouble(dataGridView1.CurrentRow.Cells["Column6"].Value) / width);
-
-
-
-
-
-
-
                             NRectangleF rect = new NRectangleF(0, 0, width, height);
                             NRectangleShape node = new NRectangleShape(rect);
                             node.Tag = zone;
@@ -291,7 +307,6 @@ namespace SpaceLayout.Forms.ZoneForms
                             string NodeLabelOut = this.dataGridView1.Rows[e.RowIndex].Cells["Column2"].Value.ToString();
                             //graphcontrol.Graph.AddLabel(node, NodeLabelOut, ExteriorLabelModel.South, defaultLableStyle);
                             node.Text = NodeLabelIn;
-
 
                             int maxWidth = Convert.ToInt32(Ndv.Document.Width);
                             int maxHeight = Convert.ToInt32(Ndv.Document.Height);
@@ -398,7 +413,7 @@ namespace SpaceLayout.Forms.ZoneForms
                 MessageBox.Show(ex.ToString());
             }
         }
-       private void UpdateControlsState()
+        private void UpdateControlsState()
        {
             if (Ndv.Selection.NodesCount != 1)
             {
@@ -429,17 +444,39 @@ namespace SpaceLayout.Forms.ZoneForms
         }
 
 
-        private NGroup CreateGroup(string name)
+        private NGroup CreateGroup(DataTable dtData)
         {
             NGroup group = new NGroup();
-            group.Name = name;
+            group.Name = dtData.Rows[0]["Group"].ToString();
+            //int maxWidth = Convert.ToInt32(Ndv.Document.Width);
+            //int maxHeight = Convert.ToInt32(Ndv.Document.Height);
 
-            // Assuming Ndd is the diagram instance and ActiveLayer is the desired layer
+            //// Generate random position and size for the shape
+            //Random rnd = new Random();
+            //int x = rnd.Next(maxWidth);
+            //int y = rnd.Next(maxHeight);
+            //int w = rnd.Next(50, 150);
+            //int h = rnd.Next(50, 150);
 
-            Ndd.ActiveLayer.AddChild(group);
+            //// Ensure that the shape bounds are within the view bounds
+            //if (x + 1000 > maxWidth)
+            //{
+            //    x = maxWidth - w;
+            //}
+            //if (y + 1200 > maxHeight)
+            //{
+            //    y = maxHeight - h;
+            //}
+
+            //group.Location = new NPointF(x, y);
+
+            CreateDecorators(group, group.Name);
             CreateGroupPorts(group);
-            AddColorsAndRectangleShape(group);
+            AddColorsAndRectangleShape(group, dtData.Rows[0]["GroupColor"].ToString());
+
             group.UpdateModelBounds();
+            group.AutoUpdateModelBounds = true;
+
             return group;
         }
         
@@ -449,15 +486,12 @@ namespace SpaceLayout.Forms.ZoneForms
             NRotatedBoundsPort port = new NRotatedBoundsPort(new NContentAlignment(ContentAlignment.TopCenter));
             port.Name = "port";
             group.Ports.AddChild(port);
-
-
-
-
         }
-        private void AddColorsAndRectangleShape(NGroup group)
+
+        private void AddColorsAndRectangleShape(NGroup group, string color)
         {
             // Assuming you have predefined colors and rectangle shape dimensions
-            NColorFillStyle Fill = new NColorFillStyle(Color.Blue);
+            NColorFillStyle Fill = new NColorFillStyle(Color.FromName(color));
             NStrokeStyle stroke = new NStrokeStyle(Color.Black);
             float width = 100;
             float height = 50;
@@ -465,9 +499,33 @@ namespace SpaceLayout.Forms.ZoneForms
             NRectangleShape rect = new NRectangleShape(0, 0, (float)width, (float)height);
             rect.Style.FillStyle = Fill;
             rect.Style.StrokeStyle = stroke;
-          
 
             group.Shapes.AddChild(rect);
+        }
+
+        private void CreateDecorators(NShape shape, string decoratorText)
+		{
+			// Create the decorators
+			shape.CreateShapeElements(ShapeElementsMask.Decorators);
+
+			// Create a frame decorator
+			// We want the user to be able to select the shape when the frame is hit
+			NFrameDecorator frameDecorator = new NFrameDecorator();
+			frameDecorator.ShapeHitTestable = true;
+			frameDecorator.Header.Margins = new Nevron.Diagram.NMargins(20, 0, 0, 0);
+			frameDecorator.Header.Text = decoratorText;
+			shape.Decorators.AddChild(frameDecorator);
+
+			// Create an expand/collapse decorator
+			NExpandCollapseDecorator decorator = new NExpandCollapseDecorator();
+			shape.Decorators.AddChild(decorator);
+		}
+
+        private NShape CreateShape(DataTable dtData)
+        {
+            NRectangleShape shape = new NRectangleShape();
+
+            return shape;
         }
 
         private void ZoneConnectorData(string flg) //flg: 1 = save, 2 =  load
@@ -733,7 +791,38 @@ namespace SpaceLayout.Forms.ZoneForms
                 ZoneID.AppendChild(Type);
             }
 
-           
+            //foreach (var result in connector)
+            //{
+            //    // Create a new XML element for the connector
+            //    XmlElement connectorElement = xmlDoc.CreateElement("Connector");
+
+            //    // Add the ID and type attributes to the connector element
+            //    connectorElement.SetAttribute("ID", connector.ID.ToString());
+            //    connectorElement.SetAttribute("Type", connector.Type.ToString());
+
+            //    // Add the start and end zone elements to the connector element
+            //    XmlElement startZoneElement = xmlDoc.CreateElement("StartZone");
+            //    startZoneElement.SetAttribute("ID", connector.Zone21.ID.ToString());
+            //    startZoneElement.SetAttribute("Name", connector.Zone21.Name);
+            //    connectorElement.AppendChild(startZoneElement);
+
+            //    XmlElement endZoneElement = xmlDoc.CreateElement("EndZone");
+            //    endZoneElement.SetAttribute("ID", connector.Zone22.ID.ToString());
+            //    endZoneElement.SetAttribute("Name", connector.Zone22.Name);
+            //    connectorElement.AppendChild(endZoneElement);
+
+            //    // Add the length and color elements to the connector element
+            //    XmlElement lengthElement = xmlDoc.CreateElement("Length");
+            //    lengthElement.InnerText = connector.Length.ToString();
+            //    connectorElement.AppendChild(lengthElement);
+
+            //    XmlElement colorElement = xmlDoc.CreateElement("Color");
+            //    colorElement.InnerText = connector.Color.ToString();
+            //    connectorElement.AppendChild(colorElement);
+
+            //    // Add the connector element to the XML file
+            //    croot.AppendChild(connectorElement);
+            //}
             xmlDoc.Save("c:\\temp\\mysavefile.cndx");
             foreach (var result in connector)
             {

@@ -107,6 +107,7 @@ namespace SpaceLayout.Forms.ZoneForms
             {
                 Ndd = Ndv.Document;
             }
+            Ndv.ViewLayout = ViewLayout.Stretch;
             BindGrid();
         }
 

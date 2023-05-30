@@ -66,7 +66,7 @@ namespace SpaceLayout.Forms.ZoneForms
             
 
             // fit the document in the viewport 
-            nDrawingView1.ViewLayout = ViewLayout.Fit;
+            nDrawingView1.ViewLayout = ViewLayout.Stretch;
 
             // apply padding to the document bounds
             nDrawingView1.DocumentPadding = new Nevron.Diagram.NMargins(10);

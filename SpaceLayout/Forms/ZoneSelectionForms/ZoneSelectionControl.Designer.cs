@@ -275,14 +275,14 @@ namespace SpaceLayout.Forms.ZoneForms
             // 
             // Column5
             // 
-            this.Column5.DataPropertyName = "Category";
+            this.Column5.DataPropertyName = "GroupArea";
             dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             this.Column5.DefaultCellStyle = dataGridViewCellStyle6;
-            this.Column5.HeaderText = "Category";
+            this.Column5.HeaderText = "Group Area";
             this.Column5.MinimumWidth = 6;
             this.Column5.Name = "Column5";
             this.Column5.Width = 125;

@@ -16,6 +16,9 @@ using Nevron.UI.WinForm.Controls;
 using Nevron.Diagram.WinForm;
 using Nevron.Diagram;
 using Nevron.Diagram.DataStructures;
+using Nevron.Dom;
+using Nevron.Diagram.Filters;
+using Nevron.Diagram.Batches;
 using Nevron.Diagram.Shapes;
 using System.Xml;
 using Nevron.Diagram.Templates;
@@ -124,7 +127,7 @@ namespace SpaceLayout.Forms.ZoneForms
             dtSource.Columns.Add("Group");
             dtSource.Columns.Add("GroupColor");
             dtSource.Columns.Add("Relation");
-            dtSource.Columns.Add("Category");
+            dtSource.Columns.Add("GroupArea");
             dtSource.Columns.Add("Color");
             dtSource.Columns.Add("Area");
             dtSource.Columns.Add("Width");
@@ -194,7 +197,7 @@ namespace SpaceLayout.Forms.ZoneForms
                 string groupname = string.Empty;
                 foreach (DataRow dr in dtMain.Rows)
                 {
-                    if(groupname != dr["Group"].ToString())
+                    if (groupname != dr["Group"].ToString())
                     {
                         groupname = dr["Group"].ToString();
                         if (!String.IsNullOrEmpty(groupname))
@@ -202,7 +205,8 @@ namespace SpaceLayout.Forms.ZoneForms
                             DataTable dtGroup = dtMain.Select("Group = '" + groupname + "'").CopyToDataTable();
                             if (dtGroup.Rows.Count > 0)
                             {
-                                maingp = CreateGroup(dtGroup);
+                                maingp = GetGroup(dtGroup);
+                                maingp.Name = groupname;
                                 Ndd.ActiveLayer.AddChild(maingp);
                             }
                         }
@@ -216,42 +220,107 @@ namespace SpaceLayout.Forms.ZoneForms
            
         }
 
-        public DataTable GetDataSource()
+        private NGroup GetGroup(DataTable dtGroup)
         {
-            return dtSource;
+           
+                float width = (float)Math.Sqrt(Convert.ToDouble(dtGroup.Rows[0]["GroupArea"].ToString()) * 2);
+                float height = (float)(Convert.ToDouble(dtGroup.Rows[0]["GroupArea"].ToString()) / width);
+                Random random = new Random();
+                float x = random.Next(0, Convert.ToInt32(Ndv.Document.Width));
+                float y = random.Next(0, Convert.ToInt32(Ndv.Document.Height));
+                float w = random.Next(30, 50);
+                float h = random.Next(30, 50);
+                if (x + width > Ndv.Document.Width)
+                {
+                    x = Ndv.Document.Width - w;
+                }
+                if (y + height > Ndv.Document.Height)
+                {
+                    y = Ndv.Document.Height - h;
+                }
+
+                Color color1 = Color.FromName(dtGroup.Rows[0]["GroupColor"].ToString());
+                Color color2 = Color.Black;
+
+                NGroup group = new NGroup();
+                NRectangleF bounds = new NRectangleF(x, y, width, height);
+                NRectangleShape frame = new NRectangleShape(bounds);
+                frame.Protection = new NAbilities(AbilitiesMask.Select);
+                foreach (DataRow dr in dtGroup.Rows)
+                {
+                    group.Shapes.AddChild(GetShape(bounds,dtGroup));
+                }
+                group.UpdateModelBounds();
+
+                frame.Style.FillStyle = new NColorFillStyle(color1);
+                group.Shapes.AddChild(frame);
+                group.Style.FillStyle = new NColorFillStyle(color2);
+                group.Style.StrokeStyle = new NStrokeStyle(color2);
+           
+            return group;
         }
+
+        private NRectangleShape GetShape(NRectangleF bounds,DataTable dtGroup)
+        {
+            NRectangleShape zone = new NRectangleShape();
+            foreach (DataRow dr in dtGroup.Rows)
+            {
+                float width = (float)Math.Sqrt(Convert.ToDouble(dr[7].ToString()) * 2);
+                float height = (float)(Convert.ToDouble(dr[7].ToString()) / width);
+                Random rnd = new Random();
+                int maxWidth = Convert.ToInt32(Math.Sqrt(Convert.ToDouble(dr[5].ToString()) * 2));
+                int maxHeight = Convert.ToInt32(Convert.ToDouble(dr[5].ToString()) / maxWidth);
+
+                // Generate random position and size for the shape
+
+                //int x = rnd.Next(0, maxWidth);
+                //int y = rnd.Next(0, maxHeight);
+                float x = (float)rnd.NextDouble() * maxWidth;
+                float y = (float)rnd.NextDouble() * maxHeight;
+                //int w = rnd.Next(20, 40);
+                //int h = rnd.Next(20, 40);
+
+                //// Ensure that the shape bounds are within the view bounds
+                //if (x + width > maxWidth)
+                //{
+                //    x = maxWidth - w;
+                //}
+                //if (y + height > maxHeight)
+                //{
+                //    y = maxHeight - h;
+                //}
+
+                string NodeLabelIn = dr[0].ToString()
+                   + System.Environment.NewLine + dr[7].ToString() + " " + "m\u00b2";
+                string NodeLabelOut = dr[1].ToString();
+                zone.Text = NodeLabelIn;
+                Color color1 = Color.FromName(dr[6].ToString());
+                Color color2 = Color.Black;
+
+                zone = new NRectangleShape(bounds.X + 10 , bounds.Y + 10 , width, height);
+                zone.Style.FillStyle = new NColorFillStyle(color1);
+                zone.Style.StrokeStyle = new NStrokeStyle(color2);
+                //zone.Location = new NPointF(x, y);
+                zone.CreateShapeElements(ShapeElementsMask.Ports);
+                NRotatedBoundsPort port1 = new NRotatedBoundsPort(zone.UniqueId, ContentAlignment.TopCenter);
+                NRotatedBoundsPort port2 = new NRotatedBoundsPort(zone.UniqueId, ContentAlignment.MiddleLeft);
+                NRotatedBoundsPort port3 = new NRotatedBoundsPort(zone.UniqueId, ContentAlignment.BottomCenter);
+                NRotatedBoundsPort port4 = new NRotatedBoundsPort(zone.UniqueId, ContentAlignment.MiddleRight);
+                zone.Ports.AddChild(port1);
+                zone.Ports.AddChild(port2);
+                zone.Ports.AddChild(port4);
+                zone.Ports.AddChild(port3);
+                zone.Ports.DefaultInwardPortUniqueId = port1.UniqueId;
+                zone.Ports.DefaultInwardPortUniqueId = port2.UniqueId;
+                zone.Ports.DefaultInwardPortUniqueId = port3.UniqueId;
+                zone.Ports.DefaultInwardPortUniqueId = port4.UniqueId;
+
+                
+            }
+            return zone;
+        }
+
         private Dictionary<int, bool> rowNodeCreated = new Dictionary<int, bool>();
-        private NDrawingDocument drawing;
-
-
-        //public NDrawingDocument Drawing { get => drawing; set => drawing = value; }
-
-
-        //private void chartControl_MouseClick(object sender, Nevron.Diagram.WinForm.NMouseEventArgs e)
-        //{
-        //NRectangleShape clickedNode = Ndv.HitTest(e.Location);
-
-        //    if (clickedNode != null && clickedNode is NRectangleShape shapeNode)
-        //    {
-        //        if (SourceNode == null)
-        //        {
-        //            SourceNode = shapeNode;
-        //        }
-        //        else if (TargetNode == null)
-        //        {
-        //            TargetNode = shapeNode;
-
-        //            NLineShape edge = new NLineShape();
-        //            //chartControl.Document..AddChild(edge);
-        //            edge.FromShape = SourceNode;
-        //            edge.ToShape = TargetNode;
-
-        //            SourceNode = null;
-        //            TargetNode = null;
-        //        }
-        //    }
-        //}
-
         private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             if (e.Exception.Message == "DataGridViewComboBoxCell value is not valid")
@@ -264,12 +333,10 @@ namespace SpaceLayout.Forms.ZoneForms
                 }
             }
         }
-
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
         }
-
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -446,38 +513,98 @@ namespace SpaceLayout.Forms.ZoneForms
 
         private NGroup CreateGroup(DataTable dtData)
         {
+            //float width = (float)Math.Sqrt(Convert.ToDouble(dtData.Rows[0]["GroupArea"].ToString()) * 2);
+            //float height = (float)(Convert.ToDouble(dtData.Rows[0]["GroupArea"].ToString()) / width);
+            
             NGroup group = new NGroup();
             group.Name = dtData.Rows[0]["Group"].ToString();
-            //int maxWidth = Convert.ToInt32(Ndv.Document.Width);
-            //int maxHeight = Convert.ToInt32(Ndv.Document.Height);
-
-            //// Generate random position and size for the shape
-            //Random rnd = new Random();
-            //int x = rnd.Next(maxWidth);
-            //int y = rnd.Next(maxHeight);
-            //int w = rnd.Next(50, 150);
-            //int h = rnd.Next(50, 150);
-
-            //// Ensure that the shape bounds are within the view bounds
-            //if (x + 1000 > maxWidth)
-            //{
-            //    x = maxWidth - w;
-            //}
-            //if (y + 1200 > maxHeight)
-            //{
-            //    y = maxHeight - h;
-            //}
-
-            //group.Location = new NPointF(x, y);
-
+           
+            List<NRectangleShape> lstshape = CreateShapes(dtData);
+            foreach (NRectangleShape shape in lstshape)
+            {
+                group.Shapes.AddChild(shape);
+            }
+            //group.Shapes.AddChild(CreateShapes(dtData));
+           string color = dtData.Rows[0]["GroupColor"].ToString();
+            ////int maxWidth = Convert.ToInt32(Ndv.Document.Width);
+            ////int maxHeight = Convert.ToInt32(Ndv.Document.Height);
+            //float width = (float)Math.Sqrt(Convert.ToDouble(dtData.Rows[0]["GroupArea"].ToString()) * 2);
+            //float height = (float)(Convert.ToDouble(dtData.Rows[0]["GroupArea"].ToString()) / width);
+        
             CreateDecorators(group, group.Name);
             CreateGroupPorts(group);
-            AddColorsAndRectangleShape(group, dtData.Rows[0]["GroupColor"].ToString());
+            //AddColorsAndRectangleShape(group, color, width, height);
+            //CreateShape(group, dtData);
+           // group.Style.FillStyle = new NColorFillStyle(Color.FromName(color));
+            ////group.SetBounds(new NRectangleF(0, 0, width, height));
 
-            group.UpdateModelBounds();
-            group.AutoUpdateModelBounds = true;
-
+            //group.UpdateModelBounds();
+            //group.AutoUpdateModelBounds = true;
+            ////ApplyProtections(group, true, true);
             return group;
+        }
+
+        public List<NRectangleShape> CreateShapes(DataTable dtShape)
+        {
+            List<NRectangleShape> shapes = new List<NRectangleShape>();
+            foreach(DataRow dr in dtShape.Rows)
+            {
+                var rand = new Random();
+                //Zone zone = new Zone();
+                float width = (float)Math.Sqrt(Convert.ToDouble(dr[7].ToString()) * 2);
+                float height = (float)(Convert.ToDouble(dr[7].ToString()) / width);
+                //NRectangleF rect = new NRectangleF(0, 0, width, height);
+                NRectangleShape node = new NRectangleShape(0, 0, width, height);
+                //node.Tag = zone;
+                //node.Id = zone.ID;
+                node.Style.FillStyle = new NColorFillStyle(Color.FromName(dr[6].ToString()));
+                string NodeLabelIn = dr[0].ToString()
+                    + System.Environment.NewLine + dr[7].ToString() + " " + "m\u00b2";
+                //graphcontrol.Graph.AddLabel(node, NodeLabelIn, InteriorLabelModel.NorthWest, defaultLableStyle, new SizeD(width, height));
+                string NodeLabelOut = dr[1].ToString();
+                //graphcontrol.Graph.AddLabel(node, NodeLabelOut, ExteriorLabelModel.South, defaultLableStyle);
+                node.Text = NodeLabelIn;
+
+                int maxWidth = Convert.ToInt32(Math.Sqrt(Convert.ToDouble(dr[5].ToString()) * 2));
+                int maxHeight = Convert.ToInt32(Convert.ToDouble(dr[5].ToString()) / maxWidth);
+
+                // Generate random position and size for the shape
+                Random rnd = new Random();
+                int x = rnd.Next(0, maxWidth);
+                int y = rnd.Next(0, maxHeight);
+                //float x = (float)rnd.NextDouble() * maxWidth;
+                // float y = (float)rnd.NextDouble() * maxHeight;
+                int w = rnd.Next(50, 150);
+                int h = rnd.Next(50, 150);
+
+                // Ensure that the shape bounds are within the view bounds
+                if (x + width > maxWidth)
+                {
+                    x = maxWidth - w;
+                }
+                if (y + height > maxHeight)
+                {
+                    y = maxHeight - h;
+                }
+
+                node.Location = new NPointF(x, y);
+                node.CreateShapeElements(ShapeElementsMask.Ports);
+                NRotatedBoundsPort port1 = new NRotatedBoundsPort(node.UniqueId, ContentAlignment.TopCenter);
+                NRotatedBoundsPort port2 = new NRotatedBoundsPort(node.UniqueId, ContentAlignment.MiddleLeft);
+                NRotatedBoundsPort port3 = new NRotatedBoundsPort(node.UniqueId, ContentAlignment.BottomCenter);
+                NRotatedBoundsPort port4 = new NRotatedBoundsPort(node.UniqueId, ContentAlignment.MiddleRight);
+                node.Ports.AddChild(port1);
+                node.Ports.AddChild(port2);
+                node.Ports.AddChild(port3);
+                node.Ports.AddChild(port4);
+                node.Ports.DefaultInwardPortUniqueId = port1.UniqueId;
+                node.Ports.DefaultInwardPortUniqueId = port2.UniqueId;
+                node.Ports.DefaultInwardPortUniqueId = port3.UniqueId;
+                node.Ports.DefaultInwardPortUniqueId = port4.UniqueId;
+
+                shapes.Add(node);
+            }
+            return shapes;
         }
         
         private void CreateGroupPorts(NGroup group)
@@ -488,18 +615,18 @@ namespace SpaceLayout.Forms.ZoneForms
             group.Ports.AddChild(port);
         }
 
-        private void AddColorsAndRectangleShape(NGroup group, string color)
+        private void AddColorsAndRectangleShape(NGroup group, string color, float width, float height)
         {
             // Assuming you have predefined colors and rectangle shape dimensions
             NColorFillStyle Fill = new NColorFillStyle(Color.FromName(color));
             NStrokeStyle stroke = new NStrokeStyle(Color.Black);
-            float width = 100;
-            float height = 50;
+            //float width = 100;
+            //float height = 50;
 
             NRectangleShape rect = new NRectangleShape(0, 0, (float)width, (float)height);
             rect.Style.FillStyle = Fill;
             rect.Style.StrokeStyle = stroke;
-
+            
             group.Shapes.AddChild(rect);
         }
 
@@ -521,11 +648,75 @@ namespace SpaceLayout.Forms.ZoneForms
 			shape.Decorators.AddChild(decorator);
 		}
 
-        private NShape CreateShape(DataTable dtData)
-        {
-            NRectangleShape shape = new NRectangleShape();
+        private void ApplyProtections(NShape shape, bool trackersEdit, bool move)
+		{
+			NAbilities protection = shape.Protection;
+			protection.TrackersEdit = trackersEdit;
+			protection.MoveX = move;
+			protection.MoveY = move;
+			shape.Protection = protection;
+		}
 
-            return shape;
+    private void CreateShape(NGroup group, DataTable dtData)
+        {
+            NRectangleShape node;
+            foreach (DataRow dr in dtData.Rows)
+            {
+                var rand = new Random();
+                //Zone zone = new Zone();
+                float width = (float)Math.Sqrt(Convert.ToDouble(dr[7].ToString()) * 2);
+                float height = (float)(Convert.ToDouble(dr[7].ToString()) / width);
+                NRectangleF rect = new NRectangleF(0, 0, width, height);
+                 node = new NRectangleShape(rect);
+                //node.Tag = zone;
+                //node.Id = zone.ID;
+                node.Style.FillStyle = new NColorFillStyle(Color.FromName(dr[6].ToString()));
+                string NodeLabelIn = dr[0].ToString()
+                    + System.Environment.NewLine + dr[7].ToString() + " " + "m\u00b2";
+                //graphcontrol.Graph.AddLabel(node, NodeLabelIn, InteriorLabelModel.NorthWest, defaultLableStyle, new SizeD(width, height));
+                string NodeLabelOut = dr[1].ToString();
+                //graphcontrol.Graph.AddLabel(node, NodeLabelOut, ExteriorLabelModel.South, defaultLableStyle);
+                node.Text = NodeLabelIn;
+
+                int maxWidth = Convert.ToInt32(Math.Sqrt(Convert.ToDouble(dr[5].ToString()) * 2));
+                int maxHeight = Convert.ToInt32(Convert.ToDouble(dr[5].ToString()) / maxWidth);
+
+                // Generate random position and size for the shape
+                Random rnd = new Random();
+                int x = rnd.Next(0,maxWidth);
+                int y = rnd.Next(0,maxHeight);
+                //float x = (float)rnd.NextDouble() * maxWidth;
+               // float y = (float)rnd.NextDouble() * maxHeight;
+                int w = rnd.Next(50, 150);
+                int h = rnd.Next(50, 150);
+
+                // Ensure that the shape bounds are within the view bounds
+                if (x + width > maxWidth)
+                {
+                    x = maxWidth - w;
+                }
+                if (y + height > maxHeight)
+                {
+                    y = maxHeight - h;
+                }
+
+                node.Location = new NPointF(x, y);
+                node.CreateShapeElements(ShapeElementsMask.Ports);
+                NRotatedBoundsPort port1 = new NRotatedBoundsPort(node.UniqueId, ContentAlignment.TopCenter);
+                NRotatedBoundsPort port2 = new NRotatedBoundsPort(node.UniqueId, ContentAlignment.MiddleLeft);
+                NRotatedBoundsPort port3 = new NRotatedBoundsPort(node.UniqueId, ContentAlignment.BottomCenter);
+                NRotatedBoundsPort port4 = new NRotatedBoundsPort(node.UniqueId, ContentAlignment.MiddleRight);
+                node.Ports.AddChild(port1);
+                node.Ports.AddChild(port2);
+                node.Ports.AddChild(port3);
+                node.Ports.AddChild(port4);
+                node.Ports.DefaultInwardPortUniqueId = port1.UniqueId;
+                node.Ports.DefaultInwardPortUniqueId = port2.UniqueId;
+                node.Ports.DefaultInwardPortUniqueId = port3.UniqueId;
+                node.Ports.DefaultInwardPortUniqueId = port4.UniqueId;
+                group.Shapes.AddChild(node);
+            }
+           
         }
 
         private void ZoneConnectorData(string flg) //flg: 1 = save, 2 =  load

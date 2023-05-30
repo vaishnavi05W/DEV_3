@@ -107,7 +107,8 @@ namespace SpaceLayout.Forms.ZoneForms
             {
                 Ndd = Ndv.Document;
             }
-            Ndv.ViewLayout = ViewLayout.Stretch;
+            
+            //Ndv.ViewLayout = ViewLayout.Stretch;
             BindGrid();
         }
 
@@ -251,13 +252,15 @@ namespace SpaceLayout.Forms.ZoneForms
                 {
                     group.Shapes.AddChild(GetShape(bounds,dtGroup));
                 }
+                CreateDecorators(frame, dtGroup.Rows[0]["Group"].ToString());
                 group.UpdateModelBounds();
-
+                
                 frame.Style.FillStyle = new NColorFillStyle(color1);
                 group.Shapes.AddChild(frame);
+                CreateGroupPorts(frame);
                 group.Style.FillStyle = new NColorFillStyle(color2);
                 group.Style.StrokeStyle = new NStrokeStyle(color2);
-           
+            frame.SendBackward();
             return group;
         }
 
@@ -533,7 +536,7 @@ namespace SpaceLayout.Forms.ZoneForms
             //float height = (float)(Convert.ToDouble(dtData.Rows[0]["GroupArea"].ToString()) / width);
         
             CreateDecorators(group, group.Name);
-            CreateGroupPorts(group);
+            //CreateGroupPorts(group);
             //AddColorsAndRectangleShape(group, color, width, height);
             //CreateShape(group, dtData);
            // group.Style.FillStyle = new NColorFillStyle(Color.FromName(color));
@@ -608,12 +611,21 @@ namespace SpaceLayout.Forms.ZoneForms
             return shapes;
         }
         
-        private void CreateGroupPorts(NGroup group)
+        private void CreateGroupPorts(NRectangleShape group)
         {
             group.CreateShapeElements(ShapeElementsMask.Ports);
             NRotatedBoundsPort port = new NRotatedBoundsPort(new NContentAlignment(ContentAlignment.TopCenter));
+            NRotatedBoundsPort port1 = new NRotatedBoundsPort(new NContentAlignment(ContentAlignment.BottomCenter));
+            NRotatedBoundsPort port2 = new NRotatedBoundsPort(new NContentAlignment(ContentAlignment.MiddleLeft));
+            NRotatedBoundsPort port3 = new NRotatedBoundsPort(new NContentAlignment(ContentAlignment.MiddleRight));
             port.Name = "port";
+            port1.Name = "port1";
+            port2.Name = "port2";
+            port3.Name = "port3";
             group.Ports.AddChild(port);
+            group.Ports.AddChild(port1);
+            group.Ports.AddChild(port2);
+            group.Ports.AddChild(port3);
         }
 
         private void AddColorsAndRectangleShape(NGroup group, string color, float width, float height)

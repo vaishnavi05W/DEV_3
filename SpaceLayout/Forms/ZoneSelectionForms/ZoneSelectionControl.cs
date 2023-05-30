@@ -222,7 +222,7 @@ namespace SpaceLayout.Forms.ZoneForms
            
         }
 
-        private NGroup GetGroup(DataTable dtGroup)
+        private NGroup GetGroup(DataTable dtGroup)//ForGroup
         {
            
                 float width = (float)Math.Sqrt(Convert.ToDouble(dtGroup.Rows[0]["GroupArea"].ToString()) * 2);
@@ -264,7 +264,7 @@ namespace SpaceLayout.Forms.ZoneForms
             return group;
         }
 
-        private NRectangleShape GetShape(NRectangleF bounds,DataTable dtGroup)
+        private NRectangleShape GetShape(NRectangleF bounds,DataTable dtGroup)//For zone
         {
             NRectangleShape zone = new NRectangleShape();
             foreach (DataRow dr in dtGroup.Rows)
@@ -670,12 +670,13 @@ namespace SpaceLayout.Forms.ZoneForms
 			shape.Protection = protection;
 		}
 
-    private void CreateShape(NGroup group, DataTable dtData)
+        private void CreateShape(NGroup group, DataTable dtData)
         {
             NRectangleShape node;
+            Random rnd = new Random();
             foreach (DataRow dr in dtData.Rows)
             {
-                var rand = new Random();
+                //var rand = new Random();
                 //Zone zone = new Zone();
                 float width = (float)Math.Sqrt(Convert.ToDouble(dr[7].ToString()) * 2);
                 float height = (float)(Convert.ToDouble(dr[7].ToString()) / width);
@@ -694,12 +695,42 @@ namespace SpaceLayout.Forms.ZoneForms
                 int maxWidth = Convert.ToInt32(Math.Sqrt(Convert.ToDouble(dr[5].ToString()) * 2));
                 int maxHeight = Convert.ToInt32(Convert.ToDouble(dr[5].ToString()) / maxWidth);
 
+                //int x = 0, y = 0,w =0, h= 0;
+
+                //bool overlapping = true;
+                //while (overlapping)
+                //{
+                //    x = rnd.Next(0, maxWidth);
+                //    y = rnd.Next(0, maxHeight);
+                //    w = rnd.Next(50, 150);
+                //    h = rnd.Next(50, 150);
+
+
+                //    node.Bounds = new NRectangleF(x, y, node.Bounds.Width, node.Bounds.Height);
+
+                //    bool intersecting = false;
+                //    // Check if the new shape intersects with any existing shape in the group
+                //    foreach (var shape in group.Shapes)
+                //    {
+
+                //        if (shape is NRectangleShape existingShape && existingShape.Bounds.IntersectsWith(node.Bounds))
+
+                //            intersecting = true;
+                //            break;
+                //    }
+                //    // If no intersection, exit the loop
+                //    if (!intersecting)
+                //    {
+                //        overlapping = false;
+                //    }
+                //}
+
                 // Generate random position and size for the shape
-                Random rnd = new Random();
-                int x = rnd.Next(0,maxWidth);
-                int y = rnd.Next(0,maxHeight);
+               
+                int x = rnd.Next(0, maxWidth);
+                int y = rnd.Next(0, maxHeight);
                 //float x = (float)rnd.NextDouble() * maxWidth;
-               // float y = (float)rnd.NextDouble() * maxHeight;
+                // float y = (float)rnd.NextDouble() * maxHeight;
                 int w = rnd.Next(50, 150);
                 int h = rnd.Next(50, 150);
 

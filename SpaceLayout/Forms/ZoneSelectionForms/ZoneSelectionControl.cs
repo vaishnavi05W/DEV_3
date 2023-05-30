@@ -220,7 +220,7 @@ namespace SpaceLayout.Forms.ZoneForms
            
         }
 
-        private NGroup GetGroup(DataTable dtGroup)
+        private NGroup GetGroup(DataTable dtGroup) //For Group
         {
            
                 float width = (float)Math.Sqrt(Convert.ToDouble(dtGroup.Rows[0]["GroupArea"].ToString()) * 2) * (float)2.5;
@@ -265,7 +265,7 @@ namespace SpaceLayout.Forms.ZoneForms
             return group;
         }
 
-        private List<NRectangleShape> GetShape(NRectangleF bounds,DataTable dtGroup)
+        private List<NRectangleShape> GetShape(NRectangleF bounds,DataTable dtGroup) //For Zones
         {
             List<NRectangleShape> zones = new List<NRectangleShape>();
             foreach (DataRow dr in dtGroup.Rows)

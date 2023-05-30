@@ -223,6 +223,7 @@ namespace SpaceLayout.Forms.ZoneForms
 
         private NGroup GetGroup(DataTable dtGroup)
         {
+           
                 float width = (float)Math.Sqrt(Convert.ToDouble(dtGroup.Rows[0]["GroupArea"].ToString()) * 2);
                 float height = (float)(Convert.ToDouble(dtGroup.Rows[0]["GroupArea"].ToString()) / width);
                 Random random = new Random();
@@ -250,17 +251,13 @@ namespace SpaceLayout.Forms.ZoneForms
                 {
                     group.Shapes.AddChild(GetShape(bounds,dtGroup));
                 }
-           
                 group.UpdateModelBounds();
 
-                CreateDecorators(frame, dtGroup.Rows[0]["Group"].ToString());
-                
                 frame.Style.FillStyle = new NColorFillStyle(color1);
                 group.Shapes.AddChild(frame);
-                CreateGroupPorts(frame);
                 group.Style.FillStyle = new NColorFillStyle(color2);
                 group.Style.StrokeStyle = new NStrokeStyle(color2);
-                frame.SendToBack();
+           
             return group;
         }
 
@@ -318,7 +315,7 @@ namespace SpaceLayout.Forms.ZoneForms
                 zone.Ports.DefaultInwardPortUniqueId = port2.UniqueId;
                 zone.Ports.DefaultInwardPortUniqueId = port3.UniqueId;
                 zone.Ports.DefaultInwardPortUniqueId = port4.UniqueId;
-                
+
                 
             }
             return zone;
@@ -536,7 +533,7 @@ namespace SpaceLayout.Forms.ZoneForms
             //float height = (float)(Convert.ToDouble(dtData.Rows[0]["GroupArea"].ToString()) / width);
         
             CreateDecorators(group, group.Name);
-            //CreateGroupPorts(group);
+            CreateGroupPorts(group);
             //AddColorsAndRectangleShape(group, color, width, height);
             //CreateShape(group, dtData);
            // group.Style.FillStyle = new NColorFillStyle(Color.FromName(color));
@@ -611,25 +608,12 @@ namespace SpaceLayout.Forms.ZoneForms
             return shapes;
         }
         
-        private void CreateGroupPorts(NRectangleShape group)
+        private void CreateGroupPorts(NGroup group)
         {
             group.CreateShapeElements(ShapeElementsMask.Ports);
             NRotatedBoundsPort port = new NRotatedBoundsPort(new NContentAlignment(ContentAlignment.TopCenter));
-            NRotatedBoundsPort port1 = new NRotatedBoundsPort(new NContentAlignment(ContentAlignment.BottomCenter));
-            NRotatedBoundsPort port2 = new NRotatedBoundsPort(new NContentAlignment(ContentAlignment.MiddleLeft));
-            NRotatedBoundsPort port3 = new NRotatedBoundsPort(new NContentAlignment(ContentAlignment.MiddleRight));
             port.Name = "port";
-            port1.Name = "port1";
-            port2.Name = "port2";
-            port3.Name = "port3";
             group.Ports.AddChild(port);
-            group.Ports.AddChild(port1);
-            group.Ports.AddChild(port2);
-            group.Ports.AddChild(port3);
-            group.Ports.DefaultInwardPortUniqueId = port.UniqueId;
-            group.Ports.DefaultInwardPortUniqueId = port1.UniqueId;
-            group.Ports.DefaultInwardPortUniqueId = port2.UniqueId;
-            group.Ports.DefaultInwardPortUniqueId = port3.UniqueId;
         }
 
         private void AddColorsAndRectangleShape(NGroup group, string color, float width, float height)

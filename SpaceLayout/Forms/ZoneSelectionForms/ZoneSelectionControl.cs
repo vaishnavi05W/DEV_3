@@ -70,6 +70,8 @@ namespace SpaceLayout.Forms.ZoneForms
         private NCheckBox canBeEmptyCheckBox;
         List<Connector_Main> connector;
         List<Zone_Main> zone;
+      
+        List<NGroup> existingGroups = new List<NGroup>();
 
         public ZoneSelectionControl()
         {
@@ -193,6 +195,7 @@ namespace SpaceLayout.Forms.ZoneForms
         {
             try
             {
+                List<NGroup> existingGroups = new List<NGroup>();
                 NGroup maingp = new NGroup();
                 string groupname = string.Empty;
                 foreach (DataRow dr in dtMain.Rows)
@@ -202,13 +205,28 @@ namespace SpaceLayout.Forms.ZoneForms
                         groupname = dr["Group"].ToString();
                         if (!String.IsNullOrEmpty(groupname))
                         {
-                            DataTable dtGroup = dtMain.Select("Group = '" + groupname + "'").CopyToDataTable();
-                            if (dtGroup.Rows.Count > 0)
+                            NGroup existingGroup = existingGroups.FirstOrDefault(g => g.Name == groupname);
+                            if (existingGroup != null)
                             {
-                                maingp = GetGroup(dtGroup);
-                                maingp.Name = groupname;
-                                Ndd.ActiveLayer.AddChild(maingp);
+                                AddRowsToGroup(existingGroup, dtMain.Select("Group = '" + groupname+ "'"));
                             }
+                            else
+                            {
+                                DataTable dtGroup = dtMain.Select("Group = '" + groupname + "'").CopyToDataTable();
+                                if (dtGroup.Rows.Count > 0)
+                                {
+                                    NGroup newGroup = GetGroup(dtGroup, existingGroups);
+                                    newGroup.Name = groupname;
+                                    existingGroups.Add(newGroup);
+                                    // Create a new list for existing groups
+                                    maingp = GetGroup(dtGroup, existingGroups);
+                                    maingp.Name = groupname;
+                                    Ndd.ActiveLayer.AddChild(newGroup);
+                                }
+                            }
+                        
+                            
+
                         }
                     }
                 }
@@ -219,33 +237,32 @@ namespace SpaceLayout.Forms.ZoneForms
             }
            
         }
+        private void AddRowsToGroup(NGroup group, DataRow[] rows)
+        {
+            // Add the DataTable rows to the existing group
+            foreach (DataRow row in rows)
+            {
+                // Add your logic to process and add rows to the group
+            }
+        }
 
-        private NGroup GetGroup(DataTable dtGroup)//ForGroup
+        private NGroup GetGroup(DataTable dtGroup, List<NGroup> existingGroups)//ForGroup
         {
            
-                float width = (float)Math.Sqrt(Convert.ToDouble(dtGroup.Rows[0]["GroupArea"].ToString()) * 2) * (float)2.5;
+
+            float width = (float)Math.Sqrt(Convert.ToDouble(dtGroup.Rows[0]["GroupArea"].ToString()) * 2) * (float)2.5;
                 float height = (float)(Convert.ToDouble(dtGroup.Rows[0]["GroupArea"].ToString()) / width) * (float)4;
                 Random random = new Random();
-                //float x = random.Next(0, Convert.ToInt32(Ndv.Document.Bounds.X));
-                //float y = random.Next(0, Convert.ToInt32(Ndv.Document.Bounds.Y));
-                float x = (float)random.NextDouble() * Ndv.Document.Bounds.X;
-                float y = (float)random.NextDouble() * Ndv.Document.Bounds.Y;
-            //float w = random.Next(30, 50);
-            //float h = random.Next(30, 50);
-            //if (x + width > Ndv.Document.Width)
-            //{
-            //    x = Ndv.Document.Width - w;
-            //}
-            //if (y + height > Ndv.Document.Height)
-            //{
-            //    y = Ndv.Document.Height - h;
-            //}
+
+            float x = (float)random.NextDouble() * Ndv.Document.Bounds.X;
+            float y = (float)random.NextDouble() * Ndv.Document.Bounds.Y;
+
 
             Color color1 = Color.FromName(dtGroup.Rows[0]["GroupColor"].ToString());
                 Color color2 = Color.Black;
 
                 NGroup group = new NGroup();
-                NRectangleF bounds = new NRectangleF(x, y, width,height);
+                NRectangleF bounds = new NRectangleF(x, y, width, height);
                 NRectangleShape frame = new NRectangleShape(bounds);
                 frame.Protection = new NAbilities(AbilitiesMask.Select);
                 List<NRectangleShape> zones = GetShape(bounds, dtGroup);
@@ -255,15 +272,63 @@ namespace SpaceLayout.Forms.ZoneForms
                 }
                 CreateDecorators(frame, dtGroup.Rows[0]["Group"].ToString());
                 group.UpdateModelBounds();
-                
+
                 frame.Style.FillStyle = new NColorFillStyle(color1);
                 group.Shapes.AddChild(frame);
                 CreateGroupPorts(frame);
                 group.Style.FillStyle = new NColorFillStyle(color2);
                 group.Style.StrokeStyle = new NStrokeStyle(color2);
-            frame.SendToBack();
-            return group;
+                frame.SendToBack();
+
+            bool overlapping = false;
+            foreach (NGroup existingGroup in existingGroups)
+            {
+                if (CheckOverlap(group, existingGroup))
+                {
+                    overlapping = true;
+                        x = (float)random.NextDouble() * Ndv.Document.Bounds.X;
+                    y = (float)random.NextDouble() * Ndv.Document.Bounds.Y;
+                    bounds = new NRectangleF(x, y, width, height);
+                    frame.Bounds = bounds;
+                    group.UpdateModelBounds();
+                    break;
+                }
+            }
+
+            // If overlapping, recursively call the GetGroup method again
+            if (overlapping)
+            {
+                return GetGroup(dtGroup, existingGroups);
+            }
+            else
+            {
+
+                return group;
+            }
+
+
         }
+        private bool CheckOverlap(NGroup group1, NGroup group2)
+        {
+            return group1.Bounds.IntersectsWith(group2.Bounds);
+        }
+
+
+        //float x = random.Next(0, Convert.ToInt32(Ndv.Document.Bounds.X));
+        //float y = random.Next(0, Convert.ToInt32(Ndv.Document.Bounds.Y));
+
+        //float w = random.Next(30, 50);
+        //float h = random.Next(30, 50);
+        //if (x + width > Ndv.Document.Width)
+        //{
+        //    x = Ndv.Document.Width - w;
+        //}
+        //if (y + height > Ndv.Document.Height)
+        //{
+        //    y = Ndv.Document.Height - h;
+        //}
+
+
 
         private List<NRectangleShape> GetShape(NRectangleF bounds,DataTable dtGroup)
         {

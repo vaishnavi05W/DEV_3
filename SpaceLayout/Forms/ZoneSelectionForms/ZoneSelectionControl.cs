@@ -313,23 +313,6 @@ namespace SpaceLayout.Forms.ZoneForms
             return group1.Bounds.IntersectsWith(group2.Bounds);
         }
 
-
-        //float x = random.Next(0, Convert.ToInt32(Ndv.Document.Bounds.X));
-        //float y = random.Next(0, Convert.ToInt32(Ndv.Document.Bounds.Y));
-
-        //float w = random.Next(30, 50);
-        //float h = random.Next(30, 50);
-        //if (x + width > Ndv.Document.Width)
-        //{
-        //    x = Ndv.Document.Width - w;
-        //}
-        //if (y + height > Ndv.Document.Height)
-        //{
-        //    y = Ndv.Document.Height - h;
-        //}
-
-
-
         private List<NRectangleShape> GetShape(NRectangleF bounds,DataTable dtGroup)
         {
             List<NRectangleShape> zones = new List<NRectangleShape>();

@@ -107,8 +107,6 @@ namespace SpaceLayout.Forms.ZoneForms
             {
                 Ndd = Ndv.Document;
             }
-            
-            //Ndv.ViewLayout = ViewLayout.Stretch;
             BindGrid();
         }
 
@@ -225,32 +223,35 @@ namespace SpaceLayout.Forms.ZoneForms
         private NGroup GetGroup(DataTable dtGroup)//ForGroup
         {
            
-                float width = (float)Math.Sqrt(Convert.ToDouble(dtGroup.Rows[0]["GroupArea"].ToString()) * 2);
-                float height = (float)(Convert.ToDouble(dtGroup.Rows[0]["GroupArea"].ToString()) / width);
+                float width = (float)Math.Sqrt(Convert.ToDouble(dtGroup.Rows[0]["GroupArea"].ToString()) * 2) * (float)2.5;
+                float height = (float)(Convert.ToDouble(dtGroup.Rows[0]["GroupArea"].ToString()) / width) * (float)4;
                 Random random = new Random();
-                float x = random.Next(0, Convert.ToInt32(Ndv.Document.Width));
-                float y = random.Next(0, Convert.ToInt32(Ndv.Document.Height));
-                float w = random.Next(30, 50);
-                float h = random.Next(30, 50);
-                if (x + width > Ndv.Document.Width)
-                {
-                    x = Ndv.Document.Width - w;
-                }
-                if (y + height > Ndv.Document.Height)
-                {
-                    y = Ndv.Document.Height - h;
-                }
+                //float x = random.Next(0, Convert.ToInt32(Ndv.Document.Bounds.X));
+                //float y = random.Next(0, Convert.ToInt32(Ndv.Document.Bounds.Y));
+                float x = (float)random.NextDouble() * Ndv.Document.Bounds.X;
+                float y = (float)random.NextDouble() * Ndv.Document.Bounds.Y;
+            //float w = random.Next(30, 50);
+            //float h = random.Next(30, 50);
+            //if (x + width > Ndv.Document.Width)
+            //{
+            //    x = Ndv.Document.Width - w;
+            //}
+            //if (y + height > Ndv.Document.Height)
+            //{
+            //    y = Ndv.Document.Height - h;
+            //}
 
-                Color color1 = Color.FromName(dtGroup.Rows[0]["GroupColor"].ToString());
+            Color color1 = Color.FromName(dtGroup.Rows[0]["GroupColor"].ToString());
                 Color color2 = Color.Black;
 
                 NGroup group = new NGroup();
-                NRectangleF bounds = new NRectangleF(x, y, width, height);
+                NRectangleF bounds = new NRectangleF(x, y, width,height);
                 NRectangleShape frame = new NRectangleShape(bounds);
                 frame.Protection = new NAbilities(AbilitiesMask.Select);
-                foreach (DataRow dr in dtGroup.Rows)
+                List<NRectangleShape> zones = GetShape(bounds, dtGroup);
+                foreach (NRectangleShape r in zones)
                 {
-                    group.Shapes.AddChild(GetShape(bounds,dtGroup));
+                    group.Shapes.AddChild(r);
                 }
                 CreateDecorators(frame, dtGroup.Rows[0]["Group"].ToString());
                 group.UpdateModelBounds();
@@ -260,15 +261,16 @@ namespace SpaceLayout.Forms.ZoneForms
                 CreateGroupPorts(frame);
                 group.Style.FillStyle = new NColorFillStyle(color2);
                 group.Style.StrokeStyle = new NStrokeStyle(color2);
-            frame.SendBackward();
+            frame.SendToBack();
             return group;
         }
 
-        private NRectangleShape GetShape(NRectangleF bounds,DataTable dtGroup)//For zone
+        private List<NRectangleShape> GetShape(NRectangleF bounds,DataTable dtGroup)
         {
-            NRectangleShape zone = new NRectangleShape();
+            List<NRectangleShape> zones = new List<NRectangleShape>();
             foreach (DataRow dr in dtGroup.Rows)
             {
+                NRectangleShape zone = new NRectangleShape();
                 float width = (float)Math.Sqrt(Convert.ToDouble(dr[7].ToString()) * 2);
                 float height = (float)(Convert.ToDouble(dr[7].ToString()) / width);
                 Random rnd = new Random();
@@ -318,10 +320,10 @@ namespace SpaceLayout.Forms.ZoneForms
                 zone.Ports.DefaultInwardPortUniqueId = port2.UniqueId;
                 zone.Ports.DefaultInwardPortUniqueId = port3.UniqueId;
                 zone.Ports.DefaultInwardPortUniqueId = port4.UniqueId;
-
                 
+                zones.Add(zone);
             }
-            return zone;
+            return zones;
         }
 
         private Dictionary<int, bool> rowNodeCreated = new Dictionary<int, bool>();

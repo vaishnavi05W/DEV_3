@@ -90,17 +90,12 @@ namespace SpaceLayout.Forms.ZoneForms
             // drawing = (NDrawingDocument)persistencyManager.LoadDocumentFromFile("c:\\temp\\drawing1.ndx");
 
             this.Load += IS_Load;
-
             connector = new List<Connector_Main>();
             zone = new List<Zone_Main>();
             groups = new List<Group>();
             congroup = new List<Connector_Group>();
             // Add the diagram view to the form
             this.Controls.Add(Ndv);
-
-            //chartControl.ItemClick += chartControl_MouseClick;
-            
-
         }
 
         private void ChartControl_NodeCreated(NNodeEventArgs args)
@@ -137,10 +132,21 @@ namespace SpaceLayout.Forms.ZoneForms
             FloorLayout.HorizontalSpacing = 20;
             FloorLayout.VerticalSpacing = 20;
             FloorLayout.MaxOrdinal = 1;
-
+            BindRatioCombo();
             BindGrid();
         }
 
+        private void BindRatioCombo()
+        {
+            Dictionary<string, string> comboSource = new Dictionary<string, string>();
+            comboSource.Add("1", "1:1");
+            comboSource.Add("2", "2:1");
+            comboSource.Add("3", "3:2");
+            cboZonesRatio.DataSource = new BindingSource(comboSource, null);
+            cboZonesRatio.DisplayMember = "Value";
+            cboZonesRatio.ValueMember = "Key";
+            cboZonesRatio.SelectedValue = "2";
+        }
         
 
         private void BindGrid()
@@ -249,7 +255,7 @@ namespace SpaceLayout.Forms.ZoneForms
                                 newGroup.Name = groupname;
                                 newGroup = CreateGroupLayout(layer, layoutContext, groupname, dtGroup);
                                 NRectangleShape frame = new NRectangleShape(newGroup.Bounds.X, newGroup.Bounds.Y, newGroup.Width, newGroup.Height);
-                                CreateDecorators(frame, newGroup.Name);
+                                //CreateDecorators(frame, newGroup.Name);
                                 frame.Protection = new NAbilities(AbilitiesMask.Select);
                                 frame.Style.FillStyle = new NColorFillStyle(Color.Transparent);
                                 frame.Style.StrokeStyle = new NStrokeStyle(Color.Gray);

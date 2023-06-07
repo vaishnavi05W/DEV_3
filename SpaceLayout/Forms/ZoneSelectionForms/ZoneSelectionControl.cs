@@ -71,7 +71,7 @@ namespace SpaceLayout.Forms.ZoneForms
         private NLayer layer;
         NRectangleShape m_DesiredSizeShape;
         NFlowLayout ZonesLayout;
-
+        NFlowLayout FloorLayout;
         List<Connector_Main> connector;
         List<Zone_Main> zone;
         List<Group> groups;
@@ -123,11 +123,21 @@ namespace SpaceLayout.Forms.ZoneForms
             ZonesLayout = new NFlowLayout();
             ZonesLayout.Direction = LayoutDirection.LeftToRight;
             ZonesLayout.ConstrainMode = CellConstrainMode.Ordinal;
-            ZonesLayout.HorizontalContentPlacement = ContentPlacement.Far;
+            ZonesLayout.HorizontalContentPlacement = ContentPlacement.Near;
             ZonesLayout.VerticalContentPlacement = ContentPlacement.Far;
-            ZonesLayout.HorizontalSpacing = 20;
+            ZonesLayout.HorizontalSpacing = 30;
             ZonesLayout.VerticalSpacing = 20;
             ZonesLayout.MaxOrdinal = 3;
+
+            FloorLayout = new NFlowLayout();
+            FloorLayout.Direction = LayoutDirection.LeftToRight;
+            FloorLayout.ConstrainMode = CellConstrainMode.Ordinal;
+            FloorLayout.HorizontalContentPlacement = ContentPlacement.Center;
+            FloorLayout.VerticalContentPlacement = ContentPlacement.Center;
+            FloorLayout.HorizontalSpacing = 20;
+            FloorLayout.VerticalSpacing = 20;
+            FloorLayout.MaxOrdinal = 1;
+
             BindGrid();
         }
 
@@ -219,7 +229,7 @@ namespace SpaceLayout.Forms.ZoneForms
                 layoutContext.BodyAdapter = new NShapeBodyAdapter(Ndd);
                 layoutContext.BodyContainerAdapter = new NDrawingBodyContainerAdapter(Ndd);
                 
-                List<string> existingGroups = new List<string>();
+                IDictionary<string,string> existingGroups = new Dictionary<string, string>();
                 NGroup maingp = new NGroup();
                 string groupname = string.Empty;
                 foreach (DataRow dr in dtMain.Rows)
@@ -230,63 +240,59 @@ namespace SpaceLayout.Forms.ZoneForms
                         if (!String.IsNullOrEmpty(groupname))
                         {
                             
-                                DataTable dtGroup = dtMain.Select("Group = '" + groupname + "'").CopyToDataTable();
-                                if (dtGroup.Rows.Count > 0)
-                                {
-                                    List<NRectangleShape> zones = GetShape(dtGroup);
-
+                            DataTable dtGroup = dtMain.Select("Group = '" + groupname + "'").CopyToDataTable();
+                            if (dtGroup.Rows.Count > 0)
+                            {
+                                
+                                List<NRectangleShape> zones = GetShape(dtGroup);
                                 NGroup newGroup = new NGroup();
                                 newGroup.Name = groupname;
                                 newGroup = CreateGroupLayout(layer, layoutContext, groupname, dtGroup);
-                                existingGroups.Add(newGroup.Name);
+                                NRectangleShape frame = new NRectangleShape(newGroup.Bounds.X, newGroup.Bounds.Y, newGroup.Width, newGroup.Height);
+                                CreateDecorators(frame, newGroup.Name);
+                                frame.Protection = new NAbilities(AbilitiesMask.Select);
+                                frame.Style.FillStyle = new NColorFillStyle(Color.Transparent);
+                                frame.Style.StrokeStyle = new NStrokeStyle(Color.Gray);
+                                newGroup.Shapes.AddChild(frame);
+                                CreateGroupPorts(frame);
+                                frame.SendToBack();
+                                existingGroups.Add(newGroup.Name, dtGroup.Rows[0]["Floor"].ToString());
                                 Ndd.ActiveLayer.AddChild(newGroup);
                             }
 
                         }
                     }
                 }
-                NNodeList listedGroup = new NNodeList();
+
+                List<string> level = new List<string>();
+                string floor = string.Empty;
                 foreach (var gname in existingGroups)
                 {
-                    listedGroup.Add(Ndd.ActiveLayer.GetChildByName(gname));
+                    //floor = gname.Value;
+                    if(gname.Value != floor)
+                    {
+                        floor = gname.Value;
+                        List<string> names = existingGroups.Where(x => x.Value == floor).Select(x=> x.Key).ToList();
+                        NGroup floorgroups = new NGroup();
+                        floorgroups = CreateFloorLayout(layoutContext, names);
+                        floorgroups.Name = floor;
+                        NRectangleShape frame = new NRectangleShape(floorgroups.Bounds.X,floorgroups.Bounds.Y, floorgroups.Width, floorgroups.Height);
+                        frame.Protection = new NAbilities(AbilitiesMask.Select);
+                        frame.Style.FillStyle = new NColorFillStyle(Color.Transparent);
+                        frame.Style.StrokeStyle = new NStrokeStyle(Color.Black);
+                        floorgroups.Shapes.AddChild(frame);
+                        level.Add(floor);
+                        Ndd.ActiveLayer.AddChild(floorgroups);
+                    }
                 }
 
-                ZonesLayout.Layout(listedGroup, layoutContext);
-                //NFlowLayout flowlayout = new NFlowLayout();
-                //flowlayout.Direction = LayoutDirection.LeftToRight;
-                //flowlayout.ConstrainMode = CellConstrainMode.Ordinal;
-                //flowlayout.HorizontalContentPlacement = ContentPlacement.Far;
-                //flowlayout.VerticalContentPlacement = ContentPlacement.Far;
-                //flowlayout.HorizontalSpacing = 50;
-                //flowlayout.VerticalSpacing = 50;
-                //flowlayout.MaxOrdinal = 1;
-                //NNodeList g = new NNodeList();
-                //foreach (NRectangleShape rectangle in existingGroups)
-                //{
-                //    g.Add(rectangle);
-                //    //group.Shapes.AddChild(rectangle);
-                //}
-
-
-                //NFlowLayout layout = new NFlowLayout();
-                //layout.Direction = LayoutDirection.LeftToRight;
-                //layout.ConstrainMode = CellConstrainMode.Ordinal;
-                //layout.HorizontalContentPlacement = ContentPlacement.Far;
-                //layout.VerticalContentPlacement = ContentPlacement.Far;
-                //layout.HorizontalSpacing = 20;
-                //layout.VerticalSpacing = 20;
-                //layout.MaxOrdinal = 2;
-
-
-
-                //if (layout != null)
-                //{
-
-
-                //    // layout the shapes
-                //    layout.Layout(g, layoutContext);
-                //}
-
+                NNodeList listedFloor = new NNodeList();
+                foreach (string l in level)
+                {
+                    listedFloor.Add(Ndd.ActiveLayer.GetChildByName(l));
+                    //Ndd.ActiveLayer.RemoveChild(Ndd.ActiveLayer.GetChildByName(l));
+                }
+               FloorLayout.Layout(listedFloor, layoutContext);
                 ////Ndd.AutoBoundsMode = AutoBoundsMode.AutoSizeToContent;
             }
             catch (Exception e)
@@ -295,15 +301,7 @@ namespace SpaceLayout.Forms.ZoneForms
             }
            
         }
-        private void AddRowsToGroup(NGroup group, DataRow[] rows)
-        {
-            // Add the DataTable rows to the existing group
-            foreach (DataRow row in rows)
-            {
-                // Add your logic to process and add rows to the group
-            }
-        }
-
+     
         private NGroup GetGroup(DataTable dtGroup, List<NGroup> existingGroups)//ForGroup
         {
             Color color2 = Color.Black;
@@ -392,12 +390,39 @@ namespace SpaceLayout.Forms.ZoneForms
            
         }
 
+        private NGroup CreateFloorLayout(NLayoutContext layoutContext, List<string> groupnames)
+        {
+            NGroup group = new NGroup();
+            NNodeList listedNode = new NNodeList();
+           
+            
+
+            if (groupnames != null)
+            {
+                foreach (string n in groupnames)
+                {
+                    
+                    group.Shapes.AddChild(Ndd.ActiveLayer.GetChildByName(n));
+                    
+                    listedNode.Add(Ndd.ActiveLayer.GetChildByName(n));
+                    
+                    Ndd.ActiveLayer.RemoveChild(Ndd.ActiveLayer.GetChildByName(n));
+                    
+                }
+                
+                ZonesLayout.Layout(listedNode, layoutContext);
+                group.UpdateModelBounds();
+            }
+            return group;
+        }
+
         private NGroup CreateGroupLayout(NLayer layer,NLayoutContext layoutContext, String groupName,DataTable dtgroup)
         {
+            
             NGroup group = new NGroup();
             if (ZonesLayout != null)
             {
-                NRectangleF bounds = new NRectangleF(0,0,1,1);
+                NRectangleF bounds = new NRectangleF(5,5,1,1);
                 NRectangleShape frame = new NRectangleShape(bounds);
                 frame.Protection = new NAbilities(AbilitiesMask.Select);
                 List<NRectangleShape> zones = GetShape(dtgroup);
@@ -410,15 +435,23 @@ namespace SpaceLayout.Forms.ZoneForms
                 {
                     listedNode.Add(n);
                 }
-
+                //NSizeF desiredSize = ZonesLayout.GetDesiredLayoutSize(listedNode, layoutContext);
+                //NRectangleF desiredLayoutArea = new NRectangleF(layoutContext.BodyContainerAdapter.GetLayoutArea().Location, desiredSize);
+                //frame.Bounds = desiredLayoutArea;
                 ZonesLayout.Layout(listedNode, layoutContext);
+                
+
                 group.Name = dtgroup.Rows[0]["Group"].ToString();
-                group.UpdateModelBounds();
+                //group.Style.StrokeStyle = new NStrokeStyle(2, Color.Black);
+                
+
                 //frame.Style.FillStyle = new NColorFillStyle(Color.Gray);
                 //group.Style.FillStyle = new NColorFillStyle(Color.Black);
-                //group.Style.StrokeStyle = new NStrokeStyle(1,Color.Black);
+                //frame.Style.StrokeStyle = new NStrokeStyle(1,Color.Black);
                 //CreateDecorators(frame, group.Name);
+                //CreateGroupPorts(frame);
                 //group.Shapes.AddChild(frame);
+                group.UpdateModelBounds();
                 //frame.SendToBack();
             }
 
@@ -527,14 +560,14 @@ namespace SpaceLayout.Forms.ZoneForms
 			// We want the user to be able to select the shape when the frame is hit
 			NFrameDecorator frameDecorator = new NFrameDecorator();
 			frameDecorator.ShapeHitTestable = true;
-			frameDecorator.Header.Margins = new Nevron.Diagram.NMargins(20, 0, 0, 0);
+			frameDecorator.Header.Margins = new Nevron.Diagram.NMargins(5, 0, 0, 0);
 			frameDecorator.Header.Text = decoratorText;
 			shape.Decorators.AddChild(frameDecorator);
 
-			// Create an expand/collapse decorator
-			NExpandCollapseDecorator decorator = new NExpandCollapseDecorator();
-			shape.Decorators.AddChild(decorator);
-		}
+            // Create an expand/collapse decorator
+            NExpandCollapseDecorator decorator = new NExpandCollapseDecorator();
+            shape.Decorators.AddChild(decorator);
+        }
 
         private void ApplyProtections(NShape shape, bool trackersEdit, bool move)
 		{

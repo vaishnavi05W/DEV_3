@@ -1,39 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Drawing;
-using Nevron.GraphicsCore;
-using Nevron.Diagram;
 
 namespace SpaceLayout.Object
 {
-    public class Connector_Main
+    public class Connector_Group
     {
         public const int TYPE_VERITCAL = 0;
         public const int TYPE_HORIZONTAL = 1;
-
-        public Zone_Main Zone21 { get; set; }//start node
-        public Zone_Main Zone22 { get; set; } // end node
+        public Group Group1 { get; set; } //start group
+        public Group Group2 { get; set; } //end group
         public int Type { get; set; } // vertical,horizontal
         public double Length { get; set; }//width
         public Color Color { get; set; }
-     
-        public Color color { get; set; } // change color of line to define the difference
-        public object ID { get; internal set; }
-
-        //yWorks.Graph.IEdge edge;
-        public NRoutableConnector connector;
-        private Zone_Main z1;
-        private Zone_Main z2;
-        private int v1;
-        private double v2;
-
-        public Connector_Main(Zone_Main zone21, Zone_Main zone22, int type, double length, Color color)
+        public Connector_Group(Group group21, Group group22, int type, double length, Color color)
         {
-            this.Zone21 = zone21;
-            this.Zone22 = zone22;
+            this.Group1 = group21;
+            this.Group2 = group22;
             this.Type = type;
             this.Length = length;
             this.Color = color;
@@ -44,7 +30,5 @@ namespace SpaceLayout.Object
             //connector.Style.StartArrowheadStyle.Shape = ArrowheadShape.None;
             //connector.Style.EndArrowheadStyle.Shape = ArrowheadShape.None;
         }
-
-       
     }
 }

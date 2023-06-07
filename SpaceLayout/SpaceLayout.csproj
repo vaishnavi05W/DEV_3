@@ -351,6 +351,7 @@
     <Compile Include="Forms\SpacePlanningMainPage.Designer.cs">
       <DependentUpon>SpacePlanningMainPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Object\Connector_Group.cs" />
     <Compile Include="Object\Group.cs" />
     <Compile Include="Object\Connector_Main.cs" />
     <Compile Include="Object\Undo.cs" />

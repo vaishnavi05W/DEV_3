@@ -26,11 +26,8 @@ using Nevron.Diagram.WinForm.Commands;
 using Nevron.Nov.Diagram.Editors;
 using Nevron.Nov.Diagram.DrawingTools;
 using Nevron.Diagram.Designer;
-
-
 using Nevron.GraphicsCore;
 using System.Drawing.Design;
-
 using Nevron.Dom;
 using Nevron.Diagram.Layout;
 using SpaceLayout.Object;
@@ -60,8 +57,6 @@ namespace SpaceLayout.Forms.ZoneForms
         private Dictionary<int, bool> rowNodecreated = new Dictionary<int, bool>();
         private NNode startnode;
         private NNode endnode;
-        //NGroup group = new NGroup();
-
         public NRectangleShape startNode = null;
         public NRectangleShape endNode = null;
         private NPersistencyManager persistencyManager;
@@ -69,15 +64,17 @@ namespace SpaceLayout.Forms.ZoneForms
         private NCheckBox autoDestroyCheckBox;
         private NCheckBox canBeEmptyCheckBox;
         private NLayer layer;
-        NRectangleShape m_DesiredSizeShape;
+
         NFlowLayout ZonesLayout;
+        NFlowLayout GroupsLayout;
         NFlowLayout FloorLayout;
         List<Connector_Main> connector;
         List<Zone_Main> zone;
         List<Group> groups;
         List<Connector_Group> congroup;
-        List<NRectangleShape> existingGroups = new List<NRectangleShape>();
+       // List<NRectangleShape> existingGroups = new List<NRectangleShape>();
 
+        IDictionary<string, string> existingGroups;
         public ZoneSelectionControl()
         {
             InitializeComponent();
@@ -111,33 +108,46 @@ namespace SpaceLayout.Forms.ZoneForms
             {
                 Ndd = Ndv.Document;
             }
+            Ndd.ActiveLayer.RemoveAllChildren();
             layer = new NLayer();
             Ndd.Layers.AddChild(layer);
             
-
             ZonesLayout = new NFlowLayout();
             ZonesLayout.Direction = LayoutDirection.LeftToRight;
             ZonesLayout.ConstrainMode = CellConstrainMode.Ordinal;
             ZonesLayout.HorizontalContentPlacement = ContentPlacement.Near;
-            ZonesLayout.VerticalContentPlacement = ContentPlacement.Far;
-            ZonesLayout.HorizontalSpacing = 30;
+            ZonesLayout.VerticalContentPlacement = ContentPlacement.Near;
+            ZonesLayout.HorizontalSpacing = 20;
             ZonesLayout.VerticalSpacing = 20;
             ZonesLayout.MaxOrdinal = 3;
+
+            GroupsLayout = new NFlowLayout();
+            GroupsLayout.Direction = LayoutDirection.LeftToRight;
+            GroupsLayout.ConstrainMode = CellConstrainMode.Ordinal;
+            GroupsLayout.HorizontalContentPlacement = ContentPlacement.Far;
+            GroupsLayout.VerticalContentPlacement = ContentPlacement.Far;
+            GroupsLayout.HorizontalSpacing = 50;
+            GroupsLayout.VerticalSpacing = 50;
+            GroupsLayout.MaxOrdinal = 3;
 
             FloorLayout = new NFlowLayout();
             FloorLayout.Direction = LayoutDirection.LeftToRight;
             FloorLayout.ConstrainMode = CellConstrainMode.Ordinal;
-            FloorLayout.HorizontalContentPlacement = ContentPlacement.Center;
-            FloorLayout.VerticalContentPlacement = ContentPlacement.Center;
-            FloorLayout.HorizontalSpacing = 20;
-            FloorLayout.VerticalSpacing = 20;
+            FloorLayout.HorizontalContentPlacement = ContentPlacement.Far;
+            FloorLayout.VerticalContentPlacement = ContentPlacement.Far;
+            FloorLayout.HorizontalSpacing = 50;
+            FloorLayout.VerticalSpacing = 50;
             FloorLayout.MaxOrdinal = 1;
+
             BindRatioCombo();
             BindGrid();
+            this.dataGridView1.ReadOnly = true;
+            this.cboZonesRatio.SelectedValueChanged += ZonesRatio_SelectedValueChanged;
         }
 
         private void BindRatioCombo()
         {
+            cboZonesRatio.DropDownStyle = ComboBoxStyle.DropDownList;
             Dictionary<string, string> comboSource = new Dictionary<string, string>();
             comboSource.Add("1", "1:1");
             comboSource.Add("2", "2:1");
@@ -220,13 +230,30 @@ namespace SpaceLayout.Forms.ZoneForms
             if (dtSource.Rows.Count > 0)
             {
                 dataGridView1.DataSource = dtSource;
-                MainFunction(dtSource);
-                // Form MainFirstPage = new MainFirstPageControl(dtSource);
-                //CreateNodes(dtSource);
+                MainFunction(dtSource, "2");
+            }
+        }
+        private void ZonesRatio_SelectedValueChanged(object sender, EventArgs e)
+        {
+            string ratio = (sender as ComboBox).SelectedValue as string;
+            if (ratio == "1")
+            {
+                Ndd.ActiveLayer.RemoveAllChildren();
+                MainFunction(dtSource, "1");
+            }
+            else if (ratio == "2")
+            {
+                Ndd.ActiveLayer.RemoveAllChildren();
+                MainFunction(dtSource, "2");
+            }
+            else
+            {
+                Ndd.ActiveLayer.RemoveAllChildren();
+                MainFunction(dtSource, "3");
             }
         }
 
-        public void MainFunction(DataTable dtMain)
+        public void MainFunction(DataTable dtMain,string ratioFlg)
         {
             try
             {
@@ -235,7 +262,7 @@ namespace SpaceLayout.Forms.ZoneForms
                 layoutContext.BodyAdapter = new NShapeBodyAdapter(Ndd);
                 layoutContext.BodyContainerAdapter = new NDrawingBodyContainerAdapter(Ndd);
                 
-                IDictionary<string,string> existingGroups = new Dictionary<string, string>();
+                existingGroups = new Dictionary<string, string>();
                 NGroup maingp = new NGroup();
                 string groupname = string.Empty;
                 foreach (DataRow dr in dtMain.Rows)
@@ -245,15 +272,12 @@ namespace SpaceLayout.Forms.ZoneForms
                         groupname = dr["Group"].ToString();
                         if (!String.IsNullOrEmpty(groupname))
                         {
-                            
                             DataTable dtGroup = dtMain.Select("Group = '" + groupname + "'").CopyToDataTable();
                             if (dtGroup.Rows.Count > 0)
                             {
-                                
-                                List<NRectangleShape> zones = GetShape(dtGroup);
                                 NGroup newGroup = new NGroup();
                                 newGroup.Name = groupname;
-                                newGroup = CreateGroupLayout(layer, layoutContext, groupname, dtGroup);
+                                newGroup = CreateGroupLayout(layer, layoutContext, groupname, dtGroup,ratioFlg);
                                 NRectangleShape frame = new NRectangleShape(newGroup.Bounds.X, newGroup.Bounds.Y, newGroup.Width, newGroup.Height);
                                 //CreateDecorators(frame, newGroup.Name);
                                 frame.Protection = new NAbilities(AbilitiesMask.Select);
@@ -261,11 +285,15 @@ namespace SpaceLayout.Forms.ZoneForms
                                 frame.Style.StrokeStyle = new NStrokeStyle(Color.Gray);
                                 newGroup.Shapes.AddChild(frame);
                                 CreateGroupPorts(frame);
+                                //newGroup.CreateShapeElements(ShapeElementsMask.Labels);
+                                //NRotatedBoundsLabel label = new NRotatedBoundsLabel(groupname, newGroup.UniqueId, new Nevron.Diagram.NMargins(0, 0, 0, -155)); //add labels to group for Name
+                                //label.Mode = BoxTextMode.Wrap;
+                                //newGroup.Labels.DefaultLabelUniqueId = label.UniqueId;
+                                //newGroup.Labels.AddChild(label);
                                 frame.SendToBack();
                                 existingGroups.Add(newGroup.Name, dtGroup.Rows[0]["Floor"].ToString());
                                 Ndd.ActiveLayer.AddChild(newGroup);
                             }
-
                         }
                     }
                 }
@@ -287,6 +315,31 @@ namespace SpaceLayout.Forms.ZoneForms
                         frame.Style.FillStyle = new NColorFillStyle(Color.Transparent);
                         frame.Style.StrokeStyle = new NStrokeStyle(Color.Black);
                         floorgroups.Shapes.AddChild(frame);
+                        floorgroups.CreateShapeElements(ShapeElementsMask.Labels);
+
+                        //NRotatedBoundsLabel label = new NRotatedBoundsLabel(floor + " floor", floorgroups.UniqueId, new Nevron.Diagram.NMargins(0, 0, -108, -2));
+                        NRotatedBoundsLabel label = new NRotatedBoundsLabel(floor, floorgroups.UniqueId, new Nevron.Diagram.NMargins(0, -110, 0, 0));  //add labels to group for floor
+                        label.Mode = BoxTextMode.Wrap;
+                        floorgroups.Labels.DefaultLabelUniqueId = label.UniqueId;
+                        floorgroups.Labels.AddChild(label);
+
+
+                        //NLogicalLineLabel lineLabel = new NLogicalLineLabel("Line label - start", frame.UniqueId, 120, true, true);
+                        //frame.Labels.DefaultLabelUniqueId = lineLabel.UniqueId;
+                        //lineLabel.UseLineOrientation = true;
+                        //NTextStyle textStyle = Ndd.Style.TextStyle.Clone() as NTextStyle;
+                        //textStyle.Orientation = 90;
+                        //textStyle.StringFormatStyle.HorzAlign = Nevron.HorzAlign.Left;
+                       // textStyle.Offset = new NPointL(50, -10);
+
+                        //textStyle.StringFormatStyle.VertAlign = Nevron.VertAlign.Center;
+                        //NStyle.SetTextStyle(frame, textStyle);
+                        //frame.Labels.AddChild(lineLabel);
+
+                        //textStyle.StringFormatStyle.VertAlign = Nevron.VertAlign.Bottom;
+                        //frame.Labels.AddChild(lineLabel);
+                        //textStyle.Offset =new NPointL(200, -10);
+
                         level.Add(floor);
                         Ndd.ActiveLayer.AddChild(floorgroups);
                     }
@@ -308,35 +361,6 @@ namespace SpaceLayout.Forms.ZoneForms
            
         }
      
-        private NGroup GetGroup(DataTable dtGroup, List<NGroup> existingGroups)//ForGroup
-        {
-            Color color2 = Color.Black;
-            
-           // minHeightTextBox.Text = document.AutoBoundsMinSize.Height.ToString();
-
-
-            NGroup group = new NGroup();
-            group.Name = dtGroup.Rows[0]["Group"].ToString();
-            
-            group.Protection = new NAbilities(AbilitiesMask.Select);
-            List<NRectangleShape> zones = GetShape(dtGroup);
-            //GetShape(dtGroup);
-                //foreach (NRectangleShape r in zones)
-                //{
-                //    group.Shapes.AddChild(r);
-                //}
-                //CreateDecorators(frame, dtGroup.Rows[0]["Group"].ToString());
-                //group.UpdateModelBounds();
-
-                //frame.Style.FillStyle = new NColorFillStyle(color1);
-                //group.Shapes.AddChild(frame);
-                //CreateGroupPorts(frame);
-                //group.Style.FillStyle = new NColorFillStyle(color2);
-                //group.Style.StrokeStyle = new NStrokeStyle(color2);
-                //frame.SendToBack();
-                return group;
-        }
-
         private bool CheckOverlap(object  item1, object item2)
         {
             bool result =  false;
@@ -351,15 +375,29 @@ namespace SpaceLayout.Forms.ZoneForms
             return result;
         }
 
-        private List<NRectangleShape> GetShape(DataTable dtGroup)
+        private List<NRectangleShape> GetShape(DataTable dtGroup,string ratioFlg)
         {
             List<NRectangleShape> zones = new List<NRectangleShape>();
-
+            float width = 0;
+            float height = 0;
+           
             foreach (DataRow dr in dtGroup.Rows)
             {
-                
-                float width = (float)Math.Sqrt(Convert.ToDouble(dr[7].ToString()) * 2);
-                float height = (float)(Convert.ToDouble(dr[7].ToString()) / width);
+                if (ratioFlg == "1") //1:1
+                {
+                    width = (float)Math.Sqrt(Convert.ToDouble(dr[7].ToString()));
+                    height = width;
+                }
+                else if (ratioFlg == "2") //2:1
+                {
+                    width = (float)Math.Sqrt(Convert.ToDouble(dr[7].ToString()) * 2);
+                    height = (float)(width / 2);
+                }
+                else //3:2
+                {
+                    width = (float)Math.Sqrt(Convert.ToDouble(dr[7].ToString()) * 3 / 2);
+                    height = (float)(width * 2 / 3) ;
+                }
                
                 Color color1 = Color.FromName(dr[6].ToString());
                 Color color2 = Color.Black;
@@ -401,37 +439,29 @@ namespace SpaceLayout.Forms.ZoneForms
             NGroup group = new NGroup();
             NNodeList listedNode = new NNodeList();
            
-            
-
             if (groupnames != null)
             {
                 foreach (string n in groupnames)
                 {
-                    
                     group.Shapes.AddChild(Ndd.ActiveLayer.GetChildByName(n));
-                    
                     listedNode.Add(Ndd.ActiveLayer.GetChildByName(n));
-                    
                     Ndd.ActiveLayer.RemoveChild(Ndd.ActiveLayer.GetChildByName(n));
-                    
                 }
-                
-                ZonesLayout.Layout(listedNode, layoutContext);
+                GroupsLayout.Layout(listedNode, layoutContext);
                 group.UpdateModelBounds();
             }
             return group;
         }
 
-        private NGroup CreateGroupLayout(NLayer layer,NLayoutContext layoutContext, String groupName,DataTable dtgroup)
+        private NGroup CreateGroupLayout(NLayer layer,NLayoutContext layoutContext, String groupName,DataTable dtgroup,string ratioFlg)
         {
-            
             NGroup group = new NGroup();
             if (ZonesLayout != null)
             {
                 NRectangleF bounds = new NRectangleF(5,5,1,1);
                 NRectangleShape frame = new NRectangleShape(bounds);
                 frame.Protection = new NAbilities(AbilitiesMask.Select);
-                List<NRectangleShape> zones = GetShape(dtgroup);
+                List<NRectangleShape> zones = GetShape(dtgroup,ratioFlg);
                 foreach (NRectangleShape r in zones)
                 {
                     group.Shapes.AddChild(r);
@@ -441,35 +471,12 @@ namespace SpaceLayout.Forms.ZoneForms
                 {
                     listedNode.Add(n);
                 }
-                //NSizeF desiredSize = ZonesLayout.GetDesiredLayoutSize(listedNode, layoutContext);
-                //NRectangleF desiredLayoutArea = new NRectangleF(layoutContext.BodyContainerAdapter.GetLayoutArea().Location, desiredSize);
-                //frame.Bounds = desiredLayoutArea;
                 ZonesLayout.Layout(listedNode, layoutContext);
-                
-
                 group.Name = dtgroup.Rows[0]["Group"].ToString();
-                //group.Style.StrokeStyle = new NStrokeStyle(2, Color.Black);
-                
-
-                //frame.Style.FillStyle = new NColorFillStyle(Color.Gray);
-                //group.Style.FillStyle = new NColorFillStyle(Color.Black);
-                //frame.Style.StrokeStyle = new NStrokeStyle(1,Color.Black);
-                //CreateDecorators(frame, group.Name);
-                //CreateGroupPorts(frame);
-                //group.Shapes.AddChild(frame);
                 group.UpdateModelBounds();
-                //frame.SendToBack();
             }
-
-            
-
             return group;
         }
-
-
-
-
-
 
         private Dictionary<int, bool> rowNodeCreated = new Dictionary<int, bool>();
         private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -522,9 +529,6 @@ namespace SpaceLayout.Forms.ZoneForms
             Ndv.Refresh();
         }
 
-
-        
-        
         private void CreateGroupPorts(NRectangleShape group)
         {
             group.CreateShapeElements(ShapeElementsMask.Ports);
@@ -540,21 +544,6 @@ namespace SpaceLayout.Forms.ZoneForms
             group.Ports.AddChild(port1);
             group.Ports.AddChild(port2);
             group.Ports.AddChild(port3);
-        }
-
-        private void AddColorsAndRectangleShape(NGroup group, string color, float width, float height)
-        {
-            // Assuming you have predefined colors and rectangle shape dimensions
-            NColorFillStyle Fill = new NColorFillStyle(Color.FromName(color));
-            NStrokeStyle stroke = new NStrokeStyle(Color.Black);
-            //float width = 100;
-            //float height = 50;
-
-            NRectangleShape rect = new NRectangleShape(0, 0, (float)width, (float)height);
-            rect.Style.FillStyle = Fill;
-            rect.Style.StrokeStyle = stroke;
-            
-            group.Shapes.AddChild(rect);
         }
 
         private void CreateDecorators(NRectangleShape shape, string decoratorText)
@@ -584,99 +573,6 @@ namespace SpaceLayout.Forms.ZoneForms
 			shape.Protection = protection;
 		}
 
-        private void CreateShape(NGroup group, DataTable dtData)
-        {
-            NRectangleShape node;
-            Random rnd = new Random();
-            foreach (DataRow dr in dtData.Rows)
-            {
-                //var rand = new Random();
-                //Zone zone = new Zone();
-                float width = (float)Math.Sqrt(Convert.ToDouble(dr[7].ToString()) * 2);
-                float height = (float)(Convert.ToDouble(dr[7].ToString()) / width);
-                NRectangleF rect = new NRectangleF(0, 0, width, height);
-                 node = new NRectangleShape(rect);
-                //node.Tag = zone;
-                //node.Id = zone.ID;
-                node.Style.FillStyle = new NColorFillStyle(Color.FromName(dr[6].ToString()));
-                string NodeLabelIn = dr[0].ToString()
-                    + System.Environment.NewLine + dr[7].ToString() + " " + "m\u00b2";
-                //graphcontrol.Graph.AddLabel(node, NodeLabelIn, InteriorLabelModel.NorthWest, defaultLableStyle, new SizeD(width, height));
-                string NodeLabelOut = dr[1].ToString();
-                //graphcontrol.Graph.AddLabel(node, NodeLabelOut, ExteriorLabelModel.South, defaultLableStyle);
-                node.Text = NodeLabelIn;
-
-                int maxWidth = Convert.ToInt32(Math.Sqrt(Convert.ToDouble(dr[5].ToString()) * 2));
-                int maxHeight = Convert.ToInt32(Convert.ToDouble(dr[5].ToString()) / maxWidth);
-
-                //int x = 0, y = 0,w =0, h= 0;
-
-                //bool overlapping = true;
-                //while (overlapping)
-                //{
-                //    x = rnd.Next(0, maxWidth);
-                //    y = rnd.Next(0, maxHeight);
-                //    w = rnd.Next(50, 150);
-                //    h = rnd.Next(50, 150);
-
-
-                //    node.Bounds = new NRectangleF(x, y, node.Bounds.Width, node.Bounds.Height);
-
-                //    bool intersecting = false;
-                //    // Check if the new shape intersects with any existing shape in the group
-                //    foreach (var shape in group.Shapes)
-                //    {
-
-                //        if (shape is NRectangleShape existingShape && existingShape.Bounds.IntersectsWith(node.Bounds))
-
-                //            intersecting = true;
-                //            break;
-                //    }
-                //    // If no intersection, exit the loop
-                //    if (!intersecting)
-                //    {
-                //        overlapping = false;
-                //    }
-                //}
-
-                // Generate random position and size for the shape
-               
-                int x = rnd.Next(0, maxWidth);
-                int y = rnd.Next(0, maxHeight);
-                //float x = (float)rnd.NextDouble() * maxWidth;
-                // float y = (float)rnd.NextDouble() * maxHeight;
-                int w = rnd.Next(50, 150);
-                int h = rnd.Next(50, 150);
-
-                // Ensure that the shape bounds are within the view bounds
-                if (x + width > maxWidth)
-                {
-                    x = maxWidth - w;
-                }
-                if (y + height > maxHeight)
-                {
-                    y = maxHeight - h;
-                }
-
-                node.Location = new NPointF(x, y);
-                node.CreateShapeElements(ShapeElementsMask.Ports);
-                NRotatedBoundsPort port1 = new NRotatedBoundsPort(node.UniqueId, ContentAlignment.TopCenter);
-                NRotatedBoundsPort port2 = new NRotatedBoundsPort(node.UniqueId, ContentAlignment.MiddleLeft);
-                NRotatedBoundsPort port3 = new NRotatedBoundsPort(node.UniqueId, ContentAlignment.BottomCenter);
-                NRotatedBoundsPort port4 = new NRotatedBoundsPort(node.UniqueId, ContentAlignment.MiddleRight);
-                node.Ports.AddChild(port1);
-                node.Ports.AddChild(port2);
-                node.Ports.AddChild(port3);
-                node.Ports.AddChild(port4);
-                node.Ports.DefaultInwardPortUniqueId = port1.UniqueId;
-                node.Ports.DefaultInwardPortUniqueId = port2.UniqueId;
-                node.Ports.DefaultInwardPortUniqueId = port3.UniqueId;
-                node.Ports.DefaultInwardPortUniqueId = port4.UniqueId;
-                group.Shapes.AddChild(node);
-            }
-           
-        }
-
         private void ZoneConnectorData(string flg) //flg: 1 = save, 2 =  load
         {
             //Ndv.Refresh();
@@ -687,7 +583,7 @@ namespace SpaceLayout.Forms.ZoneForms
                     // Check if the shape is a line and has a source and target shape
                     if (edge is NLineShape line && line.FromShape != null && line.ToShape != null) //For Connectors
                     {
-
+                        
                         if (line.FromShape.Group is NGroup && line.ToShape.Group is NGroup
                             && line.FromShape.Group != line.ToShape.Group)
                         {
@@ -713,7 +609,8 @@ namespace SpaceLayout.Forms.ZoneForms
                 {
                     if (module is NGroup g) //For Groups
                     {
-                        groups.Add(GetGroupDataFromDataSource(g));
+                       if(existingGroups.Keys.Contains(g.Name))
+                            groups.Add(GetGroupDataFromDataSource(g));
                     }
                     else if (module is NRectangleShape shape) // For Zones
                     {

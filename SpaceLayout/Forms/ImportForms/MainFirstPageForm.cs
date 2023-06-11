@@ -229,28 +229,6 @@ namespace SpaceLayout.Forms.ZoneForms
             nDrawingView1.Document.ActiveLayer.MaxShowZoomFactor = zoom;
         }
 
-
-
-        private void MainFirstPageControl_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void graphControl1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void nDrawingView1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void toolStripButton4_Click(object sender, EventArgs e)
         {
 

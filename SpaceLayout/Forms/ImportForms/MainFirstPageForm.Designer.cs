@@ -70,7 +70,6 @@ namespace SpaceLayout.Forms.ZoneForms
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1268, 481);
             this.tableLayoutPanel1.TabIndex = 0;
-            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
             // tableLayoutPanel2
             // 
@@ -204,6 +203,7 @@ namespace SpaceLayout.Forms.ZoneForms
             // nDrawingView1
             // 
             this.nDrawingView1.AllowDrop = true;
+            this.nDrawingView1.BackColor = System.Drawing.SystemColors.Control;
             this.nDrawingView1.DesignTimeState = ((Nevron.Diagram.NBinaryState)(resources.GetObject("nDrawingView1.DesignTimeState")));
             this.nDrawingView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.nDrawingView1.Document = this.nDrawingDocument1;
@@ -214,7 +214,6 @@ namespace SpaceLayout.Forms.ZoneForms
             this.nDrawingView1.Size = new System.Drawing.Size(868, 477);
             this.nDrawingView1.TabIndex = 2;
             this.nDrawingView1.Text = "nDrawingView1";
-            this.nDrawingView1.Click += new System.EventHandler(this.nDrawingView1_Click);
             // 
             // nDrawingDocument1
             // 
@@ -267,7 +266,6 @@ namespace SpaceLayout.Forms.ZoneForms
             this.Name = "MainFirstPageControl";
             this.Text = "SAMOO Space Planning";
             this.TransparencyKey = System.Drawing.Color.Blue;
-            this.Load += new System.EventHandler(this.MainFirstPageControl_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();

@@ -145,7 +145,8 @@ namespace SpaceLayout.Forms.ZoneForms
             //this.dataGridView1.ReadOnly = true;
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
-            this.cboZonesRatio.SelectedValueChanged += ZonesRatio_SelectedValueChanged;
+            this.cboZonesRatio.Visible = false;
+            //this.cboZonesRatio.SelectedValueChanged += ZonesRatio_SelectedValueChanged;
             //this.dataGridView1.CellFormatting += dataGridView1_CellFormatting;
             dataGridView1.CellValueChanged += new DataGridViewCellEventHandler(dataGridView1_CellValueChanged);
             dataGridView1.CurrentCellDirtyStateChanged += new EventHandler(dataGridView1_CurrentCellDirtyStateChanged);
@@ -153,15 +154,15 @@ namespace SpaceLayout.Forms.ZoneForms
 
         private void BindRatioCombo()
         {
-            cboZonesRatio.DropDownStyle = ComboBoxStyle.DropDownList;
+            //cboZonesRatio.DropDownStyle = ComboBoxStyle.DropDownList;
             Dictionary<string, string> comboSource = new Dictionary<string, string>();
             comboSource.Add("1", "1:1");
             comboSource.Add("2", "2:1");
             comboSource.Add("3", "3:2");
-            cboZonesRatio.DataSource = new BindingSource(comboSource, null);
-            cboZonesRatio.DisplayMember = "Value";
-            cboZonesRatio.ValueMember = "Key";
-            cboZonesRatio.SelectedValue = "2";
+            //cboZonesRatio.DataSource = new BindingSource(comboSource, null);
+            //cboZonesRatio.DisplayMember = "Value";
+            //cboZonesRatio.ValueMember = "Key";
+            //cboZonesRatio.SelectedValue = "2";
 
             DataGridViewComboBoxColumn cboRatio = (DataGridViewComboBoxColumn)dataGridView1.Columns["Column11"];
             cboRatio.DataPropertyName = "Ratio";
@@ -275,53 +276,6 @@ namespace SpaceLayout.Forms.ZoneForms
             }
         }
 
-        private void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
-        {
-            if (dataGridView1.CurrentCell.ColumnIndex == 12 && e.Control is ComboBox)
-            {
-                ComboBox comboBox = e.Control as ComboBox;
-                if(comboBox != null)
-                {
-                    //comboBox.SelectedIndexChanged -= LastColumnComboSelectionChanged;
-                    //comboBox.SelectedIndexChanged += LastColumnComboSelectionChanged;
-                }
-                
-            }
-        }
-
-        private void LastColumnComboSelectionChanged(object sender, EventArgs e)
-        {
-            var currentcell = dataGridView1.CurrentCellAddress;
-            var currentrow = dataGridView1.CurrentRow;
-            var currentzoneID = dataGridView1.CurrentRow.Cells[0].Value.ToString();
-            var ratio = dataGridView1.CurrentRow.Cells[12].EditedFormattedValue.ToString();
-            //var sendingCB = sender as DataGridViewComboBoxEditingControl;
-            //DataGridViewComboBoxColumn col = (DataGridViewComboBoxColumn)dataGridView1.Columns[12];
-            //col.DataSource = dataGridView1.CurrentRow.Cells[12].Value.ToString();
-            //DataGridViewComboBoxCell cel = (DataGridViewComboBoxCell)dataGridView1.CurrentRow.Cells[12];
-            //cel.Value = dataGridView1.CurrentRow.Cells[12].EditedFormattedValue.ToString();
-            //DataRow dr = dtSource.Select("ID = '" + currentzoneID + "'").FirstOrDefault();
-
-            Ndd.ActiveLayer.RemoveAllChildren();
-            MainFunction(dtSource);
-
-            //foreach (var module in Ndv.Document.Descendants(NFilters.Shape2D, -1)) //Detecting Rectangel Shapes with 2D 
-            //{
-            //    if (module is NRectangleShape zone && !String.IsNullOrWhiteSpace(zone.Text)) // For Zones
-            //    {
-            //        //        NNodeList deleteList = new NNodeList();
-
-            //        string na = zone.Text.Split(new string[] { "\n", "\r\n", "m\u00b2" }, StringSplitOptions.RemoveEmptyEntries)[0].ToString();
-            //        if (na == currentzoneID)
-            //        {
-            //            //zone.UpdateModelBounds();
-            //            zone.Bounds = new NRectangleF(zone.Bounds.X, zone.Bounds.Y, width, height);
-            //            zone.UpdateModelBounds();
-
-            //        }
-            //    }
-            //}
-        }
 
         void dataGridView1_CurrentCellDirtyStateChanged(object sender, EventArgs e)
         {

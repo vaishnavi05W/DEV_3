@@ -30,7 +30,7 @@ namespace SpaceLayout.Forms.ZoneForms
         {
             InitializeComponent();
             this.Load += IS_Load;
-            nDrawingView1.MouseWheel += NDrawingView1_MouseWheel;
+            //nDrawingView1.MouseWheel += NDrawingView1_MouseWheel;
 
 
         }
@@ -62,11 +62,9 @@ namespace SpaceLayout.Forms.ZoneForms
 
             nDrawingView1.HorizontalRuler.Visible = false;
             nDrawingView1.VerticalRuler.Visible = false;
-            
-            
-
+           
             // fit the document in the viewport 
-            nDrawingView1.ViewLayout = ViewLayout.StretchToWidth;
+            //nDrawingView1.ViewLayout = ViewLayout.StretchToWidth;
             
             // apply padding to the document bounds
             nDrawingView1.DocumentPadding = new Nevron.Diagram.NMargins(10);

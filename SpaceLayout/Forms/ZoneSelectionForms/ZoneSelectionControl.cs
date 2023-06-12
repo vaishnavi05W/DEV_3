@@ -371,7 +371,7 @@ namespace SpaceLayout.Forms.ZoneForms
                         label.Mode = BoxTextMode.Wrap;
                         floorgroups.Labels.DefaultLabelUniqueId = label.UniqueId;
                         floorgroups.Labels.AddChild(label);
-
+                        
 
                         //NLogicalLineLabel lineLabel = new NLogicalLineLabel("Line label - start", frame.UniqueId, 120, true, true);
                         //frame.Labels.DefaultLabelUniqueId = lineLabel.UniqueId;
@@ -379,7 +379,7 @@ namespace SpaceLayout.Forms.ZoneForms
                         //NTextStyle textStyle = Ndd.Style.TextStyle.Clone() as NTextStyle;
                         //textStyle.Orientation = 90;
                         //textStyle.StringFormatStyle.HorzAlign = Nevron.HorzAlign.Left;
-                       // textStyle.Offset = new NPointL(50, -10);
+                        // textStyle.Offset = new NPointL(50, -10);
 
                         //textStyle.StringFormatStyle.VertAlign = Nevron.VertAlign.Center;
                         //NStyle.SetTextStyle(frame, textStyle);

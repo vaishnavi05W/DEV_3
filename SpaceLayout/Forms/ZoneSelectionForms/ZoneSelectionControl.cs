@@ -285,11 +285,11 @@ namespace SpaceLayout.Forms.ZoneForms
                                 frame.Style.StrokeStyle = new NStrokeStyle(Color.Gray);
                                 newGroup.Shapes.AddChild(frame);
                                 CreateGroupPorts(frame);
-                                //newGroup.CreateShapeElements(ShapeElementsMask.Labels);
-                                //NRotatedBoundsLabel label = new NRotatedBoundsLabel(groupname, newGroup.UniqueId, new Nevron.Diagram.NMargins(0, 0, 0, -155)); //add labels to group for Name
-                                //label.Mode = BoxTextMode.Wrap;
-                                //newGroup.Labels.DefaultLabelUniqueId = label.UniqueId;
-                                //newGroup.Labels.AddChild(label);
+                                newGroup.CreateShapeElements(ShapeElementsMask.Labels);
+                                NRotatedBoundsLabel label = new NRotatedBoundsLabel(groupname, newGroup.UniqueId, new Nevron.Diagram.NMargins(0, 0, 0, -152)); //add labels to group for Name
+                                label.Mode = BoxTextMode.Wrap;
+                                newGroup.Labels.DefaultLabelUniqueId = label.UniqueId;
+                                newGroup.Labels.AddChild(label);
                                 frame.SendToBack();
                                 existingGroups.Add(newGroup.Name, dtGroup.Rows[0]["Floor"].ToString());
                                 Ndd.ActiveLayer.AddChild(newGroup);

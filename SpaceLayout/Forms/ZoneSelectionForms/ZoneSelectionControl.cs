@@ -138,42 +138,26 @@ namespace SpaceLayout.Forms.ZoneForms
             FloorLayout.HorizontalSpacing = 50;
             FloorLayout.VerticalSpacing = 50;
             FloorLayout.MaxOrdinal = 1;
+
             BindRatioCombo();
             BindGrid();
-            
-            
-            //this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.cboZonesRatio.Visible = false;
-            //this.cboZonesRatio.SelectedValueChanged += ZonesRatio_SelectedValueChanged;
-            //this.dataGridView1.CellFormatting += dataGridView1_CellFormatting;
-            dataGridView1.CellValueChanged += new DataGridViewCellEventHandler(dataGridView1_CellValueChanged);
-            dataGridView1.CurrentCellDirtyStateChanged += new EventHandler(dataGridView1_CurrentCellDirtyStateChanged);
+            this.dataGridView1.ReadOnly = true;
+            this.cboZonesRatio.SelectedValueChanged += ZonesRatio_SelectedValueChanged;
         }
 
         private void BindRatioCombo()
         {
-            //cboZonesRatio.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboZonesRatio.DropDownStyle = ComboBoxStyle.DropDownList;
             Dictionary<string, string> comboSource = new Dictionary<string, string>();
             comboSource.Add("1", "1:1");
             comboSource.Add("2", "2:1");
             comboSource.Add("3", "3:2");
-            //cboZonesRatio.DataSource = new BindingSource(comboSource, null);
-            //cboZonesRatio.DisplayMember = "Value";
-            //cboZonesRatio.ValueMember = "Key";
-            //cboZonesRatio.SelectedValue = "2";
-
-            DataGridViewComboBoxColumn cboRatio = (DataGridViewComboBoxColumn)dataGridView1.Columns["Column11"];
-            cboRatio.DataPropertyName = "Ratio";
-            cboRatio.FlatStyle = FlatStyle.Standard;
-            cboRatio.DisplayMember = "Value";
-            
-           //cboRatio.ValueMember = "Key";
-           ((DataGridViewComboBoxColumn)dataGridView1.Columns["Column11"]).DataSource = comboSource.ToList();
-           
+            cboZonesRatio.DataSource = new BindingSource(comboSource, null);
+            cboZonesRatio.DisplayMember = "Value";
+            cboZonesRatio.ValueMember = "Key";
+            cboZonesRatio.SelectedValue = "2";
         }
-
+        
 
         private void BindGrid()
         {
@@ -235,25 +219,18 @@ namespace SpaceLayout.Forms.ZoneForms
                     ds.Tables["Input Data_Module"].Columns.Remove("Column14");
                     ds.Tables["Input Data_Module"].Columns.Remove("Column15");
 
-                    
                     foreach (DataRow dr in ds.Tables["Input Data_Module"].Rows)
                     {
                         dtSource.Rows.Add(dr.ItemArray);
-                        
                     }
                 }
-            }
-
-            foreach(DataRow r in dtSource.Rows)
-            {
-                r["Ratio"] = "2:1";
             }
 
             //Bind datatable to Gridview
             if (dtSource.Rows.Count > 0)
             {
                 dataGridView1.DataSource = dtSource;
-                MainFunction(dtSource);
+                MainFunction(dtSource, "2");
             }
         }
         private void ZonesRatio_SelectedValueChanged(object sender, EventArgs e)
@@ -262,45 +239,21 @@ namespace SpaceLayout.Forms.ZoneForms
             if (ratio == "1")
             {
                 Ndd.ActiveLayer.RemoveAllChildren();
-                MainFunction(dtSource);
+                MainFunction(dtSource, "1");
             }
             else if (ratio == "2")
             {
                 Ndd.ActiveLayer.RemoveAllChildren();
-                MainFunction(dtSource);
+                MainFunction(dtSource, "2");
             }
             else
             {
                 Ndd.ActiveLayer.RemoveAllChildren();
-                MainFunction(dtSource);
+                MainFunction(dtSource, "3");
             }
         }
 
-
-        void dataGridView1_CurrentCellDirtyStateChanged(object sender, EventArgs e)
-        {
-            if (dataGridView1.IsCurrentCellDirty)
-            {
-                // This fires the cell value changed handler below
-                dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Commit);
-            }
-        }
-
-        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            // My combobox column is the second one so I hard coded a 1, flavor to taste
-            DataGridViewComboBoxCell cb = (DataGridViewComboBoxCell)dataGridView1.Rows[e.RowIndex].Cells[12];
-            if (cb.Value != null)
-            {
-                // do stuff
-                dtSource.AcceptChanges();
-                Ndd.ActiveLayer.RemoveAllChildren();
-                MainFunction(dtSource);
-                dataGridView1.Invalidate();
-            }
-        }
-
-        public void MainFunction(DataTable dtMain)
+        public void MainFunction(DataTable dtMain,string ratioFlg)
         {
             try
             {
@@ -324,7 +277,7 @@ namespace SpaceLayout.Forms.ZoneForms
                             {
                                 NGroup newGroup = new NGroup();
                                 newGroup.Name = groupname;
-                                newGroup = CreateGroupLayout(layer, layoutContext, groupname, dtGroup);
+                                newGroup = CreateGroupLayout(layer, layoutContext, groupname, dtGroup,ratioFlg);
                                 NRectangleShape frame = new NRectangleShape(newGroup.Bounds.X, newGroup.Bounds.Y, newGroup.Width, newGroup.Height);
                                 //CreateDecorators(frame, newGroup.Name);
                                 frame.Protection = new NAbilities(AbilitiesMask.Select);
@@ -332,13 +285,11 @@ namespace SpaceLayout.Forms.ZoneForms
                                 frame.Style.StrokeStyle = new NStrokeStyle(Color.Gray);
                                 newGroup.Shapes.AddChild(frame);
                                 CreateGroupPorts(frame);
-
-                                
-                                //newGroup.CreateShapeElements(ShapeElementsMask.Labels);
-                                //NRotatedBoundsLabel label = new NRotatedBoundsLabel(groupname, newGroup.UniqueId, new Nevron.Diagram.NMargins(0, 0, 0, -155)); //add labels to group for Name
-                                //label.Mode = BoxTextMode.Wrap;
-                                //newGroup.Labels.DefaultLabelUniqueId = label.UniqueId;
-                                //newGroup.Labels.AddChild(label);
+                                newGroup.CreateShapeElements(ShapeElementsMask.Labels);
+                                NRotatedBoundsLabel label = new NRotatedBoundsLabel(groupname, newGroup.UniqueId, new Nevron.Diagram.NMargins(0, 0, 0, -152)); //add labels to group for Name
+                                label.Mode = BoxTextMode.Wrap;
+                                newGroup.Labels.DefaultLabelUniqueId = label.UniqueId;
+                                newGroup.Labels.AddChild(label);
                                 frame.SendToBack();
                                 existingGroups.Add(newGroup.Name, dtGroup.Rows[0]["Floor"].ToString());
                                 Ndd.ActiveLayer.AddChild(newGroup);
@@ -424,7 +375,7 @@ namespace SpaceLayout.Forms.ZoneForms
             return result;
         }
 
-        private List<NRectangleShape> GetShape(DataTable dtGroup)
+        private List<NRectangleShape> GetShape(DataTable dtGroup,string ratioFlg)
         {
             List<NRectangleShape> zones = new List<NRectangleShape>();
             float width = 0;
@@ -432,12 +383,12 @@ namespace SpaceLayout.Forms.ZoneForms
            
             foreach (DataRow dr in dtGroup.Rows)
             {
-                if (dr[12].ToString() == "1:1") //1:1
+                if (ratioFlg == "1") //1:1
                 {
                     width = (float)Math.Sqrt(Convert.ToDouble(dr[7].ToString()));
                     height = width;
                 }
-                else if (dr[12].ToString() == "2:1") //2:1
+                else if (ratioFlg == "2") //2:1
                 {
                     width = (float)Math.Sqrt(Convert.ToDouble(dr[7].ToString()) * 2);
                     height = (float)(width / 2);
@@ -453,7 +404,6 @@ namespace SpaceLayout.Forms.ZoneForms
 
                 NRectangleShape zone = new NRectangleShape();
                 zone = new NRectangleShape(0, 0, width, height);
-                zone.Id = Convert.ToInt32(dr[0].ToString());
                 zone.Style.FillStyle = new NColorFillStyle(color1);
                 zone.Style.StrokeStyle = new NStrokeStyle(color2);
                 string NodeLabelIn = dr[0].ToString()
@@ -503,7 +453,7 @@ namespace SpaceLayout.Forms.ZoneForms
             return group;
         }
 
-        private NGroup CreateGroupLayout(NLayer layer,NLayoutContext layoutContext, String groupName,DataTable dtgroup)
+        private NGroup CreateGroupLayout(NLayer layer,NLayoutContext layoutContext, String groupName,DataTable dtgroup,string ratioFlg)
         {
             NGroup group = new NGroup();
             if (ZonesLayout != null)
@@ -511,7 +461,7 @@ namespace SpaceLayout.Forms.ZoneForms
                 NRectangleF bounds = new NRectangleF(5,5,1,1);
                 NRectangleShape frame = new NRectangleShape(bounds);
                 frame.Protection = new NAbilities(AbilitiesMask.Select);
-                List<NRectangleShape> zones = GetShape(dtgroup);
+                List<NRectangleShape> zones = GetShape(dtgroup,ratioFlg);
                 foreach (NRectangleShape r in zones)
                 {
                     group.Shapes.AddChild(r);

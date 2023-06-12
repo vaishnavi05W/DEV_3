@@ -84,8 +84,6 @@ namespace SpaceLayout.Forms.ZoneForms
             this.canBeEmptyCheckBox = new NCheckBox(); this.groupPropertiesGroup.SuspendLayout();
             this.SuspendLayout();
 
-            // drawing = (NDrawingDocument)persistencyManager.LoadDocumentFromFile("c:\\temp\\drawing1.ndx");
-
             this.Load += IS_Load;
             connector = new List<Connector_Main>();
             zone = new List<Zone_Main>();
@@ -150,6 +148,9 @@ namespace SpaceLayout.Forms.ZoneForms
             //this.dataGridView1.CellFormatting += dataGridView1_CellFormatting;
             dataGridView1.CellValueChanged += new DataGridViewCellEventHandler(dataGridView1_CellValueChanged);
             dataGridView1.CurrentCellDirtyStateChanged += new EventHandler(dataGridView1_CurrentCellDirtyStateChanged);
+
+            btnHorizontal.Click += Horizontal_Clicked;
+            btnVertical.Click += Vertical_Clicked;
         }
 
         private void BindRatioCombo()
@@ -545,39 +546,6 @@ namespace SpaceLayout.Forms.ZoneForms
         {
 
         }
-        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            dataGridView1.ReadOnly = false;
-        }
-        private void UpdateControlsState()
-        {
-            if (Ndv.Selection.NodesCount != 1)
-            {
-                groupPropertiesGroup.Enabled = false;
-                return;
-            }
-            NGroup group = (Ndv.Selection.AnchorNode as NGroup);
-            if (group == null)
-            {
-                groupPropertiesGroup.Enabled = false;
-                return;
-            }
-            groupPropertiesGroup.Enabled = true;
-            canBeEmptyCheckBox.Checked = group.CanBeEmpty;
-            autoDestroyCheckBox.Checked = group.AutoDestroy;
-        }
-        private void SelectNodesForGrouping(List<NShape> nodes)
-        {
-            // Assuming Ndd is the diagram instance and view is the view instance
-            NSelection selection = Ndv.Selection;
-            selection.Nodes.Clear();
-            foreach (NShape shape in nodes)
-            {
-                selection.Nodes.Add(shape);
-            }
-
-            Ndv.Refresh();
-        }
 
         private void CreateGroupPorts(NRectangleShape group)
         {
@@ -596,31 +564,16 @@ namespace SpaceLayout.Forms.ZoneForms
             group.Ports.AddChild(port3);
         }
 
-        private void CreateDecorators(NRectangleShape shape, string decoratorText)
+         private void Horizontal_Clicked(object sender, EventArgs e)
+         {
+            //do stuff
+            //Connector line = new Connector();
+
+         }
+
+        private void Vertical_Clicked(object sender, EventArgs e)
         {
-            // Create the decorators
-            shape.CreateShapeElements(ShapeElementsMask.Decorators);
-
-            // Create a frame decorator
-            // We want the user to be able to select the shape when the frame is hit
-            NFrameDecorator frameDecorator = new NFrameDecorator();
-            frameDecorator.ShapeHitTestable = true;
-            frameDecorator.Header.Margins = new Nevron.Diagram.NMargins(5, 0, 0, 0);
-            frameDecorator.Header.Text = decoratorText;
-            shape.Decorators.AddChild(frameDecorator);
-
-            // Create an expand/collapse decorator
-            NExpandCollapseDecorator decorator = new NExpandCollapseDecorator();
-            shape.Decorators.AddChild(decorator);
-        }
-
-        private void ApplyProtections(NShape shape, bool trackersEdit, bool move)
-        {
-            NAbilities protection = shape.Protection;
-            protection.TrackersEdit = trackersEdit;
-            protection.MoveX = move;
-            protection.MoveY = move;
-            shape.Protection = protection;
+            //do stuff
         }
 
         private void ZoneConnectorData(string flg) //flg: 1 = save, 2 =  load

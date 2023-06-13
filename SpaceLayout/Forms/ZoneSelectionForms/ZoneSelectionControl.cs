@@ -85,6 +85,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.SuspendLayout();
 
             this.Load += IS_Load;
+
             connector = new List<Connector_Main>();
             zone = new List<Zone_Main>();
             groups = new List<Group>();
@@ -92,6 +93,9 @@ namespace SpaceLayout.Forms.ZoneForms
             // Add the diagram view to the form
             this.Controls.Add(Ndv);
         }
+
+
+
 
         private void ChartControl_NodeCreated(NNodeEventArgs args)
         {
@@ -107,6 +111,12 @@ namespace SpaceLayout.Forms.ZoneForms
                 Ndd = Ndv.Document;
             }
             Ndd.ActiveLayer.RemoveAllChildren();
+
+            NViewEventSinkService eventSinkService = new NViewEventSinkService();
+
+            // Register a mouse click event handler
+            Ndv.NodeSelected += EventSinkService_MouseClick;
+
             layer = new NLayer();
             Ndd.Layers.AddChild(layer);
 
@@ -152,7 +162,10 @@ namespace SpaceLayout.Forms.ZoneForms
             btnHorizontal.Click += Horizontal_Clicked;
             btnVertical.Click += Vertical_Clicked;
         }
-
+        private void EventSinkService_MouseClick(NNodeEventArgs args)
+        {
+            NRectangleShape n = (NRectangleShape)args.Node;
+        }
         private void BindRatioCombo()
         {
             //cboZonesRatio.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -189,9 +202,9 @@ namespace SpaceLayout.Forms.ZoneForms
             dtSource.Columns.Add("Name");
             //dtSource.Columns.Add("Department");
             dtSource.Columns.Add("Group");
-            dtSource.Columns.Add("GroupColor");
+            //dtSource.Columns.Add("GroupColor");
             dtSource.Columns.Add("Relation");
-            dtSource.Columns.Add("GroupArea");
+            //dtSource.Columns.Add("GroupArea");
             dtSource.Columns.Add("Color");
             dtSource.Columns.Add("Area");
             dtSource.Columns.Add("Width");
@@ -233,8 +246,9 @@ namespace SpaceLayout.Forms.ZoneForms
 
                     ds.Tables["Input Data_Module"].Rows.RemoveAt(0);
                     ds.Tables["Input Data_Module"].Columns.Remove("Column2");
+                    ds.Tables["Input Data_Module"].Columns.Remove("Column13");
                     ds.Tables["Input Data_Module"].Columns.Remove("Column14");
-                    ds.Tables["Input Data_Module"].Columns.Remove("Column15");
+                    //ds.Tables["Input Data_Module"].Columns.Remove("Column15");
 
 
                     foreach (DataRow dr in ds.Tables["Input Data_Module"].Rows)
@@ -290,7 +304,7 @@ namespace SpaceLayout.Forms.ZoneForms
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             // My combobox column is the second one so I hard coded a 1, flavor to taste
-            DataGridViewComboBoxCell cb = (DataGridViewComboBoxCell)dataGridView1.Rows[e.RowIndex].Cells[12];
+            DataGridViewComboBoxCell cb = (DataGridViewComboBoxCell)dataGridView1.Rows[e.RowIndex].Cells[10];
             if (cb.Value != null)
             {
                 // do stuff
@@ -433,23 +447,23 @@ namespace SpaceLayout.Forms.ZoneForms
 
             foreach (DataRow dr in dtGroup.Rows)
             {
-                if (dr[12].ToString() == "1:1") //1:1
+                if (dr[10].ToString() == "1:1") //1:1
                 {
-                    width = (float)Math.Sqrt(Convert.ToDouble(dr[7].ToString()));
+                    width = (float)Math.Sqrt(Convert.ToDouble(dr[5].ToString()));
                     height = width;
                 }
-                else if (dr[12].ToString() == "2:1") //2:1
+                else if (dr[10].ToString() == "2:1") //2:1
                 {
-                    width = (float)Math.Sqrt(Convert.ToDouble(dr[7].ToString()) * 2);
+                    width = (float)Math.Sqrt(Convert.ToDouble(dr[5].ToString()) * 2);
                     height = (float)(width / 2);
                 }
                 else //3:2
                 {
-                    width = (float)Math.Sqrt(Convert.ToDouble(dr[7].ToString()) * 3 / 2);
+                    width = (float)Math.Sqrt(Convert.ToDouble(dr[5].ToString()) * 3 / 2);
                     height = (float)(width * 2 / 3);
                 }
 
-                Color color1 = Color.FromName(dr[6].ToString());
+                Color color1 = Color.FromName(dr[4].ToString());
                 Color color2 = Color.Black;
 
                 NRectangleShape zone = new NRectangleShape();
@@ -458,7 +472,7 @@ namespace SpaceLayout.Forms.ZoneForms
                 zone.Style.FillStyle = new NColorFillStyle(color1);
                 zone.Style.StrokeStyle = new NStrokeStyle(color2);
                 string NodeLabelIn = dr[0].ToString()
-                   + System.Environment.NewLine + dr[7].ToString() + " " + "m\u00b2";
+                   + System.Environment.NewLine + dr[5].ToString() + " " + "m\u00b2";
                 string NodeLabelOut = dr[1].ToString();
                 zone.Text = NodeLabelIn;
                 zone.Name = NodeLabelOut;
@@ -550,18 +564,18 @@ namespace SpaceLayout.Forms.ZoneForms
         private void CreateGroupPorts(NRectangleShape group)
         {
             group.CreateShapeElements(ShapeElementsMask.Ports);
-            NRotatedBoundsPort port = new NRotatedBoundsPort(new NContentAlignment(ContentAlignment.TopCenter));
-            NRotatedBoundsPort port1 = new NRotatedBoundsPort(new NContentAlignment(ContentAlignment.BottomCenter));
-            NRotatedBoundsPort port2 = new NRotatedBoundsPort(new NContentAlignment(ContentAlignment.MiddleLeft));
-            NRotatedBoundsPort port3 = new NRotatedBoundsPort(new NContentAlignment(ContentAlignment.MiddleRight));
-            port.Name = "port";
-            port1.Name = "port1";
-            port2.Name = "port2";
-            port3.Name = "port3";
+            NRotatedBoundsPort port = new NRotatedBoundsPort(new NContentAlignment(ContentAlignment.MiddleCenter));
+            //NRotatedBoundsPort port1 = new NRotatedBoundsPort(new NContentAlignment(ContentAlignment.BottomCenter));
+            //NRotatedBoundsPort port2 = new NRotatedBoundsPort(new NContentAlignment(ContentAlignment.MiddleLeft));
+            //NRotatedBoundsPort port3 = new NRotatedBoundsPort(new NContentAlignment(ContentAlignment.MiddleRight));
+            port.Name = "GroupPort";
+            //port1.Name = "port1";
+            //port2.Name = "port2";
+            //port3.Name = "port3";
             group.Ports.AddChild(port);
-            group.Ports.AddChild(port1);
-            group.Ports.AddChild(port2);
-            group.Ports.AddChild(port3);
+            //group.Ports.AddChild(port1);
+            //group.Ports.AddChild(port2);
+            //group.Ports.AddChild(port3);
         }
 
          private void Horizontal_Clicked(object sender, EventArgs e)
@@ -973,7 +987,7 @@ namespace SpaceLayout.Forms.ZoneForms
 
                 XmlElement Color = xmlDoc.CreateElement("Color");
                 Color.InnerText = result.Color.Name.ToString();
-
+                
                 gcroot.AppendChild(Group1);
                 gcroot.AppendChild(Group2);
                 gcroot.AppendChild(Type);

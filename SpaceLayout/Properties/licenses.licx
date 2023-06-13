@@ -1,5 +1,7 @@
-Nevron.Diagram.WinForm.Commands.NDiagramCommandBarsManager, Nevron.Diagram.WinForm, Version=23.3.9.12, Culture=neutral, PublicKeyToken=8232c9976c3abc48
-Nevron.UI.WinForm.Controls.NDockingToolbar, Nevron.Presentation, Version=23.3.9.12, Culture=neutral, PublicKeyToken=6656c5d1103e75cc
 Nevron.UI.WinForm.Controls.NGroupBox, Nevron.Presentation, Version=23.3.9.12, Culture=neutral, PublicKeyToken=6656c5d1103e75cc
-Nevron.UI.WinForm.Controls.NToolbar, Nevron.Presentation, Version=23.3.9.12, Culture=neutral, PublicKeyToken=6656c5d1103e75cc
+Nevron.UI.WinForm.Controls.NDockingToolbar, Nevron.Presentation, Version=23.3.9.12, Culture=neutral, PublicKeyToken=6656c5d1103e75cc
+Nevron.Diagram.WinForm.Commands.NDiagramCommandBarsManager, Nevron.Diagram.WinForm, Version=23.3.9.12, Culture=neutral, PublicKeyToken=8232c9976c3abc48
+Nevron.UI.WinForm.Controls.NLineControl, Nevron.Presentation, Version=23.3.9.12, Culture=neutral, PublicKeyToken=6656c5d1103e75cc
 Nevron.Diagram.WinForm.NDrawingView, Nevron.Diagram.WinForm, Version=23.3.9.12, Culture=neutral, PublicKeyToken=8232c9976c3abc48
+Nevron.UI.WinForm.Controls.NColorButton, Nevron.Presentation, Version=23.3.9.12, Culture=neutral, PublicKeyToken=6656c5d1103e75cc
+Nevron.UI.WinForm.Controls.NToolbar, Nevron.Presentation, Version=23.3.9.12, Culture=neutral, PublicKeyToken=6656c5d1103e75cc

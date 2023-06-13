@@ -12,6 +12,7 @@ using System.Collections;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using Nevron.UI.WinForm.Docking;
 
 namespace SpaceLayout.Forms.ZoneForms
 {
@@ -231,6 +232,9 @@ namespace SpaceLayout.Forms.ZoneForms
 
         private void MainFirstPageControl_Load(object sender, EventArgs e)
         {
+            Nevron.Diagram.WinForm.Commands.NEnableCreateConnectorCommand l = new Nevron.Diagram.WinForm.Commands.NEnableCreateConnectorCommand();
+            NLineShape line= new NLineShape();
+            //l.Commander.Commands.Add(null);
 
         }
 
@@ -252,6 +256,39 @@ namespace SpaceLayout.Forms.ZoneForms
         private void toolStripButton4_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void MainFirstPageControl_ControlAdded(object sender, ControlEventArgs e)
+        {
+
+        }
+
+
+
+        private void OnMyCommandCommandExecuted(object sender, EventArgs e)
+        {
+            MessageBox.Show("My command is executed...");
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //List<> a =  nDiagramCommandBarsManager1.CommandManager.GetAllCommands();
+            NCommand command = new NCommand();
+            
+            //command.
+            ////command.ID = (int)MyCommandIdEnum.Command1;
+            ////add a shortcut combination
+            //command.Shortcuts.Add(new NShortcut(Keys.Q, Keys.Control | Keys.Shift));
+            ////hook to the executed event
+            //command.Executed += new EventHandler(OnMyCommandCommandExecuted);
+            //this.nDockManager1.Commander.RegisterCommand(command);
+
+            //nDiagramCommandBarsManager1 = new Nevron.Diagram.WinForm.Commands.NDiagramCommandBarsManager();
+            //nDiagramCommandBarsManager1.commans
+            //Nevron.
+            //NCreateLineTool line = new NCreateLineTool();
+            //command.Commands[line.StartMouseEvent].Click();
+            //NLineShape shape = new NLineShape();
         }
     }
 }

@@ -55,8 +55,8 @@ namespace SpaceLayout.Forms.ZoneForms
         public NDrawingDocument Ndd;
         public NGraph graph;
         private Dictionary<int, bool> rowNodecreated = new Dictionary<int, bool>();
-        private NNode startnode;
-        private NNode endnode;
+        public NGroup startgroup = null;
+        public NGroup endgroup = null;
         public NRectangleShape startNode = null;
         public NRectangleShape endNode = null;
         private NPersistencyManager persistencyManager;
@@ -64,7 +64,8 @@ namespace SpaceLayout.Forms.ZoneForms
         private NCheckBox autoDestroyCheckBox;
         private NCheckBox canBeEmptyCheckBox;
         private NLayer layer;
-
+        
+        
         NFlowLayout ZonesLayout;
         NFlowLayout GroupsLayout;
         NFlowLayout FloorLayout;
@@ -73,7 +74,7 @@ namespace SpaceLayout.Forms.ZoneForms
         List<Group> groups;
         List<Connector_Group> congroup;
         // List<NRectangleShape> existingGroups = new List<NRectangleShape>();
-
+        
         IDictionary<string, string> existingGroups;
         public ZoneSelectionControl()
         {
@@ -94,9 +95,6 @@ namespace SpaceLayout.Forms.ZoneForms
             this.Controls.Add(Ndv);
         }
 
-
-
-
         private void ChartControl_NodeCreated(NNodeEventArgs args)
         {
             Console.WriteLine(args.Node.ToString());
@@ -111,15 +109,8 @@ namespace SpaceLayout.Forms.ZoneForms
                 Ndd = Ndv.Document;
             }
             Ndd.ActiveLayer.RemoveAllChildren();
-
-            NViewEventSinkService eventSinkService = new NViewEventSinkService();
-
-            // Register a mouse click event handler
-            Ndv.NodeSelected += EventSinkService_MouseClick;
-
             layer = new NLayer();
             Ndd.Layers.AddChild(layer);
-
             ZonesLayout = new NFlowLayout();
             ZonesLayout.Direction = LayoutDirection.LeftToRight;
             ZonesLayout.ConstrainMode = CellConstrainMode.Ordinal;
@@ -162,10 +153,104 @@ namespace SpaceLayout.Forms.ZoneForms
             btnHorizontal.Click += Horizontal_Clicked;
             btnVertical.Click += Vertical_Clicked;
         }
-        private void EventSinkService_MouseClick(NNodeEventArgs args)
+
+        private void Connect_Horizontal(NNodeEventArgs args)
         {
-            NRectangleShape n = (NRectangleShape)args.Node;
+            var module = args.Node;
+
+            if(module is NGroup group && existingGroups.ContainsKey(group.Name))
+            {
+                if (startgroup == null)
+                    startgroup = group;
+                else if(endgroup == null)
+                {
+                    endgroup = group;
+
+                    NLineShape line = new NLineShape();
+                    line.StyleSheetName = NDR.NameConnectorsStyleSheet;
+                    line.Style.FillStyle = new NColorFillStyle(Color.Black);
+                    line.Style.StrokeStyle = new NStrokeStyle(Color.Black);
+                    
+                    Ndd.ActiveLayer.AddChild(line);
+                    line.StartPoint = new NPointF(startgroup.Center.X, startgroup.Center.Y);
+                    line.EndPoint = new NPointF(endgroup.Center.X, endgroup.Center.Y);
+                    line.Tag = "Horizontal";
+                    Ndv.Selection.DeselectAll();
+
+                    startgroup = null;
+                    endgroup = null;
+
+                    NAbilities protection = line.Protection;
+                    protection.InplaceEdit = true;
+                    line.Protection = protection;
+                    line.DoubleClick += Line_DoubleClick;
+
+                    Ndv.NodeSelected -= Connect_Horizontal;
+                  
+                }
+            }
         }
+
+        private void Line_DoubleClick(NNodeViewEventArgs args)
+        {
+            var module = args.Node;
+            if(module is NLineShape line)
+            {
+                string title = "";
+                if (line.Tag.ToString() == "Horizontal")
+                    title = "Horizontal Content Weight";
+                else
+                    title = "Vertical Content Weight";
+                ContenetPlacementForm Contentplacement = new ContenetPlacementForm(title);
+                if (Contentplacement.ShowDialog() == DialogResult.Cancel)
+                {
+                    if (!string.IsNullOrWhiteSpace(Contentplacement.placementWeight))
+                    {
+                        line.Text = line.Tag.ToString() + "," + Contentplacement.placementWeight.ToString();
+                    }
+                }
+                Ndv.Selection.DeselectAll();
+            }
+            
+        }
+
+        private void Connect_Vertical(NNodeEventArgs args)
+        {
+            var module = args.Node;
+
+            if (module is NGroup group && existingGroups.ContainsKey(group.Name))
+            {
+                if (startgroup == null)
+                    startgroup = group;
+                else if (endgroup == null)
+                {
+                    endgroup = group;
+
+                    NLineShape line = new NLineShape();
+                    line.StyleSheetName = NDR.NameConnectorsStyleSheet;
+                    line.Style.FillStyle = new NColorFillStyle(Color.Black);
+                    line.Style.StrokeStyle = new NStrokeStyle(Color.Black);
+                    Ndd.ActiveLayer.AddChild(line);
+                    line.StartPoint = new NPointF(startgroup.Center.X, startgroup.Center.Y);
+                    line.EndPoint = new NPointF(endgroup.Center.X, endgroup.Center.Y);
+                    line.Tag = "Vertical";
+
+                    Ndv.Selection.DeselectAll();
+
+                    startgroup = null;
+                    endgroup = null;
+
+                    NAbilities protection = line.Protection;
+                    protection.InplaceEdit = true;
+                    line.Protection = protection;
+                    line.DoubleClick += Line_DoubleClick;
+
+                    Ndv.NodeSelected -= Connect_Vertical;
+
+                }
+            }
+        }
+
         private void BindRatioCombo()
         {
             //cboZonesRatio.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -185,7 +270,6 @@ namespace SpaceLayout.Forms.ZoneForms
 
             //cboRatio.ValueMember = "Key";
             ((DataGridViewComboBoxColumn)dataGridView1.Columns["Column11"]).DataSource = comboSource.ToList();
-
         }
 
 
@@ -357,6 +441,14 @@ namespace SpaceLayout.Forms.ZoneForms
                                 frame.SendToBack();
                                 existingGroups.Add(newGroup.Name, dtGroup.Rows[0]["Floor"].ToString());
                                 Ndd.ActiveLayer.AddChild(newGroup);
+
+                                NAbilities protection1 = frame.Protection;
+                                protection1.InplaceEdit = true;
+                                frame.Protection = protection1;
+
+                                NAbilities protection = newGroup.Protection;
+                                protection.InplaceEdit = true;
+                                newGroup.Protection = protection;
                             }
                         }
                     }
@@ -379,33 +471,26 @@ namespace SpaceLayout.Forms.ZoneForms
                         frame.Style.FillStyle = new NColorFillStyle(Color.Transparent);
                         frame.Style.StrokeStyle = new NStrokeStyle(Color.Black);
                         floorgroups.Shapes.AddChild(frame);
-                        floorgroups.CreateShapeElements(ShapeElementsMask.Labels);
 
+                        //For Label
+                        floorgroups.CreateShapeElements(ShapeElementsMask.Labels);
                         //NRotatedBoundsLabel label = new NRotatedBoundsLabel(floor + " floor", floorgroups.UniqueId, new Nevron.Diagram.NMargins(0, 0, -108, -2));
                         NRotatedBoundsLabel label = new NRotatedBoundsLabel(floor, floorgroups.UniqueId, new Nevron.Diagram.NMargins(0, -110, 0, 0));  //add labels to group for floor
                         label.Mode = BoxTextMode.Wrap;
                         floorgroups.Labels.DefaultLabelUniqueId = label.UniqueId;
+                        floorgroups.Labels.Protection = new NAbilities(AbilitiesMask.Delete);
                         floorgroups.Labels.AddChild(label);
-
-
-                        //NLogicalLineLabel lineLabel = new NLogicalLineLabel("Line label - start", frame.UniqueId, 120, true, true);
-                        //frame.Labels.DefaultLabelUniqueId = lineLabel.UniqueId;
-                        //lineLabel.UseLineOrientation = true;
-                        //NTextStyle textStyle = Ndd.Style.TextStyle.Clone() as NTextStyle;
-                        //textStyle.Orientation = 90;
-                        //textStyle.StringFormatStyle.HorzAlign = Nevron.HorzAlign.Left;
-                        // textStyle.Offset = new NPointL(50, -10);
-
-                        //textStyle.StringFormatStyle.VertAlign = Nevron.VertAlign.Center;
-                        //NStyle.SetTextStyle(frame, textStyle);
-                        //frame.Labels.AddChild(lineLabel);
-
-                        //textStyle.StringFormatStyle.VertAlign = Nevron.VertAlign.Bottom;
-                        //frame.Labels.AddChild(lineLabel);
-                        //textStyle.Offset =new NPointL(200, -10);
 
                         level.Add(floor);
                         Ndd.ActiveLayer.AddChild(floorgroups);
+
+                        NAbilities protection1 = frame.Protection;
+                        protection1.InplaceEdit = true;
+                        frame.Protection = protection1;
+
+                        NAbilities protection = floorgroups.Protection;
+                        protection.InplaceEdit = true;
+                        floorgroups.Protection = protection;
                     }
                 }
 
@@ -492,7 +577,9 @@ namespace SpaceLayout.Forms.ZoneForms
                 zone.Ports.DefaultInwardPortUniqueId = port4.UniqueId;
                 //Ndd.ActiveLayer.AddChild(zone);
                 //zone.BringToFront();
-
+                NAbilities protection = zone.Protection;
+                protection.InplaceEdit = true;
+                zone.Protection = protection;
                 zones.Add(zone);
             }
             return zones;
@@ -539,6 +626,7 @@ namespace SpaceLayout.Forms.ZoneForms
                 ZonesLayout.Layout(listedNode, layoutContext);
                 group.Name = dtgroup.Rows[0]["Group"].ToString();
                 group.UpdateModelBounds();
+
             }
             return group;
         }
@@ -564,30 +652,45 @@ namespace SpaceLayout.Forms.ZoneForms
         private void CreateGroupPorts(NRectangleShape group)
         {
             group.CreateShapeElements(ShapeElementsMask.Ports);
-            NRotatedBoundsPort port = new NRotatedBoundsPort(new NContentAlignment(ContentAlignment.MiddleCenter));
+            //NPort port = new NRotatedBoundsPort(new NContentAlignment(ContentAlignment.MiddleCenter));
             //NRotatedBoundsPort port1 = new NRotatedBoundsPort(new NContentAlignment(ContentAlignment.BottomCenter));
             //NRotatedBoundsPort port2 = new NRotatedBoundsPort(new NContentAlignment(ContentAlignment.MiddleLeft));
             //NRotatedBoundsPort port3 = new NRotatedBoundsPort(new NContentAlignment(ContentAlignment.MiddleRight));
-            port.Name = "GroupPort";
+            //port.Name = "GroupPort";
             //port1.Name = "port1";
             //port2.Name = "port2";
             //port3.Name = "port3";
-            group.Ports.AddChild(port);
+            //group.Ports.AddChild(port);
             //group.Ports.AddChild(port1);
             //group.Ports.AddChild(port2);
             //group.Ports.AddChild(port3);
+
+            NDynamicPort port = new NDynamicPort(group.UniqueId, ContentAlignment.MiddleCenter, DynamicPortGlueMode.GlueToContour);
+            port.Name = "GroupPort";
+            group.Ports.AddChild(port);
+            group.Ports.DefaultInwardPortUniqueId = port.UniqueId;
+
         }
 
-         private void Horizontal_Clicked(object sender, EventArgs e)
+        private void Horizontal_Clicked(object sender, EventArgs e)
          {
             //do stuff
-            //Connector line = new Connector();
-
-         }
+            //Connector line = new Connector();\
+            Ndv.Selection.DeselectAll();
+            startgroup = null;
+            endgroup = null;
+            Ndv.NodeSelected += Connect_Horizontal;
+            
+        }
 
         private void Vertical_Clicked(object sender, EventArgs e)
         {
             //do stuff
+            Ndv.Selection.DeselectAll();
+            startgroup = null;
+            endgroup = null;
+            Ndv.NodeSelected += Connect_Vertical;
+            
         }
 
         private void ZoneConnectorData(string flg) //flg: 1 = save, 2 =  load

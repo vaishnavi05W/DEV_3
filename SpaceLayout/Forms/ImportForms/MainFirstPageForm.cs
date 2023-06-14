@@ -238,15 +238,7 @@ namespace SpaceLayout.Forms.ZoneForms
 
         }
 
-        private void graphControl1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void nDrawingView1_Click(object sender, EventArgs e)
-        {
-
-        }
+       
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {

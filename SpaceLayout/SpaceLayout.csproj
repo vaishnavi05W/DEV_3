@@ -295,11 +295,11 @@
     <Compile Include="Forms\ImportForms\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ImportForms\GroupTestForm.cs">
+    <Compile Include="Forms\ImportForms\ContentPlacementForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\ImportForms\GroupTestForm.Designer.cs">
-      <DependentUpon>GroupTestForm.cs</DependentUpon>
+    <Compile Include="Forms\ImportForms\ContentPlacementForm.Designer.cs">
+      <DependentUpon>ContentPlacementForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ImportForms\MainFirstPageForm.cs">
       <SubType>Form</SubType>
@@ -365,8 +365,8 @@
     <Compile Include="Object\Zone_Main.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Forms\ImportForms\GroupTestForm.resx">
-      <DependentUpon>GroupTestForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ImportForms\ContentPlacementForm.resx">
+      <DependentUpon>ContentPlacementForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ImportForms\MainFirstPageForm.resx">
       <DependentUpon>MainFirstPageForm.cs</DependentUpon>

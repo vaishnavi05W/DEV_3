@@ -104,7 +104,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStripButton4});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(388, 29);
+            this.toolStrip1.Size = new System.Drawing.Size(388, 31);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -118,7 +118,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.DarkViolet;
             this.toolStripButton1.Margin = new System.Windows.Forms.Padding(1);
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(93, 27);
+            this.toolStripButton1.Size = new System.Drawing.Size(93, 29);
             this.toolStripButton1.Text = "Import file";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
@@ -217,7 +217,6 @@ namespace SpaceLayout.Forms.ZoneForms
             this.nDrawingView1.Size = new System.Drawing.Size(868, 457);
             this.nDrawingView1.TabIndex = 2;
             this.nDrawingView1.Text = "nDrawingView1";
-            this.nDrawingView1.Click += new System.EventHandler(this.nDrawingView1_Click);
             // 
             // nDrawingDocument1
             // 
@@ -316,7 +315,6 @@ namespace SpaceLayout.Forms.ZoneForms
             this.Name = "MainFirstPageControl";
             this.Text = "SAMOO Space Planning";
             this.TransparencyKey = System.Drawing.Color.Blue;
-            this.Load += new System.EventHandler(this.MainFirstPageControl_Load);
             this.ControlAdded += new System.Windows.Forms.ControlEventHandler(this.MainFirstPageControl_ControlAdded);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);

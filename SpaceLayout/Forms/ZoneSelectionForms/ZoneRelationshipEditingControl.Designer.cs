@@ -54,11 +54,9 @@ namespace SpaceLayout.Forms.ZoneForms
             this.Column13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.Column15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -280,11 +278,9 @@ namespace SpaceLayout.Forms.ZoneForms
             this.dataGridView2.BackgroundColor = System.Drawing.Color.White;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column15,
             this.Column16,
             this.Column17,
             this.Column18,
-            this.Column19,
             this.Column20});
             this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView2.GridColor = System.Drawing.SystemColors.Control;
@@ -292,32 +288,22 @@ namespace SpaceLayout.Forms.ZoneForms
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.Size = new System.Drawing.Size(1392, 225);
             this.dataGridView2.TabIndex = 4;
-            // 
-            // Column15
-            // 
-            this.Column15.HeaderText = "ID";
-            this.Column15.Name = "Column15";
-            this.Column15.Width = 50;
+            this.dataGridView2.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellContentClick);
             // 
             // Column16
             // 
-            this.Column16.HeaderText = "Start Node";
+            this.Column16.HeaderText = "Start Group";
             this.Column16.Name = "Column16";
             // 
             // Column17
             // 
-            this.Column17.HeaderText = "End Node";
+            this.Column17.HeaderText = "End Group";
             this.Column17.Name = "Column17";
             // 
             // Column18
             // 
             this.Column18.HeaderText = "Axis";
             this.Column18.Name = "Column18";
-            // 
-            // Column19
-            // 
-            this.Column19.HeaderText = "Direction";
-            this.Column19.Name = "Column19";
             // 
             // Column20
             // 
@@ -368,11 +354,9 @@ namespace SpaceLayout.Forms.ZoneForms
         private System.Windows.Forms.DataGridViewTextBoxColumn Column13;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column14;
         private System.Windows.Forms.DataGridView dataGridView2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column15;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column16;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column17;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column18;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column19;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column20;
     }
 }

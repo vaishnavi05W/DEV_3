@@ -16,5 +16,10 @@ namespace SpaceLayout.Forms.ZoneForms
         {
             InitializeComponent();
         }
+
+        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

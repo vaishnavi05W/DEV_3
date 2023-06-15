@@ -13,16 +13,16 @@ namespace SpaceLayout.Object
         public const int TYPE_HORIZONTAL = 1;
         public Group Group1 { get; set; } //start group
         public Group Group2 { get; set; } //end group
-        public int Type { get; set; } // vertical,horizontal
+        public string Axis { get; set; }
+        public string Type { get; set; } // vertical,horizontal
         public double Length { get; set; }//width
-        public Color Color { get; set; }
-        public Connector_Group(Group group21, Group group22, int type, double length, Color color)
+        public Connector_Group(Group group21, Group group22, string axis, string type, double length)
         {
             this.Group1 = group21;
             this.Group2 = group22;
+            this.Axis = axis;
             this.Type = type;
             this.Length = length;
-            this.Color = color;
             //connector = new NRoutableConnector();
             //connector.StyleSheetName = NDR.NameConnectorsStyleSheet;
             //connector.ConnectorType = RoutableConnectorType.DynamicPolyline;

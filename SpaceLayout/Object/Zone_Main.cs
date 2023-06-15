@@ -8,15 +8,13 @@ namespace SpaceLayout.Object
 {
     public class Zone_Main
     {
-        public Zone_Main(int ID, string Name, string Group, string groupcolor,string relation, double grouparea,string Color, double Area, double Width, double Lenght, 
-            double Height, int Floor, double Ratio, string Type)
+        public Zone_Main(int ID, string Name, string Group,string relation,string Color, double Area, double Width, double Lenght, 
+            double Height, int Floor, string Ratio, string Type)
         {
             this.ID = ID;
             this.Name = Name;
             this.Group = Group;
-            this.GroupColor = groupcolor;
             this.Relation = relation;
-            this.GroupArea = grouparea;
             this.Color = Color;
             this.Area = Area;
             this.Width = Width;
@@ -31,16 +29,14 @@ namespace SpaceLayout.Object
         public int ID { get; set; }
         public string Name { get; set; }
         public string Group { get; set; }
-        public string GroupColor { get; set; }
         public string Relation { get; set; }
-        public double GroupArea { get; set; }
         public string Color { get; set; }
         public double Area { get; set; }
         public double Width { get; set; }
         public double Length { get; set; }
         public double Height { get; set; }
         public int Floor { get; set; }
-        public double Ratio { get; set; }
+        public string Ratio { get; set; }
         public string Type { get; set; }
         //public Zone Tag { get; internal set; }
         //public object Labels { get; internal set; }

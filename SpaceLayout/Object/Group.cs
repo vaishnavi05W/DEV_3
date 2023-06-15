@@ -10,16 +10,12 @@ namespace SpaceLayout.Object
     public class Group
     {
         public string Name { get; set; }
-        public Color Color { get; set; }
-        public double GroupArea { get; set; }
         public List<Zone_Main> Zones { get; set; }
         // Add other properties as needed
 
-        public Group(string name, Color color, double grouparea, List<Zone_Main> zones)
+        public Group(string name, List<Zone_Main> zones)
         {
             Name = name;
-            Color = color;
-            GroupArea = grouparea;
             Zones = zones;
         }
     }

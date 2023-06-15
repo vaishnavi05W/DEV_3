@@ -13,6 +13,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using Nevron.UI.WinForm.Docking;
+using System.Collections.Generic;
 
 namespace SpaceLayout.Forms.ZoneForms
 {
@@ -21,7 +22,6 @@ namespace SpaceLayout.Forms.ZoneForms
         //private IGraph graph;
         public static bool ExcelFlg = false;
         public static DataTable dtZoneSelection = null;
-        private INNode node;
         private MouseEventHandler nDrawingView1_MouseWheel;
 
         public static object CommandBarsManager { get; internal set; }
@@ -32,23 +32,28 @@ namespace SpaceLayout.Forms.ZoneForms
             InitializeComponent();
             this.Load += IS_Load;
             //nDrawingView1.MouseWheel += NDrawingView1_MouseWheel;
-
-
         }
-
-
 
         private void IS_Load(object sender, EventArgs e)
         {
-            CrateModuleDatatable();
             btnPrevious.Visible = false;
             btnNext.Visible = false;
 
-            
             toolStripButton2.Enabled = false;
             toolStripButton3.Enabled = false;
+            toolStripButton4.Enabled = false;
 
+            //this.nDiagramCommandBarsManager1.AllowCustomize = false;
+            //foreach (NDockingToolbar tb in this.nDiagramCommandBarsManager1.Toolbars)
+            //{
+            //    tb.dele
+            //    tb.AllowHide = false;
+            //    tb.HasPendantCommand = false;
+            //}
 
+            //Array list = this.nDiagramCommandBarsManager1.CommandManager.GetAllCommands().ToArray();
+            //Nevron.Diagram.WinForm.Commands.NDiagramCommand cmd = list[0]
+            //this.nDiagramCommandBarsManager1.Commander.Commands.Remove();
             // begin view init
             nDrawingView1.BeginInit();
 
@@ -81,35 +86,8 @@ namespace SpaceLayout.Forms.ZoneForms
             nDrawingView1.EndInit();
 
             // get the NDiagramCommandBarsManager instance
-            
-
-
-
-
-
-
-
-
         }
 
-        private void CrateModuleDatatable()
-        {
-            dtZoneSelection = new DataTable();
-            dtZoneSelection.Columns.Add("ID");
-            dtZoneSelection.Columns.Add("Name");
-            //dtZoneSelection.Columns.Add("Department");
-            dtZoneSelection.Columns.Add("Group");
-            dtZoneSelection.Columns.Add("Relation");
-            dtZoneSelection.Columns.Add("Category");
-            dtZoneSelection.Columns.Add("Area");
-            dtZoneSelection.Columns.Add("Width");
-            dtZoneSelection.Columns.Add("Length");
-            dtZoneSelection.Columns.Add("Height");
-            dtZoneSelection.Columns.Add("Floor");
-            dtZoneSelection.Columns.Add("Ratio");
-            dtZoneSelection.Columns.Add("Type");
-            dtZoneSelection.Columns.Add("Color");
-        }
        
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
@@ -124,6 +102,11 @@ namespace SpaceLayout.Forms.ZoneForms
         private void toolStripButton3_Click(object sender, EventArgs e)
         {
             LoadRightPanel(3);
+        }
+
+        private void toolStripButton4_Click(object sender, EventArgs e)
+        {
+
         }
 
         public void LoadRightPanel(int flg)
@@ -187,10 +170,7 @@ namespace SpaceLayout.Forms.ZoneForms
                 LoadRightPanel(3);
             }
         }
-        private void ImportData()
-        {
-         
-        }
+
         private void btnPrevious_Click(object sender, EventArgs e)
         {
             var contrName = tableLayoutPanel2.GetControlFromPosition(0, 1).Name;
@@ -207,6 +187,13 @@ namespace SpaceLayout.Forms.ZoneForms
                 LoadRightPanel(2);
             }
         }
+
+        private void ImportData()
+        {
+         
+        }
+
+        
         private void NDrawingView1_MouseWheel(object sender, MouseEventArgs e)
         {
             // Zooming logic
@@ -228,59 +215,9 @@ namespace SpaceLayout.Forms.ZoneForms
             nDrawingView1.Document.ActiveLayer.MaxShowZoomFactor = zoom;
         }
 
-
-
-        private void MainFirstPageControl_Load(object sender, EventArgs e)
-        {
-            Nevron.Diagram.WinForm.Commands.NEnableCreateConnectorCommand l = new Nevron.Diagram.WinForm.Commands.NEnableCreateConnectorCommand();
-            NLineShape line= new NLineShape();
-            //l.Commander.Commands.Add(null);
-
-        }
-
-       
-
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
-        }
-
-        private void toolStripButton4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void MainFirstPageControl_ControlAdded(object sender, ControlEventArgs e)
-        {
-
-        }
-
-
-
-        private void OnMyCommandCommandExecuted(object sender, EventArgs e)
-        {
-            MessageBox.Show("My command is executed...");
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //List<> a =  nDiagramCommandBarsManager1.CommandManager.GetAllCommands();
-            NCommand command = new NCommand();
-            
-            //command.
-            ////command.ID = (int)MyCommandIdEnum.Command1;
-            ////add a shortcut combination
-            //command.Shortcuts.Add(new NShortcut(Keys.Q, Keys.Control | Keys.Shift));
-            ////hook to the executed event
-            //command.Executed += new EventHandler(OnMyCommandCommandExecuted);
-            //this.nDockManager1.Commander.RegisterCommand(command);
-
-            //nDiagramCommandBarsManager1 = new Nevron.Diagram.WinForm.Commands.NDiagramCommandBarsManager();
-            //nDiagramCommandBarsManager1.commans
-            //Nevron.
-            //NCreateLineTool line = new NCreateLineTool();
-            //command.Commands[line.StartMouseEvent].Click();
-            //NLineShape shape = new NLineShape();
         }
     }
 }

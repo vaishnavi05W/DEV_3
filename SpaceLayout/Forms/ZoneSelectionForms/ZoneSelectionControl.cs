@@ -846,7 +846,8 @@ namespace SpaceLayout.Forms.ZoneForms
                 {
                     if (module is NGroup g) //For Groups
                     {
-                        groups.Add(GetGroupDataFromDataSource(g));
+                        if (existingGroups.Keys.Contains(g.Name))
+                            groups.Add(GetGroupDataFromDataSource(g));
                     }
                     else if (module is NRectangleShape shape) // For Zones
                     {

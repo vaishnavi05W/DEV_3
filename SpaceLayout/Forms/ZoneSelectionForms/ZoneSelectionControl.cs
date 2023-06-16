@@ -104,6 +104,9 @@ namespace SpaceLayout.Forms.ZoneForms
             Form f = this.ParentForm;
             TableLayoutPanel tablelayout = f.Controls.Find("tableLayoutPanel1", true).FirstOrDefault() as TableLayoutPanel;
             ToolStrip btnFile =tablelayout.Controls[1] as ToolStrip;
+            ((System.Windows.Forms.ToolStripDropDownItem)btnFile.Items[0]).DropDown.Items[0].Click -= BtnSave_Click;
+            ((System.Windows.Forms.ToolStripDropDownItem)btnFile.Items[0]).DropDown.Items[1].Click -= BtnLoad_Click;
+
             ((System.Windows.Forms.ToolStripDropDownItem)btnFile.Items[0]).DropDown.Items[0].Click += BtnSave_Click;
             ((System.Windows.Forms.ToolStripDropDownItem)btnFile.Items[0]).DropDown.Items[1].Click += BtnLoad_Click;
 
@@ -112,8 +115,6 @@ namespace SpaceLayout.Forms.ZoneForms
             {
                 Ndd = Ndv.Document;
             }
-
-            
 
             ZonesLayout = new NFlowLayout();
             ZonesLayout.Direction = LayoutDirection.LeftToRight;
@@ -187,8 +188,9 @@ namespace SpaceLayout.Forms.ZoneForms
         private void Connect_Horizontal(NNodeEventArgs args)
         {
             var module = args.Node;
-
-            if(module is NGroup group && existingGroups.ContainsKey(group.Name))
+            List<string> GroupRecord = new List<string>();
+            GroupRecord = dtSource.AsEnumerable().Select(r => r.Field<string>("Group")).Distinct().ToList();
+            if (module is NGroup group && GroupRecord.Contains(group.Name))
             {
                 if (startgroup == null)
                     startgroup = group;
@@ -256,8 +258,9 @@ namespace SpaceLayout.Forms.ZoneForms
         private void Connect_Vertical(NNodeEventArgs args)
         {
             var module = args.Node;
-
-            if (module is NGroup group && existingGroups.ContainsKey(group.Name))
+            List<string> GroupRecord = new List<string>();
+            GroupRecord = dtSource.AsEnumerable().Select(r => r.Field<string>("Group")).Distinct().ToList();
+            if (module is NGroup group && GroupRecord.Contains(group.Name))
             {
                 if (startgroup == null)
                     startgroup = group;
@@ -743,6 +746,8 @@ namespace SpaceLayout.Forms.ZoneForms
         private void ZoneConnectorData(string flg) //flg: 1 = save, 2 =  load
         {
             //Ndv.Refresh();
+            List<string> GroupRecord = new List<string>();
+            GroupRecord = dtSource.AsEnumerable().Select(r => r.Field<string>("Group")).Distinct().ToList();
             if (flg == "1")
             {
                 foreach (NLineShape edge in Ndv.Document.Descendants(NFilters.Shape1D, -1)) ////Detecting Line Shapes with 1D 
@@ -790,7 +795,7 @@ namespace SpaceLayout.Forms.ZoneForms
                 {
                     if (module is NGroup g) //For Groups
                     {
-                        if (existingGroups.Keys.Contains(g.Name))
+                        if (GroupRecord.Contains(g.Name))
                             groups.Add(GetGroupDataFromDataSource(g));
                     }
                     else if (module is NRectangleShape shape) // For Zones
@@ -850,7 +855,7 @@ namespace SpaceLayout.Forms.ZoneForms
                 {
                     if (module is NGroup g) //For Groups
                     {
-                        if (existingGroups.Keys.Contains(g.Name))
+                        if (GroupRecord.Contains(g.Name))
                             groups.Add(GetGroupDataFromDataSource(g));
                     }
                     else if (module is NRectangleShape shape) // For Zones

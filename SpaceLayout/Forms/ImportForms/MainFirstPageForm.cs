@@ -113,6 +113,7 @@ namespace SpaceLayout.Forms.ZoneForms
         {
             if (flg == 1)
             {
+                
                 if (tableLayoutPanel2.Controls.Count > 1)
                     tableLayoutPanel2.Controls.Remove(tableLayoutPanel2.GetControlFromPosition(0, 1));
 

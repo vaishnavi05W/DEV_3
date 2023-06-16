@@ -60,19 +60,19 @@ namespace SpaceLayout.Forms.ZoneForms
             this.tableLayoutPanel2.Controls.Add(this.toolStrip1, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 2);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(877, 2);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(877, 25);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 3;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.132623F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 86.26016F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.621849F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 88.65546F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.607213F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(388, 707);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(388, 719);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // toolStrip1
             // 
-            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton1,
@@ -81,7 +81,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStripButton4});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(388, 31);
+            this.toolStrip1.Size = new System.Drawing.Size(388, 33);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -95,7 +95,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.DarkViolet;
             this.toolStripButton1.Margin = new System.Windows.Forms.Padding(1);
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(93, 29);
+            this.toolStripButton1.Size = new System.Drawing.Size(93, 31);
             this.toolStripButton1.Text = "Import file";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
@@ -109,7 +109,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Margin = new System.Windows.Forms.Padding(1);
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(127, 27);
+            this.toolStripButton2.Size = new System.Drawing.Size(127, 46);
             this.toolStripButton2.Text = "Zone Selection";
             this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
@@ -122,7 +122,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton3.Margin = new System.Windows.Forms.Padding(1);
             this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(120, 27);
+            this.toolStripButton3.Size = new System.Drawing.Size(120, 46);
             this.toolStripButton3.Text = "Zone Relation";
             this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
             // 
@@ -147,7 +147,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.tableLayoutPanel3.Controls.Add(this.btnPrevious, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.btnNext, 1, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 661);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 673);
             this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
@@ -192,7 +192,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStripDropDownButton1});
             this.toolStrip2.Location = new System.Drawing.Point(0, 0);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(1268, 30);
+            this.toolStrip2.Size = new System.Drawing.Size(874, 23);
             this.toolStrip2.TabIndex = 1;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -202,9 +202,10 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveToolStripMenuItem,
             this.openToolStripMenuItem});
+            this.toolStripDropDownButton1.ForeColor = System.Drawing.Color.Navy;
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(49, 27);
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(49, 20);
             this.toolStripDropDownButton1.Text = "File";
             this.toolStripDropDownButton1.ToolTipText = "File";
             // 
@@ -228,11 +229,11 @@ namespace SpaceLayout.Forms.ZoneForms
             this.nDrawingView1.DesignTimeState = ((Nevron.Diagram.NBinaryState)(resources.GetObject("nDrawingView1.DesignTimeState")));
             this.nDrawingView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.nDrawingView1.Document = this.nDrawingDocument1;
-            this.nDrawingView1.Location = new System.Drawing.Point(3, 2);
+            this.nDrawingView1.Location = new System.Drawing.Point(3, 25);
             this.nDrawingView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.nDrawingView1.Name = "nDrawingView1";
             this.nDrawingView1.RenderTechnology = Nevron.GraphicsCore.RenderTechnology.GDIPlus;
-            this.nDrawingView1.Size = new System.Drawing.Size(868, 707);
+            this.nDrawingView1.Size = new System.Drawing.Size(868, 719);
             this.nDrawingView1.TabIndex = 2;
             this.nDrawingView1.Text = "nDrawingView1";
             // 
@@ -242,16 +243,18 @@ namespace SpaceLayout.Forms.ZoneForms
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 68.9899F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 31.0101F));
-            this.tableLayoutPanel1.Controls.Add(this.nDrawingView1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tableLayoutPanel1.Controls.Add(this.nDrawingView1, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.toolStrip2, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.ForeColor = System.Drawing.Color.White;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 35);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1268, 711);
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 3.217158F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 96.78284F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1268, 746);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // MainFirstPageControl
@@ -260,7 +263,6 @@ namespace SpaceLayout.Forms.ZoneForms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(1268, 746);
-            this.Controls.Add(this.toolStrip2);
             this.Controls.Add(this.tableLayoutPanel1);
             this.ForeColor = System.Drawing.Color.Navy;
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -275,8 +277,8 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStrip2.ResumeLayout(false);
             this.toolStrip2.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

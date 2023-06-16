@@ -102,8 +102,8 @@ namespace SpaceLayout.Forms.ZoneForms
         private void IS_Load(object sender, EventArgs e)
         {
             Form f = this.ParentForm;
-
-            ToolStrip btnFile = f.Controls[0] as ToolStrip;
+            TableLayoutPanel tablelayout = f.Controls.Find("tableLayoutPanel1", true).FirstOrDefault() as TableLayoutPanel;
+            ToolStrip btnFile =tablelayout.Controls[1] as ToolStrip;
             ((System.Windows.Forms.ToolStripDropDownItem)btnFile.Items[0]).DropDown.Items[0].Click += BtnSave_Click;
             ((System.Windows.Forms.ToolStripDropDownItem)btnFile.Items[0]).DropDown.Items[1].Click += BtnLoad_Click;
 

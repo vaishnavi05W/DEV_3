@@ -43,17 +43,6 @@ namespace SpaceLayout.Forms.ZoneForms
             toolStripButton3.Enabled = false;
             toolStripButton4.Enabled = false;
 
-            //this.nDiagramCommandBarsManager1.AllowCustomize = false;
-            //foreach (NDockingToolbar tb in this.nDiagramCommandBarsManager1.Toolbars)
-            //{
-            //    tb.dele
-            //    tb.AllowHide = false;
-            //    tb.HasPendantCommand = false;
-            //}
-
-            //Array list = this.nDiagramCommandBarsManager1.CommandManager.GetAllCommands().ToArray();
-            //Nevron.Diagram.WinForm.Commands.NDiagramCommand cmd = list[0]
-            //this.nDiagramCommandBarsManager1.Commander.Commands.Remove();
             // begin view init
             nDrawingView1.BeginInit();
 
@@ -113,7 +102,6 @@ namespace SpaceLayout.Forms.ZoneForms
         {
             if (flg == 1)
             {
-                
                 if (tableLayoutPanel2.Controls.Count > 1)
                     tableLayoutPanel2.Controls.Remove(tableLayoutPanel2.GetControlFromPosition(0, 1));
 

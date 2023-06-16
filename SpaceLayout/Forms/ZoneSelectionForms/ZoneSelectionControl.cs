@@ -112,9 +112,8 @@ namespace SpaceLayout.Forms.ZoneForms
             {
                 Ndd = Ndv.Document;
             }
-            Ndd.ActiveLayer.RemoveAllChildren();
-            layer = new NLayer();
-            Ndd.Layers.AddChild(layer);
+
+            
 
             ZonesLayout = new NFlowLayout();
             ZonesLayout.Direction = LayoutDirection.LeftToRight;
@@ -163,7 +162,7 @@ namespace SpaceLayout.Forms.ZoneForms
         {
             try
             {
-                if (Ndv != null)
+                if (Ndv.Document.ActiveLayer != null)
                     Export();
                 else MessageBox.Show("Diagram View is empty!");
             }
@@ -245,7 +244,6 @@ namespace SpaceLayout.Forms.ZoneForms
                         
                         line.Style.TextStyle = new NTextStyle()
                         {
-                            
                             Orientation = 180,
                         };
                     }
@@ -395,6 +393,8 @@ namespace SpaceLayout.Forms.ZoneForms
             if (dtSource.Rows.Count > 0)
             {
                 dataGridView1.DataSource = dtSource;
+                if(Ndd== null || Ndd.ActiveLayer == null 
+                    || Ndd.ActiveLayer.Descendants(NFilters.Shape1D, -1).Count == 0 || Ndd.ActiveLayer.Descendants(NFilters.Shape2D, -1).Count == 0)
                 MainFunction(dtSource);
             }
         }
@@ -430,7 +430,7 @@ namespace SpaceLayout.Forms.ZoneForms
 
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            // My combobox column is the second one so I hard coded a 1, flavor to taste
+            
             DataGridViewComboBoxCell cb = (DataGridViewComboBoxCell)dataGridView1.Rows[e.RowIndex].Cells[10];
             if (cb.Value != null)
             {
@@ -446,6 +446,10 @@ namespace SpaceLayout.Forms.ZoneForms
         {
             try
             {
+                Ndd.ActiveLayer.RemoveAllChildren();
+                layer = new NLayer();
+                Ndd.Layers.AddChild(layer);
+
                 NLayoutContext layoutContext = new NLayoutContext();
                 layoutContext.GraphAdapter = new NShapeGraphAdapter();
                 layoutContext.BodyAdapter = new NShapeBodyAdapter(Ndd);

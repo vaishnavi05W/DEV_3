@@ -36,7 +36,6 @@ namespace SpaceLayout.Forms.ZoneForms
             {
                 if (checkedListBox1.CheckedItems.Count > 0)
                 {
-                    string s = "";
                     for (int x = 0; x < checkedListBox1.CheckedItems.Count; x++)
                     {
                         if(checkedListBox1.CheckedItems[x].ToString() == "관계도 .xlsx")
@@ -60,8 +59,8 @@ namespace SpaceLayout.Forms.ZoneForms
                                 {
                                     if (Path.GetExtension(savedialog.FileName).Contains(".xlsx"))
                                     {
-                                        ExportDataTableToExcel(dtExcelExport, savedialog.FileName);
-                                        Process.Start(Path.GetDirectoryName(savedialog.FileName));
+                                        if(ExportDataTableToExcel(dtExcelExport, savedialog.FileName))
+                                            Process.Start(Path.GetDirectoryName(savedialog.FileName));
                                     }
                                 }
                             }
@@ -74,9 +73,9 @@ namespace SpaceLayout.Forms.ZoneForms
                     MessageBox.Show("Please check at least one item.");
                     return;
                 }
-                
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
@@ -85,6 +84,21 @@ namespace SpaceLayout.Forms.ZoneForms
        
         public static bool ExportDataTableToExcel(DataTable dt, string filepath)
         {
+            try
+            {
+
+                using (Stream stream = new FileStream(filepath, FileMode.Open, FileAccess.ReadWrite, FileShare.None))
+                {
+                    // Here you can copy your file
+                    // then rename the copied file
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("File is in use!! Close it and try again");
+                return false;
+            }
+
             Excel.Application oXL;
             Excel.Workbook oWB;
             Excel.Worksheet oSheet;
@@ -124,10 +138,10 @@ namespace SpaceLayout.Forms.ZoneForms
                 // Save the sheet and close 
                 oSheet = null;
                 oRange = null;
-                oWB.SaveAs(filepath);
+                oWB.SaveCopyAs(filepath);
                 oWB = null;
                 oXL.Quit();
-            }
+        }
             catch
             {
                 throw;

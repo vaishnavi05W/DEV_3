@@ -23,8 +23,8 @@ using Nevron.Diagram.Shapes;
 using System.Xml;
 using Nevron.Diagram.Templates;
 using Nevron.Diagram.WinForm.Commands;
-using Nevron.Nov.Diagram.Editors;
-using Nevron.Nov.Diagram.DrawingTools;
+
+
 using Nevron.Diagram.Designer;
 using Nevron.GraphicsCore;
 using System.Drawing.Design;
@@ -36,8 +36,8 @@ using Nevron.Diagram.ThinWeb;
 using Nevron.Diagram.Extensions;
 using Nevron.Serialization;
 using Nevron.Diagram.Filters;
-using Nevron.Chart.Windows;
-using Nevron.Chart;
+
+
 using Nevron.UI;
 using System.Xml.Serialization;
 using Nevron.Diagram.Layout;

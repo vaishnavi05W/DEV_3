@@ -12,9 +12,15 @@ namespace SpaceLayout.Forms.ZoneForms
 {
     public partial class OutputControl1 : UserControl
     {
-        public OutputControl1()
+        public OutputControl1(DataTable dtZoneRelationshipControl)
         {
             InitializeComponent();
+            this.Load += IS_Load;
+        }
+
+        private void IS_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

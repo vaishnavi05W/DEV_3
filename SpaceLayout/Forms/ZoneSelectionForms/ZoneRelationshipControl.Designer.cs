@@ -36,14 +36,14 @@ namespace SpaceLayout.Forms.ZoneForms
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.dgvZoneRelationship = new System.Windows.Forms.DataGridView();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.button2 = new System.Windows.Forms.Button();
             this.colID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colStartNode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colEndNode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAxis = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnGenerative = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvZoneRelationship)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
@@ -59,7 +59,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15.42F));
@@ -81,51 +81,11 @@ namespace SpaceLayout.Forms.ZoneForms
             this.dgvZoneRelationship.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvZoneRelationship.GridColor = System.Drawing.SystemColors.Control;
             this.dgvZoneRelationship.Location = new System.Drawing.Point(4, 119);
-            this.dgvZoneRelationship.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvZoneRelationship.Margin = new System.Windows.Forms.Padding(4);
             this.dgvZoneRelationship.Name = "dgvZoneRelationship";
             this.dgvZoneRelationship.RowHeadersWidth = 51;
             this.dgvZoneRelationship.Size = new System.Drawing.Size(472, 554);
             this.dgvZoneRelationship.TabIndex = 3;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Font = new System.Drawing.Font("Corbel", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.ForeColor = System.Drawing.Color.Navy;
-            this.textBox1.Location = new System.Drawing.Point(0, 41);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(0);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(480, 32);
-            this.textBox1.TabIndex = 1;
-            this.textBox1.Text = "Zone Relationship";
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 1;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Controls.Add(this.button2, 0, 0);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(4, 681);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 1;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 65F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(472, 66);
-            this.tableLayoutPanel2.TabIndex = 5;
-            // 
-            // button2
-            // 
-            this.button2.BackColor = System.Drawing.Color.White;
-            this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button2.ForeColor = System.Drawing.Color.Navy;
-            this.button2.Location = new System.Drawing.Point(4, 4);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(464, 58);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "Draw";
-            this.button2.UseVisualStyleBackColor = false;
             // 
             // colID
             // 
@@ -139,6 +99,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.colID.DefaultCellStyle = dataGridViewCellStyle1;
             this.colID.FillWeight = 85.23576F;
             this.colID.HeaderText = "ID";
+            this.colID.MinimumWidth = 6;
             this.colID.Name = "colID";
             // 
             // colStartNode
@@ -201,12 +162,52 @@ namespace SpaceLayout.Forms.ZoneForms
             this.colType.MinimumWidth = 6;
             this.colType.Name = "colType";
             // 
+            // textBox1
+            // 
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox1.Font = new System.Drawing.Font("Corbel", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.ForeColor = System.Drawing.Color.Navy;
+            this.textBox1.Location = new System.Drawing.Point(0, 41);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(0);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(480, 32);
+            this.textBox1.TabIndex = 1;
+            this.textBox1.Text = "Zone Relationship";
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 1;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Controls.Add(this.btnGenerative, 0, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(4, 681);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 65F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(472, 66);
+            this.tableLayoutPanel2.TabIndex = 5;
+            // 
+            // btnGenerative
+            // 
+            this.btnGenerative.BackColor = System.Drawing.Color.White;
+            this.btnGenerative.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnGenerative.ForeColor = System.Drawing.Color.Navy;
+            this.btnGenerative.Location = new System.Drawing.Point(4, 4);
+            this.btnGenerative.Margin = new System.Windows.Forms.Padding(4);
+            this.btnGenerative.Name = "btnGenerative";
+            this.btnGenerative.Size = new System.Drawing.Size(464, 58);
+            this.btnGenerative.TabIndex = 5;
+            this.btnGenerative.Text = "Generative";
+            this.btnGenerative.UseVisualStyleBackColor = false;
+            // 
             // ZoneRelationshipControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ZoneRelationshipControl";
             this.Size = new System.Drawing.Size(480, 751);
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -223,7 +224,7 @@ namespace SpaceLayout.Forms.ZoneForms
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.DataGridView dgvZoneRelationship;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnGenerative;
         private System.Windows.Forms.DataGridViewTextBoxColumn colID;
         private System.Windows.Forms.DataGridViewTextBoxColumn colStartNode;
         private System.Windows.Forms.DataGridViewTextBoxColumn colEndNode;

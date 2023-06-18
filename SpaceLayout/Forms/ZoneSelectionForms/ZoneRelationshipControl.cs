@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace SpaceLayout.Forms.ZoneForms
 {
     public partial class ZoneRelationshipControl : UserControl
     {
-        DataTable dtSource;
+        public DataTable dtZoneRelationSource = new DataTable();
         Form parentFrm;
 
         public NDrawingView Ndv;
@@ -40,21 +41,22 @@ namespace SpaceLayout.Forms.ZoneForms
             this.dgvZoneRelationship.AllowUserToAddRows = false;
             this.dgvZoneRelationship.AllowUserToDeleteRows = false;
             BindGrid();
+
         }
 
         private void BindGrid()
         {
-            dtSource = new DataTable();
-            dtSource.Columns.Add("ID");
-            dtSource.Columns.Add("StartNode");
-            dtSource.Columns.Add("EndNode");
-            dtSource.Columns.Add("Axis");
-            dtSource.Columns.Add("Type");
+            dtZoneRelationSource = new DataTable();
+            dtZoneRelationSource.Columns.Add("ID");
+            dtZoneRelationSource.Columns.Add("StartNode");
+            dtZoneRelationSource.Columns.Add("EndNode");
+            dtZoneRelationSource.Columns.Add("Axis");
+            dtZoneRelationSource.Columns.Add("Type");
 
             Get_GroupConnectorData();
 
-            if(dtSource.Rows.Count > 0)
-                dgvZoneRelationship.DataSource = dtSource;
+            if (dtZoneRelationSource.Rows.Count > 0)
+                dgvZoneRelationship.DataSource = dtZoneRelationSource;
         }
 
         private void Get_GroupConnectorData()
@@ -70,7 +72,7 @@ namespace SpaceLayout.Forms.ZoneForms
                         if (line.FromShape.Group is NGroup && line.ToShape.Group is NGroup
                                && line.FromShape.Group != line.ToShape.Group)
                         {
-                            DataRow workRow = dtSource.NewRow();
+                            DataRow workRow = dtZoneRelationSource.NewRow();
                             string[] axistype = { };
                             if (!string.IsNullOrEmpty(line.Text.ToString()))
                             {
@@ -81,12 +83,7 @@ namespace SpaceLayout.Forms.ZoneForms
                                 workRow["Axis"] = line.Tag.ToString();
                                 workRow["Type"] = axistype[1];
 
-                                dtSource.Rows.Add(workRow);
-                                //congroup.Add(new Connector_Group(GetGroupDataFromDataSource((NGroup)line.FromShape.Group)
-                                //    , GetGroupDataFromDataSource((NGroup)line.ToShape.Group)
-                                //    , line.Tag.ToString()
-                                //    , axistype[1].ToString()
-                                //    , line.Length));
+                                dtZoneRelationSource.Rows.Add(workRow);
 
                             }
                             else
@@ -95,20 +92,61 @@ namespace SpaceLayout.Forms.ZoneForms
                                 workRow["StartGroup"] = line.FromShape.Group.Name.ToString();
                                 workRow["EndGroup"] = line.ToShape.Group.Name.ToString();
                                 workRow["Axis"] = line.Tag.ToString();
-                                workRow["Type"] ="";
+                                workRow["Type"] = "";
 
-                                dtSource.Rows.Add(workRow);
-                                //congroup.Add(new Connector_Group(GetGroupDataFromDataSource((NGroup)line.FromShape.Group)
-                                //    , GetGroupDataFromDataSource((NGroup)line.ToShape.Group)
-                                //    , line.Tag.ToString()
-                                //    , string.Empty
-                                //    , line.Length));
+                                dtZoneRelationSource.Rows.Add(workRow);
                             }
                         }
                     }
                 }
             }
-            
+
+        }
+
+        private void ExportCSV(object sender, EventArgs args)
+        {
+            //if(dtSource.row)
+        }
+
+        private void ToCSV(DataTable dtDataTable, string strFilePath)
+        {
+            StreamWriter sw = new StreamWriter(strFilePath, false);
+            //headers    
+            for (int i = 0; i < dtDataTable.Columns.Count; i++)
+            {
+                sw.Write(dtDataTable.Columns[i]);
+                if (i < dtDataTable.Columns.Count - 1)
+                {
+                    sw.Write(",");
+                }
+            }
+            sw.Write(sw.NewLine);
+
+            foreach (DataRow dr in dtDataTable.Rows)
+            {
+                for (int i = 0; i < dtDataTable.Columns.Count; i++)
+                {
+                    if (!Convert.IsDBNull(dr[i]))
+                    {
+                        string value = dr[i].ToString();
+                        if (value.Contains(','))
+                        {
+                            value = String.Format("\"{0}\"", value);
+                            sw.Write(value);
+                        }
+                        else
+                        {
+                            sw.Write(dr[i].ToString());
+                        }
+                    }
+                    if (i < dtDataTable.Columns.Count - 1)
+                    {
+                        sw.Write(",");
+                    }
+                }
+                sw.Write(sw.NewLine);
+            }
+            sw.Close();
         }
     }
 }

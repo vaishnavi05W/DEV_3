@@ -23,7 +23,7 @@ namespace SpaceLayout.Forms.ZoneForms
         public static bool ExcelFlg = false;
         public static DataTable dtZoneSelection = null;
         private MouseEventHandler nDrawingView1_MouseWheel;
-
+        public static DataTable dtZoneRelationship = null;
         public static object CommandBarsManager { get; internal set; }
         public object m_ZoomRect { get; private set; }
 
@@ -95,7 +95,7 @@ namespace SpaceLayout.Forms.ZoneForms
 
         private void toolStripButton4_Click(object sender, EventArgs e)
         {
-
+            LoadRightPanel(4);
         }
 
         public void LoadRightPanel(int flg)
@@ -130,6 +130,17 @@ namespace SpaceLayout.Forms.ZoneForms
                 var ZoneRelation = new ZoneRelationshipControl();
                 tableLayoutPanel2.Controls.Add(ZoneRelation, 0, 1);
                 ZoneRelation.Dock = DockStyle.Fill;
+                KeepDataFromZoneReationship(ZoneRelation.dtZoneRelationSource);
+                btnNext.Visible = true;
+                btnPrevious.Visible = true;
+            }
+            else if (flg == 4)
+            {
+                if (tableLayoutPanel2.Controls.Count > 1)
+                    tableLayoutPanel2.Controls.Remove(tableLayoutPanel2.GetControlFromPosition(0, 1));
+                var OutputControl1 = new OutputControl1(dtZoneRelationship);
+                tableLayoutPanel2.Controls.Add(OutputControl1, 0, 1);
+                OutputControl1.Dock = DockStyle.Fill;
                 btnNext.Visible = false;
                 btnPrevious.Visible = true;
             }
@@ -158,6 +169,10 @@ namespace SpaceLayout.Forms.ZoneForms
             {
                 LoadRightPanel(3);
             }
+            else if (contrName == "ZoneRelationshipControl")
+            {
+                LoadRightPanel(4);
+            }
         }
 
         private void btnPrevious_Click(object sender, EventArgs e)
@@ -174,6 +189,10 @@ namespace SpaceLayout.Forms.ZoneForms
             else if (contrName == "ZoneRelationshipControl")
             {
                 LoadRightPanel(2);
+            }
+            else if (contrName == "OutputControl1")
+            {
+                LoadRightPanel(3);
             }
         }
 
@@ -207,6 +226,19 @@ namespace SpaceLayout.Forms.ZoneForms
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void KeepDataFromZoneReationship(DataTable dt)
+        {
+            dtZoneRelationship = new DataTable();
+            dtZoneRelationship.Columns.Add("ID");
+            dtZoneRelationship.Columns.Add("StartNode");
+            dtZoneRelationship.Columns.Add("EndNode");
+            dtZoneRelationship.Columns.Add("Axis");
+            dtZoneRelationship.Columns.Add("Type");
+
+            dtZoneRelationship = dt.Copy();
+            dtZoneRelationship.AcceptChanges();
         }
     }
 }

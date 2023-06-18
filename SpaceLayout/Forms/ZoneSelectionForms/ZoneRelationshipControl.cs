@@ -48,8 +48,8 @@ namespace SpaceLayout.Forms.ZoneForms
         {
             dtZoneRelationSource = new DataTable();
             dtZoneRelationSource.Columns.Add("ID");
-            dtZoneRelationSource.Columns.Add("StartNode");
-            dtZoneRelationSource.Columns.Add("EndNode");
+            dtZoneRelationSource.Columns.Add("StartGroup");
+            dtZoneRelationSource.Columns.Add("EndGroup");
             dtZoneRelationSource.Columns.Add("Axis");
             dtZoneRelationSource.Columns.Add("Type");
 
@@ -78,8 +78,8 @@ namespace SpaceLayout.Forms.ZoneForms
                             {
                                 axistype = line.Text.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
                                 workRow["ID"] = "";
-                                workRow["StartNode"] = line.FromShape.Group.Name.ToString();
-                                workRow["EndNode"] = line.ToShape.Group.Name.ToString();
+                                workRow["StartGroup"] = line.FromShape.Group.Name.ToString();
+                                workRow["EndGroup"] = line.ToShape.Group.Name.ToString();
                                 workRow["Axis"] = line.Tag.ToString();
                                 workRow["Type"] = axistype[1];
 

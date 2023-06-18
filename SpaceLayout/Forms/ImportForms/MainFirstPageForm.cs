@@ -156,12 +156,14 @@ namespace SpaceLayout.Forms.ZoneForms
                     LoadRightPanel(2);
                     toolStripButton2.Enabled = true;
                     toolStripButton3.Enabled = true;
+                    toolStripButton4.Enabled = true;
                 }
                 else
                 {
                     MessageBox.Show("Please click the 'Import' button to import the data source first.");
                     toolStripButton2.Enabled = false;
                     toolStripButton3.Enabled = false;
+                    toolStripButton4.Enabled = false;
                     return;
                 }
             }
@@ -184,6 +186,7 @@ namespace SpaceLayout.Forms.ZoneForms
                 LoadRightPanel(1);
                 toolStripButton2.Enabled = false;
                 toolStripButton3.Enabled = false;
+                toolStripButton4.Enabled = false;
                 ExcelFlg = false;
             }
             else if (contrName == "ZoneRelationshipControl")
@@ -232,8 +235,8 @@ namespace SpaceLayout.Forms.ZoneForms
         {
             dtZoneRelationship = new DataTable();
             dtZoneRelationship.Columns.Add("ID");
-            dtZoneRelationship.Columns.Add("StartNode");
-            dtZoneRelationship.Columns.Add("EndNode");
+            dtZoneRelationship.Columns.Add("StartGroup");
+            dtZoneRelationship.Columns.Add("EndGroup");
             dtZoneRelationship.Columns.Add("Axis");
             dtZoneRelationship.Columns.Add("Type");
 

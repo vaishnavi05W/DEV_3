@@ -42,6 +42,7 @@ using Nevron.UI;
 using System.Xml.Serialization;
 using Nevron.Diagram.Layout;
 using NSelection = Nevron.Diagram.WinForm.NSelection;
+using System.Diagnostics;
 
 namespace SpaceLayout.Forms.ZoneForms
 {
@@ -955,6 +956,7 @@ namespace SpaceLayout.Forms.ZoneForms
              persistencyManager.SaveToFile("c:\\temp\\Drawingfile.cndx", PersistencyFormat.CustomXML, null);
              AppendXMLNodes();
              MessageBox.Show("Save successful");
+             Process.Start(Path.GetDirectoryName("c:\\temp\\Drawingfile.cndx"));
         }
 
 

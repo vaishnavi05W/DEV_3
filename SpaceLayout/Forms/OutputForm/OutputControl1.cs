@@ -70,15 +70,12 @@ namespace SpaceLayout.Forms.ZoneForms
                                             {
                                                 Process.Start(Path.GetDirectoryName(savedialog.FileName));
                                             }
-                                            
-                                        }
-                                            
+                                        }  
                                     }
                                 }
                             }
                         }
                     }
-                   
                 }
                 else
                 {
@@ -100,7 +97,6 @@ namespace SpaceLayout.Forms.ZoneForms
             {
                 try
                 {
-
                     using (Stream stream = new FileStream(filepath, FileMode.Open, FileAccess.ReadWrite, FileShare.None))
                     {
                         // Here you can copy your file

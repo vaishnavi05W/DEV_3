@@ -14,6 +14,7 @@ using System.IO;
 using System.Text;
 using Nevron.UI.WinForm.Docking;
 using System.Collections.Generic;
+using Nevron.Diagram.WinForm.Commands;
 
 namespace SpaceLayout.Forms.ZoneForms
 {
@@ -73,8 +74,30 @@ namespace SpaceLayout.Forms.ZoneForms
 
             //end view init
             nDrawingView1.EndInit();
+            this.nDiagramCommandBarsManager1.AllowCustomize = true;
+            //foreach (NDockingToolbar tb in this.nDiagramCommandBarsManager1.Toolbars)
+            //{
 
-            // get the NDiagramCommandBarsManager instance
+            string[] tools = { "View", "Format","Layout", "Action", "Library" };
+            foreach(var toolname in tools)
+            {
+                NDockingToolbar tb = this.nDiagramCommandBarsManager1.Toolbars[toolname.ToString()];
+                this.nDiagramCommandBarsManager1.Toolbars.Remove(tb);
+            }
+          
+
+            //this.nDiagramCommandBarsManager1.Toolbars.RemoveAt(2);
+            //this.nDiagramCommandBarsManager1.Toolbars.RemoveAt(3);
+            //this.nDiagramCommandBarsManager1.Toolbars.RemoveAt(5);
+            //// get the NDiagramCommandBarsManager instance
+            //this.nDiagramCommandBarsManager1.AllowCustomize = true;
+            //this.nDiagramCommandBarsManager1.View = nDrawingView1;
+            //NDiagramCommander commander = this.nDiagramCommandBarsManager1.Commander;
+
+            //// replace the New Drawing Command
+            //NNewDrawingCommand newDrawingCmd = (NNewDrawingCommand)commander.Commands.GetCommandFromId((int)DiagramCommand.NewDrawing);
+            ////int index = commander.Commands.IndexOf(newDrawingCmd);
+            //commander.Commands.Remove(newDrawingCmd);
         }
 
        
@@ -226,11 +249,6 @@ namespace SpaceLayout.Forms.ZoneForms
             nDrawingView1.Document.ActiveLayer.MaxShowZoomFactor = zoom;
         }
 
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void KeepDataFromZoneReationship(DataTable dt)
         {
             dtZoneRelationship = new DataTable();
@@ -243,5 +261,7 @@ namespace SpaceLayout.Forms.ZoneForms
             dtZoneRelationship = dt.Copy();
             dtZoneRelationship.AcceptChanges();
         }
+
+        
     }
 }

@@ -60,7 +60,19 @@ namespace SpaceLayout.Forms.ZoneForms
                                     if (Path.GetExtension(savedialog.FileName).Contains(".xlsx"))
                                     {
                                         if(ExportDataTableToExcel(dtExcelExport, savedialog.FileName))
-                                            Process.Start(Path.GetDirectoryName(savedialog.FileName));
+                                        {
+                                            DialogResult result = MessageBox.Show("Save Successful", "", MessageBoxButtons.OK);
+                                            if (result == DialogResult.OK)
+                                            {
+                                                Process.Start(Path.GetDirectoryName(savedialog.FileName));
+                                            }
+                                            else
+                                            {
+                                                Process.Start(Path.GetDirectoryName(savedialog.FileName));
+                                            }
+                                            
+                                        }
+                                            
                                     }
                                 }
                             }
@@ -84,23 +96,24 @@ namespace SpaceLayout.Forms.ZoneForms
        
         public static bool ExportDataTableToExcel(DataTable dt, string filepath)
         {
-            try
+            if (File.Exists(filepath))
             {
-
-                using (Stream stream = new FileStream(filepath, FileMode.Open, FileAccess.ReadWrite, FileShare.None))
+                try
                 {
-                    // Here you can copy your file
-                    // then rename the copied file
+
+                    using (Stream stream = new FileStream(filepath, FileMode.Open, FileAccess.ReadWrite, FileShare.None))
+                    {
+                        // Here you can copy your file
+                        // then rename the copied file
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("File is in use!! Close it and try again");
+                    return false;
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("File is in use!! Close it and try again");
-                return false;
-            }
-
-
-
+              
             Excel.Application oXL;
             Excel.Workbook oWB;
             Excel.Worksheet oSheet;

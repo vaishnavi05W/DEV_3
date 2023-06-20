@@ -12,12 +12,17 @@ using System.IO;
 using System.Diagnostics;
 using Microsoft.Office.Interop;
 using Excel = Microsoft.Office.Interop.Excel;
+using Nevron.Diagram.Extensions;
+using Nevron.Diagram.WinForm;
+using Nevron.Diagram;
 
 namespace SpaceLayout.Forms.ZoneForms
 {
     public partial class OutputControl1 : UserControl
     {
         private DataTable dtExcelExport = new DataTable();
+        public NDrawingView Ndv;
+        public NDrawingDocument Ndd;
         public OutputControl1(DataTable dtZoneRelationshipControl)
         {
             InitializeComponent();
@@ -28,6 +33,13 @@ namespace SpaceLayout.Forms.ZoneForms
         private void IS_Load(object sender, EventArgs e)
         {
             btnExport.Click += btnExport_Clicked;
+
+            Form f = this.ParentForm;
+            Ndv = f.Controls.Find("nDrawingView1", true).FirstOrDefault() as NDrawingView;
+            if (Ndv != null)
+            {
+                Ndd = Ndv.Document;
+            }
         }
 
         private void btnExport_Clicked(object sender, EventArgs e)
@@ -61,20 +73,45 @@ namespace SpaceLayout.Forms.ZoneForms
                                     {
                                         if(ExportDataTableToExcel(dtExcelExport, savedialog.FileName))
                                         {
-                                            DialogResult result = MessageBox.Show("Save Successful", "", MessageBoxButtons.OK);
-                                            if (result == DialogResult.OK)
-                                            {
-                                                Process.Start(Path.GetDirectoryName(savedialog.FileName));
-                                            }
-                                            else
-                                            {
-                                                Process.Start(Path.GetDirectoryName(savedialog.FileName));
-                                            }
+                                            //DialogResult result = MessageBox.Show("Save Successful", "", MessageBoxButtons.OK);
+                                            //if (result == DialogResult.OK)
+                                            //{
+                                            //    Process.Start(Path.GetDirectoryName(savedialog.FileName));
+                                            //}
+                                            //else
+                                            //{
+                                            //    Process.Start(Path.GetDirectoryName(savedialog.FileName));
+                                            //}
                                         }  
                                     }
                                 }
                             }
                         }
+
+                        if(checkedListBox1.CheckedItems[x].ToString() == "관계도 다이어그램 .dwg")
+                        {
+                            NAutocadExporter exporter = new NAutocadExporter(Ndd);
+                            string fileName = Path.Combine("C:\\temp\\", "관계도 다이어그램 .dxf");
+                            exporter.SaveToFile(fileName);
+                            //DialogResult result = MessageBox.Show("Save Successful", "", MessageBoxButtons.OK);
+                            //if (result == DialogResult.OK)
+                            //{
+                            //    Process.Start(Path.GetDirectoryName("C:\\temp\\"));
+                            //}
+                            //else
+                            //{
+                            //    Process.Start(Path.GetDirectoryName("C:\\temp\\"));
+                            //}
+                        }
+                    }
+                    DialogResult result = MessageBox.Show("Save Successful", "", MessageBoxButtons.OK);
+                    if (result == DialogResult.OK)
+                    {
+                        Process.Start(Path.GetDirectoryName("C:\\temp\\"));
+                    }
+                    else
+                    {
+                        Process.Start(Path.GetDirectoryName("C:\\temp\\"));
                     }
                 }
                 else

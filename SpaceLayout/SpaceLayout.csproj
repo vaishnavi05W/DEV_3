@@ -88,7 +88,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.Diagram.dll</HintPath>
     </Reference>
-    <Reference Include="Nevron.Diagram.Designer">
+    <Reference Include="Nevron.Diagram.Designer, Version=23.3.9.12, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.Diagram.Designer.exe</HintPath>
     </Reference>
     <Reference Include="Nevron.Diagram.Shapes, Version=23.3.9.12, Culture=neutral, PublicKeyToken=532a56b211affb14, processorArchitecture=MSIL">
@@ -111,7 +112,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.Examples.Framework.WebForm.dll</HintPath>
     </Reference>
-    <Reference Include="Nevron.Examples.Framework.WinForm">
+    <Reference Include="Nevron.Examples.Framework.WinForm, Version=23.3.9.12, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Nevron Software\Nevron .NET Vision 2022.2\Bin\Net40\Nevron.Examples.Framework.WinForm.dll</HintPath>
     </Reference>
     <Reference Include="Nevron.GraphicsGL, Version=23.3.9.12, Culture=neutral, PublicKeyToken=2f17c6a71f852d32, processorArchitecture=MSIL">

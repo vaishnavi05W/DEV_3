@@ -85,19 +85,6 @@ namespace SpaceLayout.Forms.ZoneForms
                 this.nDiagramCommandBarsManager1.Toolbars.Remove(tb);
             }
           
-
-            //this.nDiagramCommandBarsManager1.Toolbars.RemoveAt(2);
-            //this.nDiagramCommandBarsManager1.Toolbars.RemoveAt(3);
-            //this.nDiagramCommandBarsManager1.Toolbars.RemoveAt(5);
-            //// get the NDiagramCommandBarsManager instance
-            //this.nDiagramCommandBarsManager1.AllowCustomize = true;
-            //this.nDiagramCommandBarsManager1.View = nDrawingView1;
-            //NDiagramCommander commander = this.nDiagramCommandBarsManager1.Commander;
-
-            //// replace the New Drawing Command
-            //NNewDrawingCommand newDrawingCmd = (NNewDrawingCommand)commander.Commands.GetCommandFromId((int)DiagramCommand.NewDrawing);
-            ////int index = commander.Commands.IndexOf(newDrawingCmd);
-            //commander.Commands.Remove(newDrawingCmd);
         }
 
        

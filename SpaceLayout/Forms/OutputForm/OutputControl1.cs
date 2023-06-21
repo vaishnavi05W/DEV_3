@@ -73,15 +73,6 @@ namespace SpaceLayout.Forms.ZoneForms
                                     {
                                         if(ExportDataTableToExcel(dtExcelExport, savedialog.FileName))
                                         {
-                                            //DialogResult result = MessageBox.Show("Save Successful", "", MessageBoxButtons.OK);
-                                            //if (result == DialogResult.OK)
-                                            //{
-                                            //    Process.Start(Path.GetDirectoryName(savedialog.FileName));
-                                            //}
-                                            //else
-                                            //{
-                                            //    Process.Start(Path.GetDirectoryName(savedialog.FileName));
-                                            //}
                                         }  
                                     }
                                 }
@@ -90,20 +81,32 @@ namespace SpaceLayout.Forms.ZoneForms
 
                         if(checkedListBox1.CheckedItems[x].ToString() == "관계도 다이어그램 .dwg")
                         {
-                            NAutocadExporter exporter = new NAutocadExporter(Ndd);
-                            string fileName = Path.Combine("C:\\temp\\", "관계도 다이어그램 .dxf");
-                            exporter.SaveToFile(fileName);
-                            //DialogResult result = MessageBox.Show("Save Successful", "", MessageBoxButtons.OK);
-                            //if (result == DialogResult.OK)
-                            //{
-                            //    Process.Start(Path.GetDirectoryName("C:\\temp\\"));
-                            //}
-                            //else
-                            //{
-                            //    Process.Start(Path.GetDirectoryName("C:\\temp\\"));
-                            //}
+                            string folderPath = "C:\\temp\\";
+                            if (!Directory.Exists(folderPath))
+                            {
+                                Directory.CreateDirectory(folderPath);
+                            }
+                            SaveFileDialog savedialog = new SaveFileDialog();
+                            savedialog.Filter = "AutoCAD Files|*.dxf;";
+                            savedialog.Title = "Save";
+                            savedialog.FileName = "관계도 다이어그램";
+                            savedialog.InitialDirectory = folderPath;
+
+                            savedialog.RestoreDirectory = true;
+
+                            if (savedialog.ShowDialog() == DialogResult.OK)
+                            {
+                                if (Path.GetExtension(savedialog.FileName).Contains(".dxf"))
+                                {
+                                    NAutocadExporter exporter = new NAutocadExporter(Ndd);
+                                    string fileName = Path.Combine(savedialog.FileName);
+                                    exporter.SaveToFile(fileName);
+                                }
+                            }
                         }
                     }
+                
+
                     DialogResult result = MessageBox.Show("Save Successful", "", MessageBoxButtons.OK);
                     if (result == DialogResult.OK)
                     {

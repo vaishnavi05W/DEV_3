@@ -240,8 +240,8 @@ namespace SpaceLayout.Forms.ZoneForms
         {
             dtZoneRelationship = new DataTable();
             dtZoneRelationship.Columns.Add("ID");
-            dtZoneRelationship.Columns.Add("StartGroup");
-            dtZoneRelationship.Columns.Add("EndGroup");
+            dtZoneRelationship.Columns.Add("StartNode");
+            dtZoneRelationship.Columns.Add("EndNode");
             dtZoneRelationship.Columns.Add("Axis");
             dtZoneRelationship.Columns.Add("Type");
 

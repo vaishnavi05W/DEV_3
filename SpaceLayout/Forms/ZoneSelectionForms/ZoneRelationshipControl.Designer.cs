@@ -33,15 +33,13 @@ namespace SpaceLayout.Forms.ZoneForms
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.dgvZoneRelationship = new System.Windows.Forms.DataGridView();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.btnGenerative = new System.Windows.Forms.Button();
-            this.colID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colStartGroup = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colEndGroup = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStartNode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colEndNode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAxis = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel1.SuspendLayout();
@@ -73,9 +71,8 @@ namespace SpaceLayout.Forms.ZoneForms
             this.dgvZoneRelationship.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
             this.dgvZoneRelationship.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvZoneRelationship.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colID,
-            this.colStartGroup,
-            this.colEndGroup,
+            this.colStartNode,
+            this.colEndNode,
             this.colAxis,
             this.colType});
             this.dgvZoneRelationship.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -127,61 +124,46 @@ namespace SpaceLayout.Forms.ZoneForms
             this.btnGenerative.Text = "Generative";
             this.btnGenerative.UseVisualStyleBackColor = false;
             // 
-            // colID
+            // colStartNode
             // 
-            this.colID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colID.DataPropertyName = "ID";
+            this.colStartNode.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colStartNode.DataPropertyName = "StartNode";
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.colID.DefaultCellStyle = dataGridViewCellStyle1;
-            this.colID.FillWeight = 85.23576F;
-            this.colID.HeaderText = "ID";
-            this.colID.MinimumWidth = 6;
-            this.colID.Name = "colID";
+            this.colStartNode.DefaultCellStyle = dataGridViewCellStyle1;
+            this.colStartNode.FillWeight = 111.5168F;
+            this.colStartNode.HeaderText = "Start Node";
+            this.colStartNode.MinimumWidth = 6;
+            this.colStartNode.Name = "colStartNode";
             // 
-            // colStartGroup
+            // colEndNode
             // 
-            this.colStartGroup.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colStartGroup.DataPropertyName = "StartGroup";
+            this.colEndNode.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colEndNode.DataPropertyName = "EndNode";
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.colStartGroup.DefaultCellStyle = dataGridViewCellStyle2;
-            this.colStartGroup.FillWeight = 111.5168F;
-            this.colStartGroup.HeaderText = "Start Group";
-            this.colStartGroup.MinimumWidth = 6;
-            this.colStartGroup.Name = "colStartGroup";
-            // 
-            // colEndGroup
-            // 
-            this.colEndGroup.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colEndGroup.DataPropertyName = "EndGroup";
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.colEndGroup.DefaultCellStyle = dataGridViewCellStyle3;
-            this.colEndGroup.FillWeight = 111.5168F;
-            this.colEndGroup.HeaderText = "End Group";
-            this.colEndGroup.MinimumWidth = 6;
-            this.colEndGroup.Name = "colEndGroup";
+            this.colEndNode.DefaultCellStyle = dataGridViewCellStyle2;
+            this.colEndNode.FillWeight = 111.5168F;
+            this.colEndNode.HeaderText = "End Node";
+            this.colEndNode.MinimumWidth = 6;
+            this.colEndNode.Name = "colEndNode";
             // 
             // colAxis
             // 
             this.colAxis.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colAxis.DataPropertyName = "Axis";
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.colAxis.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            this.colAxis.DefaultCellStyle = dataGridViewCellStyle3;
             this.colAxis.FillWeight = 111.5168F;
             this.colAxis.HeaderText = "Axis";
             this.colAxis.MinimumWidth = 6;
@@ -191,12 +173,12 @@ namespace SpaceLayout.Forms.ZoneForms
             // 
             this.colType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colType.DataPropertyName = "Type";
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.colType.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            this.colType.DefaultCellStyle = dataGridViewCellStyle4;
             this.colType.FillWeight = 80.21391F;
             this.colType.HeaderText = "Type";
             this.colType.MinimumWidth = 6;
@@ -225,9 +207,8 @@ namespace SpaceLayout.Forms.ZoneForms
         private System.Windows.Forms.DataGridView dgvZoneRelationship;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Button btnGenerative;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colStartGroup;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colEndGroup;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colStartNode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colEndNode;
         private System.Windows.Forms.DataGridViewTextBoxColumn colAxis;
         private System.Windows.Forms.DataGridViewTextBoxColumn colType;
     }

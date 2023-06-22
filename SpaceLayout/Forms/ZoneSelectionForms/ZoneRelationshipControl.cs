@@ -47,9 +47,8 @@ namespace SpaceLayout.Forms.ZoneForms
         private void BindGrid()
         {
             dtZoneRelationSource = new DataTable();
-            dtZoneRelationSource.Columns.Add("ID");
-            dtZoneRelationSource.Columns.Add("StartGroup");
-            dtZoneRelationSource.Columns.Add("EndGroup");
+            dtZoneRelationSource.Columns.Add("StartNode");
+            dtZoneRelationSource.Columns.Add("EndNode");
             dtZoneRelationSource.Columns.Add("Axis");
             dtZoneRelationSource.Columns.Add("Type");
 
@@ -70,17 +69,17 @@ namespace SpaceLayout.Forms.ZoneForms
                     if (edge is NLineShape line && line.FromShape != null && line.ToShape != null) //For Connectors
                     {
                         if (line.FromShape.Group is NGroup && line.ToShape.Group is NGroup
-                               && line.FromShape.Group != line.ToShape.Group)
+                               && line.FromShape.Group != line.ToShape.Group && line.FromShape.Name == "RectangleShape"
+                               && line.ToShape.Name == "RectangleShape")
                         {
                             DataRow workRow = dtZoneRelationSource.NewRow();
                             string[] axistype = { };
                             if (!string.IsNullOrEmpty(line.Text.ToString()))
                             {
                                 axistype = line.Text.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
-                                workRow["ID"] = "";
-                                workRow["StartGroup"] = line.FromShape.Group.Name.ToString();
-                                workRow["EndGroup"] = line.ToShape.Group.Name.ToString();
-                                workRow["Axis"] = line.Tag.ToString();
+                                workRow["StartNode"] = line.FromShape.Group.Name.ToString();
+                                workRow["EndNode"] = line.ToShape.Group.Name.ToString();
+                                workRow["Axis"] = axistype[0];
                                 workRow["Type"] = axistype[1];
 
                                 dtZoneRelationSource.Rows.Add(workRow);
@@ -88,10 +87,34 @@ namespace SpaceLayout.Forms.ZoneForms
                             }
                             else
                             {
-                                workRow["ID"] = "";
-                                workRow["StartGroup"] = line.FromShape.Group.Name.ToString();
-                                workRow["EndGroup"] = line.ToShape.Group.Name.ToString();
-                                workRow["Axis"] = line.Tag.ToString();
+                                workRow["StartNode"] = line.FromShape.Group.Name.ToString();
+                                workRow["EndNode"] = line.ToShape.Group.Name.ToString();
+                                workRow["Axis"] = axistype[0];
+                                workRow["Type"] = "";
+
+                                dtZoneRelationSource.Rows.Add(workRow);
+                            }
+                        }
+                        else if (line.StartPlug.Shape.FromShape is NRectangleShape && line.EndPlug.Shape.ToShape is NRectangleShape)
+                        {
+                            DataRow workRow = dtZoneRelationSource.NewRow();
+                            string[] axistype = { };
+                            if (!string.IsNullOrEmpty(line.Text.ToString()))
+                            {
+                                axistype = line.Text.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+                                workRow["StartNode"] = line.FromShape.Text.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None)[0].ToString();
+                                workRow["EndNode"] = line.ToShape.Text.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None)[0].ToString();
+                                workRow["Axis"] = axistype[0];
+                                workRow["Type"] = axistype[1];
+
+                                dtZoneRelationSource.Rows.Add(workRow);
+
+                            }
+                            else
+                            {
+                                workRow["StartNode"] = line.FromShape.Text.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None)[0].ToString();
+                                workRow["EndNode"] = line.ToShape.Text.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None)[0].ToString();
+                                workRow["Axis"] = axistype[0];
                                 workRow["Type"] = "";
 
                                 dtZoneRelationSource.Rows.Add(workRow);

@@ -16,10 +16,10 @@ namespace SpaceLayout.Object
 
         public Zone_Main Zone21 { get; set; }//start node
         public Zone_Main Zone22 { get; set; } // end node
-        public int Type { get; set; } // vertical,horizontal
+        public string Type { get; set; } // vertical,horizontal
         public double Length { get; set; }//width
         public Color Color { get; set; }
-     
+        public string Weight { get; set; } //fit,near,far
         public Color color { get; set; } // change color of line to define the difference
         public object ID { get; internal set; }
 
@@ -30,11 +30,12 @@ namespace SpaceLayout.Object
         private int v1;
         private double v2;
 
-        public Connector_Main(Zone_Main zone21, Zone_Main zone22, int type, double length, Color color)
+        public Connector_Main(Zone_Main zone21, Zone_Main zone22, string type, string weight, double length, Color color)
         {
             this.Zone21 = zone21;
             this.Zone22 = zone22;
             this.Type = type;
+            this.Weight = weight;
             this.Length = length;
             this.Color = color;
             //connector = new NRoutableConnector();

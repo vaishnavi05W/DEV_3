@@ -65,6 +65,7 @@ namespace SpaceLayout.Forms.ZoneForms
         private NCheckBox autoDestroyCheckBox;
         private NCheckBox canBeEmptyCheckBox;
         private NLayer layer;
+        public string Nodeflg = null;
         
         NFlowLayout ZonesLayout;
         NFlowLayout GroupsLayout;
@@ -73,8 +74,6 @@ namespace SpaceLayout.Forms.ZoneForms
         List<Zone_Main> zone;
         List<Group> groups;
         List<Connector_Group> congroup;
-        // List<NRectangleShape> existingGroups = new List<NRectangleShape>();
-        
         IDictionary<string, string> existingGroups;
         public ZoneSelectionControl()
         {
@@ -191,11 +190,17 @@ namespace SpaceLayout.Forms.ZoneForms
             var module = args.Node;
             List<string> GroupRecord = new List<string>();
             GroupRecord = dtSource.AsEnumerable().Select(r => r.Field<string>("Group")).Distinct().ToList();
+            List<string> ZoneRecord = new List<string>();
+            ZoneRecord = dtSource.AsEnumerable().Select(r => r.Field<string>("Name")).Distinct().ToList();
+
             if (module is NGroup group && GroupRecord.Contains(group.Name))
             {
                 if (startgroup == null)
+                {
                     startgroup = group;
-                else if(endgroup == null)
+                    Nodeflg = "group";
+                }
+                else if(endgroup == null && Nodeflg == "group")
                 {
                     endgroup = group;
 
@@ -204,6 +209,7 @@ namespace SpaceLayout.Forms.ZoneForms
                     
                     line.Style.FillStyle = new NColorFillStyle(Color.Black);
                     line.Style.StrokeStyle = new NStrokeStyle(Color.Black);
+                    line.Text = "Horizontal";
                     Ndd.ActiveLayer.AddChild(line);
                     //line.StartPoint = new NPointF(startgroup.Center.X, startgroup.Center.Y);
                     //line.EndPoint = new NPointF(endgroup.Center.X, endgroup.Center.Y);
@@ -211,13 +217,52 @@ namespace SpaceLayout.Forms.ZoneForms
                     NShape end = (NShape)endgroup.Shapes.GetChildAt(0);
                     line.StartPlug.Connect(start.Ports.GetChildByName("GroupPort", 0) as NPort);
                     line.EndPlug.Connect(end.Ports.GetChildByName("GroupPort", 0) as NPort);
-                    line.Tag = "Horizontal";
+                    
                     
                     Ndv.Selection.DeselectAll();
 
                     startgroup = null;
                     endgroup = null;
+                    Nodeflg = null;
+                    NAbilities protection = line.Protection;
+                    protection.InplaceEdit = true;
+                    line.Protection = protection;
+                    line.DoubleClick += Line_DoubleClick;
 
+                    Ndv.NodeSelected -= Connect_Horizontal;
+                }
+            }
+            else if (module is NRectangleShape zone && ZoneRecord.Contains(zone.Name))
+            {
+                if (startNode == null)
+                {
+                    startNode = zone;
+                    Nodeflg = "zone";
+                }
+                else if (endNode == null && Nodeflg == "zone")
+                {
+                    endNode = zone;
+
+                    NLineShape line = new NLineShape();
+                    line.StyleSheetName = NDR.NameConnectorsStyleSheet;
+
+                    line.Style.FillStyle = new NColorFillStyle(Color.Black);
+                    line.Style.StrokeStyle = new NStrokeStyle(Color.Black);
+                    line.Text = "Horizontal";
+                    Ndd.ActiveLayer.AddChild(line);
+                    //line.StartPoint = new NPointF(startgroup.Center.X, startgroup.Center.Y);
+                    //line.EndPoint = new NPointF(endgroup.Center.X, endgroup.Center.Y);
+                   // NShape start = (NShape)startNode.Shapes.GetChildAt(0);
+                    //NShape end = (NShape)endNode.Shapes.GetChildAt(0);
+                    line.StartPlug.Connect(startNode.Ports.GetChildByName("ZonePort", 0) as NPort);
+                    line.EndPlug.Connect(endNode.Ports.GetChildByName("ZonePort", 0) as NPort);
+                    
+
+                    Ndv.Selection.DeselectAll();
+
+                    startNode = null;
+                    endNode = null;
+                    Nodeflg = null;
                     NAbilities protection = line.Protection;
                     protection.InplaceEdit = true;
                     line.Protection = protection;
@@ -234,7 +279,7 @@ namespace SpaceLayout.Forms.ZoneForms
             if(module is NLineShape line)
             {
                 string title = "";
-                if (line.Tag.ToString() == "Horizontal")
+                if (line.Text.ToString() == "Horizontal")
                     title = "Horizontal Content Weight";
                 else
                     title = "Vertical Content Weight";
@@ -243,7 +288,7 @@ namespace SpaceLayout.Forms.ZoneForms
                 {
                     if (!string.IsNullOrWhiteSpace(Contentplacement.placementWeight))
                     {
-                        line.Text = line.Tag.ToString() +System.Environment.NewLine + Contentplacement.placementWeight.ToString();
+                        line.Text = line.Text.ToString() +System.Environment.NewLine + Contentplacement.placementWeight.ToString();
                         
                         line.Style.TextStyle = new NTextStyle()
                         {
@@ -261,11 +306,17 @@ namespace SpaceLayout.Forms.ZoneForms
             var module = args.Node;
             List<string> GroupRecord = new List<string>();
             GroupRecord = dtSource.AsEnumerable().Select(r => r.Field<string>("Group")).Distinct().ToList();
+            List<string> ZoneRecord = new List<string>();
+            ZoneRecord = dtSource.AsEnumerable().Select(r => r.Field<string>("Name")).Distinct().ToList();
+
             if (module is NGroup group && GroupRecord.Contains(group.Name))
             {
                 if (startgroup == null)
+                {
                     startgroup = group;
-                else if (endgroup == null)
+                    Nodeflg = "group";
+                }
+                else if (endgroup == null && Nodeflg == "group")
                 {
                     endgroup = group;
 
@@ -273,18 +324,55 @@ namespace SpaceLayout.Forms.ZoneForms
                     line.StyleSheetName = NDR.NameConnectorsStyleSheet;
                     line.Style.FillStyle = new NColorFillStyle(Color.Black);
                     line.Style.StrokeStyle = new NStrokeStyle(Color.Black);
+                    line.Text = "Vertical";
                     Ndd.ActiveLayer.AddChild(line);
                     NShape start = (NShape)startgroup.Shapes.GetChildAt(0);
                     NShape end = (NShape)endgroup.Shapes.GetChildAt(0);
                     line.StartPlug.Connect(start.Ports.GetChildByName("GroupPort", 0) as NPort);
                     line.EndPlug.Connect(end.Ports.GetChildByName("GroupPort", 0) as NPort);
-                    line.Tag = "Vertical";
+                   
 
                     Ndv.Selection.DeselectAll();
 
                     startgroup = null;
                     endgroup = null;
+                    Nodeflg = null;
+                    NAbilities protection = line.Protection;
+                    protection.InplaceEdit = true;
+                    line.Protection = protection;
+                    line.DoubleClick += Line_DoubleClick;
 
+                    Ndv.NodeSelected -= Connect_Vertical;
+
+                }
+            }
+            else if (module is NRectangleShape zone && ZoneRecord.Contains(zone.Name))
+            {
+                if (startNode == null)
+                {
+                    startNode = zone;
+                    Nodeflg = "zone";
+                } 
+                else if (endNode == null && Nodeflg == "zone")
+                {
+                    endNode = zone;
+
+                    NLineShape line = new NLineShape();
+                    line.StyleSheetName = NDR.NameConnectorsStyleSheet;
+                    line.Style.FillStyle = new NColorFillStyle(Color.Black);
+                    line.Style.StrokeStyle = new NStrokeStyle(Color.Black);
+                    line.Text = "Vertical";
+                    Ndd.ActiveLayer.AddChild(line);
+                    //NShape start = (NShape)startgroup.Shapes.GetChildAt(0);
+                    //NShape end = (NShape)endgroup.Shapes.GetChildAt(0);
+                    line.StartPlug.Connect(startNode.Ports.GetChildByName("ZonePort", 0) as NPort);
+                    line.EndPlug.Connect(endNode.Ports.GetChildByName("ZonePort", 0) as NPort);
+
+                    Ndv.Selection.DeselectAll();
+
+                    startNode = null;
+                    endNode = null;
+                    Nodeflg = null;
                     NAbilities protection = line.Protection;
                     protection.InplaceEdit = true;
                     line.Protection = protection;
@@ -611,23 +699,12 @@ namespace SpaceLayout.Forms.ZoneForms
                    + System.Environment.NewLine + dr[5].ToString() + " " + "m\u00b2";
                 string NodeLabelOut = dr[1].ToString();
                 zone.Text = NodeLabelIn;
-                zone.Name = NodeLabelOut;
-                //zone.Location = new NPointF(x, y);
+                zone.Name = NodeLabelOut;;
                 zone.CreateShapeElements(ShapeElementsMask.Ports);
-                NRotatedBoundsPort port1 = new NRotatedBoundsPort(zone.UniqueId, ContentAlignment.TopCenter);
-                NRotatedBoundsPort port2 = new NRotatedBoundsPort(zone.UniqueId, ContentAlignment.MiddleLeft);
-                NRotatedBoundsPort port3 = new NRotatedBoundsPort(zone.UniqueId, ContentAlignment.BottomCenter);
-                NRotatedBoundsPort port4 = new NRotatedBoundsPort(zone.UniqueId, ContentAlignment.MiddleRight);
-                zone.Ports.AddChild(port1);
-                zone.Ports.AddChild(port2);
-                zone.Ports.AddChild(port4);
-                zone.Ports.AddChild(port3);
-                zone.Ports.DefaultInwardPortUniqueId = port1.UniqueId;
-                zone.Ports.DefaultInwardPortUniqueId = port2.UniqueId;
-                zone.Ports.DefaultInwardPortUniqueId = port3.UniqueId;
-                zone.Ports.DefaultInwardPortUniqueId = port4.UniqueId;
-                //Ndd.ActiveLayer.AddChild(zone);
-                //zone.BringToFront();
+                NDynamicPort port = new NDynamicPort(zone.UniqueId, ContentAlignment.MiddleCenter, DynamicPortGlueMode.GlueToContour);
+                zone.Ports.AddChild(port);
+                port.Name = "ZonePort";
+                zone.Ports.DefaultInwardPortUniqueId = port.UniqueId;
                 NAbilities protection = zone.Protection;
                 protection.InplaceEdit = true;
                 zone.Protection = protection;
@@ -703,19 +780,6 @@ namespace SpaceLayout.Forms.ZoneForms
         private void CreateGroupPorts(NRectangleShape group)
         {
             group.CreateShapeElements(ShapeElementsMask.Ports);
-            //NPort port = new NRotatedBoundsPort(new NContentAlignment(ContentAlignment.MiddleCenter));
-            //NRotatedBoundsPort port1 = new NRotatedBoundsPort(new NContentAlignment(ContentAlignment.BottomCenter));
-            //NRotatedBoundsPort port2 = new NRotatedBoundsPort(new NContentAlignment(ContentAlignment.MiddleLeft));
-            //NRotatedBoundsPort port3 = new NRotatedBoundsPort(new NContentAlignment(ContentAlignment.MiddleRight));
-            //port.Name = "GroupPort";
-            //port1.Name = "port1";
-            //port2.Name = "port2";
-            //port3.Name = "port3";
-            //group.Ports.AddChild(port);
-            //group.Ports.AddChild(port1);
-            //group.Ports.AddChild(port2);
-            //group.Ports.AddChild(port3);
-
             NDynamicPort port = new NDynamicPort(group.UniqueId, ContentAlignment.MiddleCenter, DynamicPortGlueMode.GlueToContour);
             group.Ports.AddChild(port);
             port.Name = "GroupPort";
@@ -767,15 +831,15 @@ namespace SpaceLayout.Forms.ZoneForms
 
                                 congroup.Add(new Connector_Group(GetGroupDataFromDataSource((NGroup)line.FromShape.Group)
                                     , GetGroupDataFromDataSource((NGroup)line.ToShape.Group)
-                                    , line.Tag.ToString()
-                                    , axistype[1].ToString()
+                                    , axistype[0] is null ? string.Empty : axistype[0].ToString()
+                                    , axistype[1] is null ? string.Empty : axistype[1].ToString()
                                     , line.Length));
                             }
                             else
                             {
                                 congroup.Add(new Connector_Group(GetGroupDataFromDataSource((NGroup)line.FromShape.Group)
                                     , GetGroupDataFromDataSource((NGroup)line.ToShape.Group)
-                                    , line.Tag.ToString()
+                                    , string.Empty
                                     , string.Empty
                                     , line.Length));
                             }
@@ -827,15 +891,15 @@ namespace SpaceLayout.Forms.ZoneForms
 
                                 congroup.Add(new Connector_Group(GetGroupDataFromDataSource((NGroup)line.FromShape.Group)
                                     , GetGroupDataFromDataSource((NGroup)line.ToShape.Group)
-                                    , line.Tag.ToString()
-                                    , axistype[1].ToString()
+                                    , axistype[0] is null ? string.Empty : axistype[0].ToString()
+                                    , axistype[1] is null ? string.Empty : axistype[1].ToString()
                                     , line.Length));
                             }
                             else
                             {
                                 congroup.Add(new Connector_Group(GetGroupDataFromDataSource((NGroup)line.FromShape.Group)
                                     , GetGroupDataFromDataSource((NGroup)line.ToShape.Group)
-                                    , line.Tag.ToString()
+                                    , string.Empty
                                     , string.Empty
                                     , line.Length));
                             }
@@ -926,37 +990,73 @@ namespace SpaceLayout.Forms.ZoneForms
 
         private Connector_Main GetConnectorData(Zone_Main z1, Zone_Main z2, NLineShape line)
         {
-            Connector_Main connector_data = new Connector_Main(z1
+            string[] axistype = { };
+            if (!string.IsNullOrEmpty(line.Text.ToString()))
+            {
+                axistype = line.Text.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+                Connector_Main connector_data = new Connector_Main(z1
                                , z2
-                               , 0 //put zero for temporary 
+                               , axistype[0] is null ? string.Empty : axistype[0].ToString() //Horizontal or Vertical
+                               , axistype[1] is null ? string.Empty : axistype[1].ToString() //Fit or Near or Far
                                , Convert.ToDouble(line.Length)
                                , line.StyleSheet.Style.StrokeStyle.Color
                                );
+                return connector_data;
+            }
+            else
+            {
+                Connector_Main connector_data = new Connector_Main(z1
+                              , z2
+                              , string.Empty  //Horizontal or Vertical
+                              , string.Empty 
+                              , Convert.ToDouble(line.Length)
+                              , line.StyleSheet.Style.StrokeStyle.Color
+                              );
+                return connector_data;
+            }
 
-            return connector_data;
         }
 
         //savebutton
         private void Export()
         {
-             ZoneConnectorData("1");
-             NPersistentDocument document = new NPersistentDocument("My document");
+            ZoneConnectorData("1");
+            string folderPath = "C:\\temp\\";
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+            SaveFileDialog savedialog = new SaveFileDialog();
+            savedialog.Filter = "Nevron Drawing Custom XML File|*.cndx;";
+            savedialog.Title = "Save";
+            savedialog.FileName = "Drawingfile";
+            savedialog.InitialDirectory = folderPath;
 
-             // Add the drawing document and the drawing view to the section
-             NPersistentSection documentSection = new NPersistentSection("DrawingDocument", Ndd);
-             document.Sections.Add(documentSection);
+            savedialog.RestoreDirectory = true;
 
-             NPersistentSection nodesSection = new NPersistentSection("Graph", null);
-             document.Sections.Add(nodesSection);
-             // set the document to the manager
-             persistencyManager.PersistentDocument = document;
+            if (savedialog.ShowDialog() == DialogResult.OK)
+            {
+                if (Path.GetExtension(savedialog.FileName).Contains(".cndx"))
+                {
+                    NPersistentDocument document = new NPersistentDocument("My document");
+
+                    // Add the drawing document and the drawing view to the section
+                    NPersistentSection documentSection = new NPersistentSection("Drawingfile", Ndd);
+                    document.Sections.Add(documentSection);
+
+                    NPersistentSection nodesSection = new NPersistentSection("Graph", null);
+                    document.Sections.Add(nodesSection);
+                    // set the document to the manager
+                    persistencyManager.PersistentDocument = document;
 
 
-             // save the document to a file
-             persistencyManager.SaveToFile("c:\\temp\\Drawingfile.cndx", PersistencyFormat.CustomXML, null);
-             AppendXMLNodes();
-             MessageBox.Show("Save successful");
-             Process.Start(Path.GetDirectoryName("c:\\temp\\Drawingfile.cndx"));
+                    // save the document to a file
+                    persistencyManager.SaveToFile(savedialog.FileName, PersistencyFormat.CustomXML, null);
+                    AppendXMLNodes(savedialog.FileName);
+                    MessageBox.Show("Save successful");
+                    Process.Start(Path.GetDirectoryName(savedialog.FileName));
+                }
+            }
         }
 
 
@@ -994,10 +1094,10 @@ namespace SpaceLayout.Forms.ZoneForms
         }
 
 
-        private void AppendXMLNodes()
+        private void AppendXMLNodes(string filepath)
         {
             XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load("c:\\temp\\Drawingfile.cndx");
+            xmlDoc.Load(filepath);
 
             XmlElement zroot = xmlDoc.CreateElement("Zone");
             xmlDoc.DocumentElement.AppendChild(zroot);
@@ -1063,7 +1163,7 @@ namespace SpaceLayout.Forms.ZoneForms
                 ZoneID.AppendChild(Ratio);
                 ZoneID.AppendChild(Type);
             }
-            xmlDoc.Save("c:\\temp\\mysavefile.cndx");
+            xmlDoc.Save(filepath);
             foreach (var result in connector)
             {
                 XmlElement Zone21 = xmlDoc.CreateElement("ConnectorZone21");
@@ -1079,12 +1179,20 @@ namespace SpaceLayout.Forms.ZoneForms
                 XmlElement Relation = xmlDoc.CreateElement("Relation");
                 Relation.InnerText = result.Zone21.ToString();
 
+                XmlElement Type = xmlDoc.CreateElement("Type");
+                Type.InnerText = result.Type.ToString();
+
+                XmlElement Weight = xmlDoc.CreateElement("Weight");
+                Weight.InnerText = result.Weight.ToString();
+
                 Zone21.AppendChild(ZoneName);
                 Zone21.AppendChild(Group);
                 Zone21.AppendChild(Relation);
+                Zone21.AppendChild(Type);
+                Zone21.AppendChild(Weight);
             }
 
-            xmlDoc.Save("c:\\temp\\mysavefile.cndx");
+            xmlDoc.Save(filepath);
             foreach (var result in connector)
             {
                 XmlElement Zone22 = xmlDoc.CreateElement("ConnectorZone22");
@@ -1100,20 +1208,27 @@ namespace SpaceLayout.Forms.ZoneForms
                 XmlElement Relation1 = xmlDoc.CreateElement("Relation");
                 Relation1.InnerText = result.Zone22.ToString();
 
+                XmlElement Type = xmlDoc.CreateElement("Type");
+                Type.InnerText = result.Type.ToString();
+
+                XmlElement Weight = xmlDoc.CreateElement("Weight");
+                Weight.InnerText = result.Weight.ToString();
 
                 Zone22.AppendChild(ZoneName1);
                 Zone22.AppendChild(Group1);
                 Zone22.AppendChild(Relation1);
+                Zone22.AppendChild(Type);
+                Zone22.AppendChild(Weight);
 
             }
-            xmlDoc.Save("c:\\temp\\mysavefile.cndx");
+            xmlDoc.Save(filepath);
             foreach (var result in groups)
             {
                 XmlElement Group = xmlDoc.CreateElement("Group");
                 Group.InnerText = result.Name.ToString();
                 groot.AppendChild(Group);
             }
-            xmlDoc.Save("c:\\temp\\mysavefile.cndx");
+            xmlDoc.Save(filepath);
             foreach (var result in congroup)
             {
                 XmlElement Group1 = xmlDoc.CreateElement("Group1");
@@ -1138,7 +1253,7 @@ namespace SpaceLayout.Forms.ZoneForms
                 gcroot.AppendChild(Type);
                 gcroot.AppendChild(Length);
             }
-            xmlDoc.Save("c:\\temp\\mysavefile.cndx");
+            xmlDoc.Save(filepath);
         }
     }
 }

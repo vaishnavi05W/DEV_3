@@ -12,7 +12,7 @@ using VectorDraw.Professional.vdPrimaries;
 using VectorDraw.Professional.Control;
 using VectorDraw.Render;
 
-namespace SpaceLayout
+namespace SpaceLayout.Forms
 {
     public partial class SpaceSyntax : Form
     {

@@ -1,7 +1,7 @@
 ﻿
 using System;
 
-namespace SpaceLayout
+namespace SpaceLayout.Forms
 {
     partial class SpaceSyntax
     {
@@ -40,6 +40,7 @@ namespace SpaceLayout
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.vdFramedControl1 = new vdControls.vdFramedControl();
             this.vdScrollableControl1 = new vdScrollableControl.vdScrollableControl();
+            this.vdFramedControl2 = new vdControls.vdFramedControl();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -53,6 +54,7 @@ namespace SpaceLayout
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.28393F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.71608F));
             this.tableLayoutPanel1.Controls.Add(this.toolStripContainer1, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.vdFramedControl2, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
@@ -73,7 +75,7 @@ namespace SpaceLayout
             this.toolStripContainer1.ContentPanel.Controls.Add(this.button2);
             this.toolStripContainer1.ContentPanel.Controls.Add(this.button1);
             this.toolStripContainer1.ContentPanel.Margin = new System.Windows.Forms.Padding(4);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(383, 577);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(383, 583);
             this.toolStripContainer1.ContentPanel.Load += new System.EventHandler(this.toolStripContainer1_ContentPanel_Load);
             this.toolStripContainer1.Location = new System.Drawing.Point(771, 4);
             this.toolStripContainer1.Margin = new System.Windows.Forms.Padding(4);
@@ -102,7 +104,7 @@ namespace SpaceLayout
             this.button1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.button1.BackColor = System.Drawing.Color.White;
             this.button1.ForeColor = System.Drawing.Color.Navy;
-            this.button1.Location = new System.Drawing.Point(4, -106);
+            this.button1.Location = new System.Drawing.Point(4, -103);
             this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(94, 29);
@@ -120,7 +122,7 @@ namespace SpaceLayout
             this.toolStripButton1});
             this.toolStrip1.Location = new System.Drawing.Point(4, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(68, 31);
+            this.toolStrip1.Size = new System.Drawing.Size(68, 25);
             this.toolStrip1.TabIndex = 0;
             // 
             // toolStripButton1
@@ -131,7 +133,7 @@ namespace SpaceLayout
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(55, 28);
+            this.toolStripButton1.Size = new System.Drawing.Size(55, 22);
             this.toolStripButton1.Text = "Setting";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
@@ -161,6 +163,20 @@ namespace SpaceLayout
             this.vdScrollableControl1.ShowLayoutPopupMenu = true;
             this.vdScrollableControl1.Size = new System.Drawing.Size(311, 18);
             this.vdScrollableControl1.TabIndex = 4;
+            // 
+            // vdFramedControl2
+            // 
+            this.vdFramedControl2.AccessibleRole = System.Windows.Forms.AccessibleRole.Pane;
+            this.vdFramedControl2.DisplayPolarCoord = false;
+            this.vdFramedControl2.HistoryLines = ((uint)(4u));
+            this.vdFramedControl2.LoadCommandstxt = true;
+            this.vdFramedControl2.LoadMenutxt = true;
+            this.vdFramedControl2.Location = new System.Drawing.Point(4, 4);
+            this.vdFramedControl2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.vdFramedControl2.Name = "vdFramedControl2";
+            this.vdFramedControl2.PropertyGridWidth = ((uint)(300u));
+            this.vdFramedControl2.Size = new System.Drawing.Size(759, 608);
+            this.vdFramedControl2.TabIndex = 2;
             // 
             // SpaceSyntax
             // 
@@ -200,9 +216,10 @@ namespace SpaceLayout
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private vdControls.vdFramedControl vdFramedControl1;
         private System.Windows.Forms.Button button1;
-       // private VectorDraw.Professional.Control.VectorDrawBaseControl vectorDrawBaseControl1;
+        // private VectorDraw.Professional.Control.VectorDrawBaseControl vectorDrawBaseControl1;
         private vdScrollableControl.vdScrollableControl vdScrollableControl1;
         private System.Windows.Forms.Button button2;
+        private vdControls.vdFramedControl vdFramedControl2;
     }
 }
 

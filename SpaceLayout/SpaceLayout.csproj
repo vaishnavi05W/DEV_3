@@ -186,41 +186,41 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="vdFramedControl, Version=10.1002.1.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
+    <Reference Include="vdFramedControl, Version=10.1003.1.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1002.1 Evaluation\bin\vdFramedControl.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1003.1.0\bin\vdFramedControl.dll</HintPath>
     </Reference>
-    <Reference Include="VDrawBaseControl, Version=10.1002.1.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
+    <Reference Include="VDrawBaseControl, Version=10.1003.1.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1002.1 Evaluation\bin\VDrawBaseControl.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1003.1.0\bin\VDrawBaseControl.dll</HintPath>
     </Reference>
-    <Reference Include="vdScrollableControl, Version=10.1002.1.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
+    <Reference Include="vdScrollableControl, Version=10.1003.1.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1002.1 Evaluation\bin\vdScrollableControl.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1003.1.0\bin\vdScrollableControl.dll</HintPath>
     </Reference>
-    <Reference Include="VectorDraw.Actions, Version=10.1002.1.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
+    <Reference Include="VectorDraw.Actions, Version=10.1003.1.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1002.1 Evaluation\bin\VectorDraw.Actions.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1003.1.0\bin\VectorDraw.Actions.dll</HintPath>
     </Reference>
-    <Reference Include="VectorDraw.Advanced, Version=10.1002.1.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
+    <Reference Include="VectorDraw.Advanced, Version=10.1003.1.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1002.1 Evaluation\bin\VectorDraw.Advanced.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1003.1.0\bin\VectorDraw.Advanced.dll</HintPath>
     </Reference>
-    <Reference Include="VectorDraw.Geometry, Version=10.1002.1.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
+    <Reference Include="VectorDraw.Geometry, Version=10.1003.1.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1002.1 Evaluation\bin\VectorDraw.Geometry.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1003.1.0\bin\VectorDraw.Geometry.dll</HintPath>
     </Reference>
-    <Reference Include="VectorDraw.Professional, Version=10.1002.1.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
+    <Reference Include="VectorDraw.Professional, Version=10.1003.1.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1002.1 Evaluation\bin\VectorDraw.Professional.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1003.1.0\bin\VectorDraw.Professional.dll</HintPath>
     </Reference>
-    <Reference Include="VectorDraw.Render, Version=10.1002.1.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
+    <Reference Include="VectorDraw.Render, Version=10.1003.1.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1002.1 Evaluation\bin\VectorDraw.Render.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1003.1.0\bin\VectorDraw.Render.dll</HintPath>
     </Reference>
-    <Reference Include="VectorDraw.Serialize, Version=10.1002.1.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
+    <Reference Include="VectorDraw.Serialize, Version=10.1003.1.0, Culture=neutral, PublicKeyToken=54eac14e23c9ee53, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1002.1 Evaluation\bin\VectorDraw.Serialize.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\VectorDraw\VectorDraw Developer Framework 10.1003.1.0\bin\VectorDraw.Serialize.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -228,11 +228,11 @@
     <Compile Include="Entity\InputData_ModuleEntity.cs" />
     <Compile Include="Entity\SolidColorBrush.cs" />
     <Compile Include="Entity\StaticCache.cs" />
-    <Compile Include="Forms\ImportForms\Form1.cs">
+    <Compile Include="Forms\ImportForms\ImportAutoCADForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\ImportForms\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Forms\ImportForms\ImportAutoCADForm.Designer.cs">
+      <DependentUpon>ImportAutoCADForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ImportForms\ContentPlacementForm.cs">
       <SubType>Form</SubType>
@@ -263,12 +263,6 @@
     </Compile>
     <Compile Include="Forms\OutputForm\OutputControl1.Designer.cs">
       <DependentUpon>OutputControl1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\TestForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\TestForm.Designer.cs">
-      <DependentUpon>TestForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ZoneSelectionForms\ZoneRelationshipEditingControl.cs">
       <SubType>UserControl</SubType>
@@ -307,6 +301,9 @@
     <EmbeddedResource Include="Forms\ImportForms\ContentPlacementForm.resx">
       <DependentUpon>ContentPlacementForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ImportForms\ImportAutoCADForm.resx">
+      <DependentUpon>ImportAutoCADForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ImportForms\MainFirstPageForm.resx">
       <DependentUpon>MainFirstPageForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -318,9 +315,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\OutputForm\OutputControl1.resx">
       <DependentUpon>OutputControl1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\TestForm.resx">
-      <DependentUpon>TestForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ZoneSelectionForms\ZoneRelationshipControl.resx">
       <DependentUpon>ZoneRelationshipControl.cs</DependentUpon>

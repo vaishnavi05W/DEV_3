@@ -14,7 +14,7 @@ using VectorDraw.Actions;
 using SpaceLayout.Forms.ZoneForms;
 
 
-namespace SpaceLayout
+namespace SpaceLayout.Forms
 {
     static class Program
     {

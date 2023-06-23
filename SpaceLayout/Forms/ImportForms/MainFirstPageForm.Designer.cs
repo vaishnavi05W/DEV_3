@@ -105,7 +105,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStripButton4});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(388, 31);
+            this.toolStrip1.Size = new System.Drawing.Size(388, 29);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -119,7 +119,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.DarkViolet;
             this.toolStripButton1.Margin = new System.Windows.Forms.Padding(1);
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(93, 29);
+            this.toolStripButton1.Size = new System.Drawing.Size(93, 27);
             this.toolStripButton1.Text = "Import file";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
@@ -133,7 +133,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Margin = new System.Windows.Forms.Padding(1);
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(127, 29);
+            this.toolStripButton2.Size = new System.Drawing.Size(127, 27);
             this.toolStripButton2.Text = "Zone Selection";
             this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
@@ -146,7 +146,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton3.Margin = new System.Windows.Forms.Padding(1);
             this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(120, 29);
+            this.toolStripButton3.Size = new System.Drawing.Size(120, 27);
             this.toolStripButton3.Text = "Zone Relation";
             this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
             // 
@@ -232,7 +232,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStripDropDownButton1});
             this.toolStrip2.Location = new System.Drawing.Point(0, 97);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(62, 31);
+            this.toolStrip2.Size = new System.Drawing.Size(62, 30);
             this.toolStrip2.TabIndex = 5;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -245,7 +245,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(49, 28);
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(49, 27);
             this.toolStripDropDownButton1.Text = "File";
             // 
             // saveToolStripMenuItem

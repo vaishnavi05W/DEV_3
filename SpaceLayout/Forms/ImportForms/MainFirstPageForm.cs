@@ -22,6 +22,7 @@ namespace SpaceLayout.Forms.ZoneForms
     {
         //private IGraph graph;
         public static bool ExcelFlg = false;
+        //public static bool CADFlg = false;
         public static DataTable dtZoneSelection = null;
         private MouseEventHandler nDrawingView1_MouseWheel;
         public static DataTable dtZoneRelationship = null;

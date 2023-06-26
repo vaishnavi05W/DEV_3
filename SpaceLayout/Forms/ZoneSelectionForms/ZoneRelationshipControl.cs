@@ -11,21 +11,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SpaceLayout.Forms.GenerativeForms;
 
 namespace SpaceLayout.Forms.ZoneForms
 {
     public partial class ZoneRelationshipControl : UserControl
     {
         public DataTable dtZoneRelationSource = new DataTable();
-        Form parentFrm;
+        Form parentFrm = null;
 
-        public NDrawingView Ndv;
-        public NDrawingDocument Ndd;
-
+        public NDrawingView Ndv = null;
+        public NDrawingDocument Ndd = null;
+        public TabPage tabMain = null;
+        public TabPage tabGenerative = null;
+        public TabControl tabControl1 = null;
+        public TableLayoutPanel rightPanel = null;
         public ZoneRelationshipControl()
         {
             InitializeComponent();
             this.Load += IS_Load;
+
         }
 
         private void IS_Load(object sender, EventArgs e)
@@ -37,11 +42,15 @@ namespace SpaceLayout.Forms.ZoneForms
                 Ndd = Ndv.Document;
             }
 
+            tabMain = parentFrm.Controls.Find("tabMain", true).FirstOrDefault() as TabPage;
+            tabGenerative = parentFrm.Controls.Find("tabGenerative", true).FirstOrDefault() as TabPage;
+            tabControl1 = parentFrm.Controls.Find("tabControl1", true).FirstOrDefault() as TabControl;
+            rightPanel = parentFrm.Controls.Find("tableLayoutPanel2", true).FirstOrDefault() as TableLayoutPanel;
             this.dgvZoneRelationship.ReadOnly = true;
             this.dgvZoneRelationship.AllowUserToAddRows = false;
             this.dgvZoneRelationship.AllowUserToDeleteRows = false;
             BindGrid();
-
+            this.btnGenerative.Click += btnGenerative_Clicked;
         }
 
         private void BindGrid()
@@ -126,11 +135,6 @@ namespace SpaceLayout.Forms.ZoneForms
 
         }
 
-        private void ExportCSV(object sender, EventArgs args)
-        {
-            //if(dtSource.row)
-        }
-
         private void ToCSV(DataTable dtDataTable, string strFilePath)
         {
             StreamWriter sw = new StreamWriter(strFilePath, false);
@@ -170,6 +174,18 @@ namespace SpaceLayout.Forms.ZoneForms
                 sw.Write(sw.NewLine);
             }
             sw.Close();
+        }
+
+        private void btnGenerative_Clicked(object sender, EventArgs args)
+        {
+           // if(dgvZoneRelationship.Rows.Count > 0)
+            {
+                tabControl1.SelectedTab = tabGenerative;
+                rightPanel.Controls.Remove(rightPanel.GetControlFromPosition(0, 1));
+                var GenerativeInfomationForms = new GenerativeInfomationForms();
+                rightPanel.Controls.Add(GenerativeInfomationForms, 0, 1);
+                GenerativeInfomationForms.Dock = DockStyle.Fill;
+            }
         }
     }
 }

@@ -228,6 +228,12 @@
     <Compile Include="Entity\InputData_ModuleEntity.cs" />
     <Compile Include="Entity\SolidColorBrush.cs" />
     <Compile Include="Entity\StaticCache.cs" />
+    <Compile Include="Forms\GenerativeForms\GenerativeInfomationForms.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\GenerativeForms\GenerativeInfomationForms.Designer.cs">
+      <DependentUpon>GenerativeInfomationForms.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ImportForms\ImportAutoCADForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -298,6 +304,9 @@
     <Compile Include="Object\Zone_Main.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\GenerativeForms\GenerativeInfomationForms.resx">
+      <DependentUpon>GenerativeInfomationForms.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ImportForms\ContentPlacementForm.resx">
       <DependentUpon>ContentPlacementForm.cs</DependentUpon>
     </EmbeddedResource>

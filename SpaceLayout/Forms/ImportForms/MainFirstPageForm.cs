@@ -40,10 +40,12 @@ namespace SpaceLayout.Forms.ZoneForms
         {
             btnPrevious.Visible = false;
             btnNext.Visible = false;
-
+            //tabGenerative
+            tabControl1.SelectedTab = tabMain;
             toolStripButton2.Enabled = false;
             toolStripButton3.Enabled = false;
             toolStripButton4.Enabled = false;
+            toolStripButton5.Enabled = false;
 
             // begin view init
             nDrawingView1.BeginInit();
@@ -107,6 +109,7 @@ namespace SpaceLayout.Forms.ZoneForms
         private void toolStripButton4_Click(object sender, EventArgs e)
         {
             LoadRightPanel(4);
+            this.toolStrip1.Enabled = false;
         }
 
         public void LoadRightPanel(int flg)

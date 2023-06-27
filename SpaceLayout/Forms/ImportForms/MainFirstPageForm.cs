@@ -90,7 +90,11 @@ namespace SpaceLayout.Forms.ZoneForms
           
         }
 
-       
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            LoadRightPanel(2);
+        }
+
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
             LoadRightPanel(2);

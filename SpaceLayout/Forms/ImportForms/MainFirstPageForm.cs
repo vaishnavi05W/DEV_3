@@ -15,6 +15,7 @@ using System.Text;
 using Nevron.UI.WinForm.Docking;
 using System.Collections.Generic;
 using Nevron.Diagram.WinForm.Commands;
+using SpaceLayout.Forms.GenerativeForms;
 
 namespace SpaceLayout.Forms.ZoneForms
 {
@@ -95,11 +96,6 @@ namespace SpaceLayout.Forms.ZoneForms
             LoadRightPanel(2);
         }
 
-        private void toolStripButton2_Click(object sender, EventArgs e)
-        {
-            LoadRightPanel(2);
-        }
-
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             LoadRightPanel(1);
@@ -110,10 +106,15 @@ namespace SpaceLayout.Forms.ZoneForms
             LoadRightPanel(3);
         }
 
+        private void toolStripButton5_Click(object sender, EventArgs e)
+        {
+            LoadRightPanel(5);
+            
+            
+        }
         private void toolStripButton4_Click(object sender, EventArgs e)
         {
             LoadRightPanel(4);
-            this.toolStrip1.Enabled = false;
         }
 
         public void LoadRightPanel(int flg)
@@ -152,7 +153,18 @@ namespace SpaceLayout.Forms.ZoneForms
                 btnNext.Visible = true;
                 btnPrevious.Visible = true;
             }
+            
             else if (flg == 4)
+            {
+                if (tableLayoutPanel2.Controls.Count > 1)
+                    tableLayoutPanel2.Controls.Remove(tableLayoutPanel2.GetControlFromPosition(0, 1));
+                var GenerativeInformationForms = new GenerativeInfomationForms();
+                tableLayoutPanel2.Controls.Add(GenerativeInformationForms, 0, 1);
+                GenerativeInformationForms.Dock = DockStyle.Fill;
+                btnNext.Visible = true;
+                btnPrevious.Visible = true; 
+            }
+            else if (flg == 5)
             {
                 if (tableLayoutPanel2.Controls.Count > 1)
                     tableLayoutPanel2.Controls.Remove(tableLayoutPanel2.GetControlFromPosition(0, 1));
@@ -175,6 +187,7 @@ namespace SpaceLayout.Forms.ZoneForms
                     toolStripButton2.Enabled = true;
                     toolStripButton3.Enabled = true;
                     toolStripButton4.Enabled = true;
+                    toolStripButton5.Enabled = true;
                 }
                 else
                 {
@@ -182,6 +195,7 @@ namespace SpaceLayout.Forms.ZoneForms
                     toolStripButton2.Enabled = false;
                     toolStripButton3.Enabled = false;
                     toolStripButton4.Enabled = false;
+                    toolStripButton5.Enabled= false;
                     return;
                 }
             }
@@ -192,6 +206,10 @@ namespace SpaceLayout.Forms.ZoneForms
             else if (contrName == "ZoneRelationshipControl")
             {
                 LoadRightPanel(4);
+            }
+            else if (contrName == "GenerativeInfomationForms")
+            {
+                LoadRightPanel(5);
             }
         }
 
@@ -204,16 +222,21 @@ namespace SpaceLayout.Forms.ZoneForms
                 LoadRightPanel(1);
                 toolStripButton2.Enabled = false;
                 toolStripButton3.Enabled = false;
-                toolStripButton4.Enabled = false;
+                toolStripButton4.Enabled = false;   
+                toolStripButton5.Enabled = false;
                 ExcelFlg = false;
             }
             else if (contrName == "ZoneRelationshipControl")
             {
                 LoadRightPanel(2);
             }
-            else if (contrName == "OutputControl1")
+            else if (contrName == "GenerativeInfomationForms")
             {
                 LoadRightPanel(3);
+            }
+            else if (contrName == "OutputControl1")
+            {
+                LoadRightPanel(4);
             }
         }
 
@@ -257,6 +280,6 @@ namespace SpaceLayout.Forms.ZoneForms
             dtZoneRelationship.AcceptChanges();
         }
 
-        
+       
     }
 }

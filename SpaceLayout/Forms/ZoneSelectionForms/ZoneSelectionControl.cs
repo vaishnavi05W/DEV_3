@@ -1248,5 +1248,10 @@ namespace SpaceLayout.Forms.ZoneForms
             }
             xmlDoc.Save(filepath);
         }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

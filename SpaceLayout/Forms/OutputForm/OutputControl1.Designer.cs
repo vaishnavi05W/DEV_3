@@ -50,14 +50,14 @@ namespace SpaceLayout.Forms.ZoneForms
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.ForeColor = System.Drawing.Color.White;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.57025F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 78.89182F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.630607F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(512, 746);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(384, 606);
             this.tableLayoutPanel1.TabIndex = 0;
+            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
             // tableLayoutPanel2
             // 
@@ -67,12 +67,11 @@ namespace SpaceLayout.Forms.ZoneForms
             this.tableLayoutPanel2.Controls.Add(this.btnExport, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnFinish, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(4, 677);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 550);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(504, 65);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(378, 53);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // btnExport
@@ -80,10 +79,10 @@ namespace SpaceLayout.Forms.ZoneForms
             this.btnExport.BackColor = System.Drawing.Color.White;
             this.btnExport.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnExport.ForeColor = System.Drawing.Color.Navy;
-            this.btnExport.Location = new System.Drawing.Point(7, 6);
-            this.btnExport.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
+            this.btnExport.Location = new System.Drawing.Point(5, 5);
+            this.btnExport.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(238, 53);
+            this.btnExport.Size = new System.Drawing.Size(179, 43);
             this.btnExport.TabIndex = 0;
             this.btnExport.Text = "Export";
             this.btnExport.UseVisualStyleBackColor = false;
@@ -93,10 +92,10 @@ namespace SpaceLayout.Forms.ZoneForms
             this.btnFinish.BackColor = System.Drawing.Color.White;
             this.btnFinish.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnFinish.ForeColor = System.Drawing.Color.Navy;
-            this.btnFinish.Location = new System.Drawing.Point(259, 6);
-            this.btnFinish.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
+            this.btnFinish.Location = new System.Drawing.Point(194, 5);
+            this.btnFinish.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnFinish.Name = "btnFinish";
-            this.btnFinish.Size = new System.Drawing.Size(238, 53);
+            this.btnFinish.Size = new System.Drawing.Size(179, 43);
             this.btnFinish.TabIndex = 1;
             this.btnFinish.Text = "Finish";
             this.btnFinish.UseVisualStyleBackColor = false;
@@ -109,10 +108,9 @@ namespace SpaceLayout.Forms.ZoneForms
             "관계도 다이어그램 .dwg",
             "관계도 다이어그램 .jpg",
             "관계도 .xlsx"});
-            this.checkedListBox1.Location = new System.Drawing.Point(4, 90);
-            this.checkedListBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.checkedListBox1.Location = new System.Drawing.Point(3, 73);
             this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(504, 579);
+            this.checkedListBox1.Size = new System.Drawing.Size(378, 471);
             this.checkedListBox1.TabIndex = 1;
             // 
             // textBox1
@@ -120,21 +118,19 @@ namespace SpaceLayout.Forms.ZoneForms
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox1.ForeColor = System.Drawing.Color.Navy;
-            this.textBox1.Location = new System.Drawing.Point(4, 27);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox1.Location = new System.Drawing.Point(3, 21);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(504, 32);
+            this.textBox1.Size = new System.Drawing.Size(378, 27);
             this.textBox1.TabIndex = 2;
             this.textBox1.Text = "Output";
             // 
             // OutputControl1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "OutputControl1";
-            this.Size = new System.Drawing.Size(512, 746);
+            this.Size = new System.Drawing.Size(384, 606);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);

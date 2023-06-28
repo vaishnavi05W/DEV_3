@@ -79,13 +79,14 @@
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 4;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.54694F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.138409F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 77.52066F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.92562F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(463, 473);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(617, 582);
             this.tableLayoutPanel1.TabIndex = 0;
             this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
@@ -98,11 +99,12 @@
             this.tableLayoutPanel4.Controls.Add(this.btnVertical, 1, 0);
             this.tableLayoutPanel4.Controls.Add(this.btnHorizontal, 0, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 432);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(4, 533);
+            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(457, 38);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(609, 45);
             this.tableLayoutPanel4.TabIndex = 3;
             // 
             // btnVertical
@@ -110,9 +112,10 @@
             this.btnVertical.BackColor = System.Drawing.Color.White;
             this.btnVertical.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnVertical.ForeColor = System.Drawing.Color.Navy;
-            this.btnVertical.Location = new System.Drawing.Point(231, 3);
+            this.btnVertical.Location = new System.Drawing.Point(308, 4);
+            this.btnVertical.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnVertical.Name = "btnVertical";
-            this.btnVertical.Size = new System.Drawing.Size(223, 32);
+            this.btnVertical.Size = new System.Drawing.Size(297, 37);
             this.btnVertical.TabIndex = 1;
             this.btnVertical.Text = "Vertical";
             this.btnVertical.UseVisualStyleBackColor = false;
@@ -122,9 +125,10 @@
             this.btnHorizontal.BackColor = System.Drawing.Color.White;
             this.btnHorizontal.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnHorizontal.ForeColor = System.Drawing.Color.Navy;
-            this.btnHorizontal.Location = new System.Drawing.Point(3, 3);
+            this.btnHorizontal.Location = new System.Drawing.Point(4, 4);
+            this.btnHorizontal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnHorizontal.Name = "btnHorizontal";
-            this.btnHorizontal.Size = new System.Drawing.Size(222, 32);
+            this.btnHorizontal.Size = new System.Drawing.Size(296, 37);
             this.btnHorizontal.TabIndex = 0;
             this.btnHorizontal.Text = "Horizontal";
             this.btnHorizontal.UseVisualStyleBackColor = false;
@@ -134,9 +138,10 @@
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox1.ForeColor = System.Drawing.Color.Navy;
-            this.textBox1.Location = new System.Drawing.Point(3, 3);
+            this.textBox1.Location = new System.Drawing.Point(4, 4);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(457, 27);
+            this.textBox1.Size = new System.Drawing.Size(609, 32);
             this.textBox1.TabIndex = 1;
             this.textBox1.Text = "Zone Selection";
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
@@ -159,11 +164,12 @@
             this.Column12,
             this.Column13});
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(3, 66);
+            this.dataGridView1.Location = new System.Drawing.Point(4, 83);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(457, 360);
+            this.dataGridView1.Size = new System.Drawing.Size(609, 442);
             this.dataGridView1.TabIndex = 2;
             this.dataGridView1.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridView1_DataError);
             // 
@@ -352,17 +358,17 @@
             // 
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 166F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 196F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 15F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 221F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 261F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.Controls.Add(this.cboZonesRatio, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(2, 32);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 40);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(459, 29);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(611, 37);
             this.tableLayoutPanel2.TabIndex = 4;
             // 
             // cboZonesRatio
@@ -370,10 +376,10 @@
             this.cboZonesRatio.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboZonesRatio.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.cboZonesRatio.FormattingEnabled = true;
-            this.cboZonesRatio.Location = new System.Drawing.Point(2, 2);
-            this.cboZonesRatio.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cboZonesRatio.Location = new System.Drawing.Point(3, 2);
+            this.cboZonesRatio.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cboZonesRatio.Name = "cboZonesRatio";
-            this.cboZonesRatio.Size = new System.Drawing.Size(93, 25);
+            this.cboZonesRatio.Size = new System.Drawing.Size(123, 28);
             this.cboZonesRatio.TabIndex = 1;
             // 
             // contextMenuStrip1
@@ -384,12 +390,13 @@
             // 
             // ZoneSelectionControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "ZoneSelectionControl";
-            this.Size = new System.Drawing.Size(463, 473);
+            this.Size = new System.Drawing.Size(617, 582);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.tableLayoutPanel4.ResumeLayout(false);

@@ -186,6 +186,8 @@ namespace SpaceLayout.Forms.ZoneForms
                 rightPanel.Controls.Add(GenerativeInfomationForms, 0, 1);
                 GenerativeInfomationForms.Dock = DockStyle.Fill;
             }
+
+            
         }
     }
 }

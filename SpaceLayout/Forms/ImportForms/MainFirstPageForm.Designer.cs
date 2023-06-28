@@ -74,11 +74,12 @@ namespace SpaceLayout.Forms.ZoneForms
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.tabControl1, 0, 0);
             this.tableLayoutPanel1.ForeColor = System.Drawing.Color.White;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 107);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 132);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(951, 499);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1268, 614);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // tableLayoutPanel2
@@ -88,15 +89,15 @@ namespace SpaceLayout.Forms.ZoneForms
             this.tableLayoutPanel2.Controls.Add(this.toolStrip1, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 2);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(658, 2);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(877, 2);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 3;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.132623F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 86.26016F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.607213F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(291, 495);
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(388, 610);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // toolStrip1
@@ -111,7 +112,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStripButton5});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(291, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(388, 30);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -125,7 +126,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.DarkViolet;
             this.toolStripButton1.Margin = new System.Windows.Forms.Padding(1);
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(66, 23);
+            this.toolStripButton1.Size = new System.Drawing.Size(93, 28);
             this.toolStripButton1.Text = "Import file";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
@@ -139,7 +140,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Margin = new System.Windows.Forms.Padding(1);
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(89, 23);
+            this.toolStripButton2.Size = new System.Drawing.Size(127, 28);
             this.toolStripButton2.Text = "Zone Selection";
             // 
             // toolStripButton3
@@ -151,7 +152,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton3.Margin = new System.Windows.Forms.Padding(1);
             this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(84, 23);
+            this.toolStripButton3.Size = new System.Drawing.Size(120, 28);
             this.toolStripButton3.Text = "Zone Relation";
             this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
             // 
@@ -164,7 +165,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton4.Margin = new System.Windows.Forms.Padding(1);
             this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(67, 19);
+            this.toolStripButton4.Size = new System.Drawing.Size(96, 27);
             this.toolStripButton4.Text = "Generative";
             this.toolStripButton4.Click += new System.EventHandler(this.toolStripButton4_Click);
             // 
@@ -176,7 +177,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
             this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton5.Name = "toolStripButton5";
-            this.toolStripButton5.Size = new System.Drawing.Size(49, 19);
+            this.toolStripButton5.Size = new System.Drawing.Size(69, 27);
             this.toolStripButton5.Text = "Output";
             this.toolStripButton5.Click += new System.EventHandler(this.toolStripButton5_Click);
             // 
@@ -188,22 +189,22 @@ namespace SpaceLayout.Forms.ZoneForms
             this.tableLayoutPanel3.Controls.Add(this.btnPrevious, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.btnNext, 1, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(2, 463);
-            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 571);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(287, 30);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(382, 37);
             this.tableLayoutPanel3.TabIndex = 1;
             // 
             // btnPrevious
             // 
             this.btnPrevious.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnPrevious.ForeColor = System.Drawing.Color.Navy;
-            this.btnPrevious.Location = new System.Drawing.Point(2, 2);
-            this.btnPrevious.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnPrevious.Location = new System.Drawing.Point(3, 2);
+            this.btnPrevious.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnPrevious.Name = "btnPrevious";
-            this.btnPrevious.Size = new System.Drawing.Size(139, 26);
+            this.btnPrevious.Size = new System.Drawing.Size(185, 33);
             this.btnPrevious.TabIndex = 0;
             this.btnPrevious.Text = "Previous";
             this.btnPrevious.UseVisualStyleBackColor = true;
@@ -213,10 +214,10 @@ namespace SpaceLayout.Forms.ZoneForms
             // 
             this.btnNext.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnNext.ForeColor = System.Drawing.Color.Navy;
-            this.btnNext.Location = new System.Drawing.Point(145, 2);
-            this.btnNext.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnNext.Location = new System.Drawing.Point(194, 2);
+            this.btnNext.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(140, 26);
+            this.btnNext.Size = new System.Drawing.Size(185, 33);
             this.btnNext.TabIndex = 1;
             this.btnNext.Text = "Next";
             this.btnNext.UseVisualStyleBackColor = true;
@@ -227,21 +228,21 @@ namespace SpaceLayout.Forms.ZoneForms
             this.tabControl1.Controls.Add(this.tabMain);
             this.tabControl1.Controls.Add(this.tabGenerative);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(2, 2);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabControl1.Location = new System.Drawing.Point(3, 2);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(652, 495);
+            this.tabControl1.Size = new System.Drawing.Size(868, 610);
             this.tabControl1.TabIndex = 2;
             // 
             // tabMain
             // 
             this.tabMain.Controls.Add(this.nDrawingView1);
-            this.tabMain.Location = new System.Drawing.Point(4, 22);
-            this.tabMain.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabMain.Location = new System.Drawing.Point(4, 25);
+            this.tabMain.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabMain.Name = "tabMain";
-            this.tabMain.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.tabMain.Size = new System.Drawing.Size(644, 469);
+            this.tabMain.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabMain.Size = new System.Drawing.Size(860, 581);
             this.tabMain.TabIndex = 0;
             this.tabMain.Text = "Main";
             this.tabMain.UseVisualStyleBackColor = true;
@@ -252,11 +253,11 @@ namespace SpaceLayout.Forms.ZoneForms
             this.nDrawingView1.DesignTimeState = ((Nevron.Diagram.NBinaryState)(resources.GetObject("nDrawingView1.DesignTimeState")));
             this.nDrawingView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.nDrawingView1.Document = this.nDrawingDocument1;
-            this.nDrawingView1.Location = new System.Drawing.Point(2, 2);
-            this.nDrawingView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.nDrawingView1.Location = new System.Drawing.Point(3, 2);
+            this.nDrawingView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.nDrawingView1.Name = "nDrawingView1";
             this.nDrawingView1.RenderTechnology = Nevron.GraphicsCore.RenderTechnology.GDIPlus;
-            this.nDrawingView1.Size = new System.Drawing.Size(640, 465);
+            this.nDrawingView1.Size = new System.Drawing.Size(854, 577);
             this.nDrawingView1.TabIndex = 2;
             this.nDrawingView1.Text = "nDrawingView1";
             // 
@@ -266,11 +267,11 @@ namespace SpaceLayout.Forms.ZoneForms
             // 
             // tabGenerative
             // 
-            this.tabGenerative.Location = new System.Drawing.Point(4, 22);
-            this.tabGenerative.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabGenerative.Location = new System.Drawing.Point(4, 25);
+            this.tabGenerative.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabGenerative.Name = "tabGenerative";
-            this.tabGenerative.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.tabGenerative.Size = new System.Drawing.Size(643, 401);
+            this.tabGenerative.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabGenerative.Size = new System.Drawing.Size(861, 580);
             this.tabGenerative.TabIndex = 1;
             this.tabGenerative.Text = "Generative";
             this.tabGenerative.UseVisualStyleBackColor = true;
@@ -282,9 +283,9 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStrip2.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripDropDownButton1});
-            this.toolStrip2.Location = new System.Drawing.Point(0, 79);
+            this.toolStrip2.Location = new System.Drawing.Point(0, 97);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(50, 25);
+            this.toolStrip2.Size = new System.Drawing.Size(62, 30);
             this.toolStrip2.TabIndex = 5;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -297,21 +298,21 @@ namespace SpaceLayout.Forms.ZoneForms
             this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(38, 22);
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(49, 27);
             this.toolStripDropDownButton1.Text = "File";
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.ForeColor = System.Drawing.Color.Navy;
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(136, 28);
             this.saveToolStripMenuItem.Text = "Save";
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.ForeColor = System.Drawing.Color.Navy;
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(136, 28);
             this.openToolStripMenuItem.Text = "Open";
             // 
             // nDiagramCommandBarsManager1
@@ -359,8 +360,8 @@ namespace SpaceLayout.Forms.ZoneForms
             this.nColorButton1.ButtonProperties.ShowFocusRect = false;
             this.nColorButton1.CellSize = new System.Drawing.Size(21, 21);
             this.nColorButton1.Color = System.Drawing.Color.White;
-            this.nColorButton1.Location = new System.Drawing.Point(658, 38);
-            this.nColorButton1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.nColorButton1.Location = new System.Drawing.Point(877, 47);
+            this.nColorButton1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.nColorButton1.Name = "nColorButton1";
             this.nColorButton1.Palette.Border = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))));
             this.nColorButton1.Palette.Caption = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(86)))), ((int)(((byte)(86)))));
@@ -385,19 +386,20 @@ namespace SpaceLayout.Forms.ZoneForms
             this.nColorButton1.Palette.SelectedBorder = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.nColorButton1.Palette.Window = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(245)))));
             this.nColorButton1.Palette.WindowText = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.nColorButton1.Size = new System.Drawing.Size(56, 20);
+            this.nColorButton1.Size = new System.Drawing.Size(75, 25);
             this.nColorButton1.TabIndex = 4;
             // 
             // MainFirstPageControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.ClientSize = new System.Drawing.Size(951, 606);
+            this.ClientSize = new System.Drawing.Size(1268, 746);
             this.Controls.Add(this.toolStrip2);
             this.Controls.Add(this.nColorButton1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.ForeColor = System.Drawing.Color.Navy;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "MainFirstPageControl";
             this.Text = "SAMOO Space Planning";
             this.TransparencyKey = System.Drawing.Color.Blue;

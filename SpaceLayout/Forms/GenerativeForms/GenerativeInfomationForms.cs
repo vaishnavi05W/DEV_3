@@ -1,8 +1,11 @@
-﻿using System;
+﻿using ExcelDataReader;
+using SpaceLayout.Entity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +25,8 @@ namespace SpaceLayout.Forms.GenerativeForms
 
         private void IS_Load(object sender, EventArgs args)
         {
+            dtSource();
+            dtZoneReationship();
             //for (int i = 1; i < 2; i++)
             //{
             //    Button btn = new Button();
@@ -78,28 +83,110 @@ namespace SpaceLayout.Forms.GenerativeForms
 
             dgv.CellContentClick += dgv_CellContentClick;
 
+            //Test_topology();
+            var node = dtSourceMain.AsEnumerable()
+                .Select(s => Convert.ToInt32(s.Field<string>("ID")))
+                .Distinct()
+                .ToList();
+
+            HashSet<Tuple<int, int>> connection = new HashSet<Tuple<int, int>>();
+            foreach (DataRow dr in dtZoneRelationship.Rows)
+            {
+                connection.Add(Tuple.Create(Convert.ToInt32(dr[0]), Convert.ToInt32(dr[1])));
+            }
+
+            var ret = TopologicalSort(new HashSet<int>(node), connection);
+
         }
 
+        private void Test_topology()
+        {
+            int vertices = 5;
+            int[,] edges = new int[,] { { 3, 2 }, { 3, 0 }, { 2, 0 }, { 2, 1 },{ 1, 0} };
+            // Console.WriteLine(edges.GetLength(0));
+            List<int> result = SortGraph(vertices, edges);
+           
+        }
 
+        public static List<int> SortGraph(int vertices, int[,] edges)
+        {
+            // 0. Initialize Sorted List
+            List<int> sortedOrder = new List<int>();
+            if (vertices <= 0)
+            {
+                return sortedOrder;
+            }
+
+            // 1. Initialize the Graph (O(V))
+
+            Dictionary<int, List<int>> graph = new Dictionary<int, List<int>>(); // key = node, values = list of it's adjacent nodes
+            Dictionary<int, int> inDegrees = new Dictionary<int, int>(); // key = vertex, value = number of incoming edges
+
+            for (int i = 0; i < vertices; i++)
+            {
+                inDegrees.Add(i, 0);
+                graph.Add(i, new List<int>());
+            }
+
+            // 2. Build the Graph (O(E))
+
+            for (int i = 0; i < edges.GetLength(0); i++)
+            {
+                int parent = edges[i, 0]; // left node of directed edge
+                int child = edges[i, 1]; // right node of directed edge
+
+                graph[parent].Add(child); // put the child into it's parent's adjacency list
+                inDegrees[child] += 1;
+            }
+
+            // 3. Find all Sources and add to Queue
+
+            Queue<int> sources = new Queue<int>();
+
+            foreach (var entry in inDegrees)
+            {
+                if (entry.Value == 0)
+                {
+                    sources.Enqueue(entry.Key);
+                }
+            }
+
+            // 4. Sort
+
+            // For each Source, add it to Sorted Order
+            while (sources.Count > 0)
+            {
+                int source = sources.Dequeue();
+                sortedOrder.Add(source);
+
+                // Subtract one from all of it's children's inDegrees value
+                foreach (int child in graph[source])
+                {
+                    inDegrees[child] -= 1;
+
+                    // If a child's in-degree becomes zero, add to sources queue
+                    if (inDegrees[child] == 0)
+                    {
+                        sources.Enqueue(child);
+                    }
+                }
+            }
+
+            // 5. Check for Cycles
+            // Check if there is a topological sort by seeing if the graph has a cycle
+            if (sortedOrder.Count != vertices)
+            {
+                return new List<int>();
+            }
+
+            return sortedOrder;
+
+        }
 
         private void dgv_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }
-      
-
-        private void dtZoneReationship(DataTable dt)
-        {
-            dtZoneRelationship = new DataTable();
-            dtZoneRelationship.Columns.Add("StartNode");
-            dtZoneRelationship.Columns.Add("EndNode");
-            dtZoneRelationship.Columns.Add("Axis");
-            dtZoneRelationship.Columns.Add("Type");
-
-            dtZoneRelationship = dt.Copy();
-            dtZoneRelationship.AcceptChanges();
-        }
-
         private List<T> TopologicalSort<T>(HashSet<T> nodes, HashSet<Tuple<T, T>> edges) where T : IEquatable<T>
         {
             // Empty list that will contain the sorted elements
@@ -146,6 +233,98 @@ namespace SpaceLayout.Forms.GenerativeForms
             {
                 // return L (a topologically sorted order)
                 return L;
+            }
+        }
+
+        private void dtZoneReationship()
+        {
+            string DataSourceInputData = StaticCache.DataSourceZoneRelationShip;
+            if (!File.Exists(DataSourceInputData))
+            {
+                MessageBox.Show("Please make and configure a setting to initialize dbsource file having path " + DataSourceInputData + "." + Environment.NewLine + "Source File have been put at Project's Datasource Folder.");
+                return;
+            }
+            dtZoneRelationship = new DataTable();
+            dtZoneRelationship.Columns.Add("StartNode");
+            dtZoneRelationship.Columns.Add("EndNode");
+            dtZoneRelationship.Columns.Add("Axis");
+            dtZoneRelationship.Columns.Add("Type");
+
+            using (var stream = File.Open(DataSourceInputData, FileMode.Open, FileAccess.Read))
+            {
+                // Auto-detect format, supports:
+                //  - Binary Excel files (2.0-2003 format; *.xls)
+                //  - OpenXml Excel files (2007 format; *.xlsx, *.xlsb)
+
+                using (var reader = ExcelReaderFactory.CreateReader(stream))
+                {
+                    // Choose one of either 1 or 2:
+
+                    // 1. Use the reader methods
+                    do
+                    {
+                        while (reader.Read())
+                        {
+                            // reader.GetDouble(0);
+                        }
+                    } while (reader.NextResult());
+
+                    // 2. Use the AsDataSet extension method
+                    var ds = reader.AsDataSet();
+                    ds.Tables["Input Data_Module"].Rows.RemoveAt(0);
+                    foreach (DataRow dr in ds.Tables["Input Data_Module"].Rows)
+                    {
+                        dtZoneRelationship.Rows.Add(dr.ItemArray);
+                    }
+                }
+                dtZoneRelationship.AcceptChanges();
+            }
+        }
+
+        private void dtSource()
+        {
+            string DataSourceInputData = StaticCache.DataSource_Test;
+            if (!File.Exists(DataSourceInputData))
+            {
+                MessageBox.Show("Please make and configure a setting to initialize dbsource file having path " + DataSourceInputData + "." + Environment.NewLine + "Source File have been put at Project's Datasource Folder.");
+                return;
+            }
+            dtSourceMain = new DataTable();
+            dtSourceMain.Columns.Add("ID");
+            dtSourceMain.Columns.Add("module name");
+            dtSourceMain.Columns.Add("color");
+            dtSourceMain.Columns.Add("area");
+            dtSourceMain.Columns.Add("height");
+            dtSourceMain.Columns.Add("floor");
+
+            using (var stream = File.Open(DataSourceInputData, FileMode.Open, FileAccess.Read))
+            {
+                // Auto-detect format, supports:
+                //  - Binary Excel files (2.0-2003 format; *.xls)
+                //  - OpenXml Excel files (2007 format; *.xlsx, *.xlsb)
+
+                using (var reader = ExcelReaderFactory.CreateReader(stream))
+                {
+                    // Choose one of either 1 or 2:
+
+                    // 1. Use the reader methods
+                    do
+                    {
+                        while (reader.Read())
+                        {
+                            // reader.GetDouble(0);
+                        }
+                    } while (reader.NextResult());
+
+                    // 2. Use the AsDataSet extension method
+                    var ds = reader.AsDataSet();
+                    ds.Tables["Input Data_Module"].Rows.RemoveAt(0);
+                    foreach (DataRow dr in ds.Tables["Input Data_Module"].Rows)
+                    {
+                        dtSourceMain.Rows.Add(dr.ItemArray);
+                    }
+                }
+                dtSourceMain.AcceptChanges();
             }
         }
     }

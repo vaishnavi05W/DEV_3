@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SpaceLayout.Object;
 
 namespace SpaceLayout.Forms.GenerativeForms
 {
@@ -83,103 +84,30 @@ namespace SpaceLayout.Forms.GenerativeForms
 
             dgv.CellContentClick += dgv_CellContentClick;
 
-            //Test_topology();
-            var node = dtSourceMain.AsEnumerable()
-                .Select(s => Convert.ToInt32(s.Field<string>("ID")))
-                .Distinct()
-                .ToList();
+            Graph g = new Graph(4);
+            g.AddEdge(0, 1);
+            g.AddEdge(0, 2);
+            g.AddEdge(1, 2);
+            g.AddEdge(2, 0);
+            g.AddEdge(2, 3);
+            g.AddEdge(3, 3);
 
-            HashSet<Tuple<int, int>> connection = new HashSet<Tuple<int, int>>();
-            foreach (DataRow dr in dtZoneRelationship.Rows)
-            {
-                connection.Add(Tuple.Create(Convert.ToInt32(dr[0]), Convert.ToInt32(dr[1])));
-            }
+            g.DFS();
+            //var node = dtSourceMain.AsEnumerable()
+            //    .Select(s => Convert.ToInt32(s.Field<string>("ID")))
+            //    .Distinct()
+            //    .ToList();
 
-            var ret = TopologicalSort(new HashSet<int>(node), connection);
+            //HashSet<Tuple<int, int>> connection = new HashSet<Tuple<int, int>>();
+            //foreach (DataRow dr in dtZoneRelationship.Rows)
+            //{
+            //    connection.Add(Tuple.Create(Convert.ToInt32(dr[0]), Convert.ToInt32(dr[1])));
+            //}
 
-        }
+            //var ret = GetAllTopologicalSorts(new HashSet<int>(node), connection);
 
-        private void Test_topology()
-        {
-            int vertices = 5;
-            int[,] edges = new int[,] { { 3, 2 }, { 3, 0 }, { 2, 0 }, { 2, 1 },{ 1, 0} };
-            // Console.WriteLine(edges.GetLength(0));
-            List<int> result = SortGraph(vertices, edges);
-           
-        }
 
-        public static List<int> SortGraph(int vertices, int[,] edges)
-        {
-            // 0. Initialize Sorted List
-            List<int> sortedOrder = new List<int>();
-            if (vertices <= 0)
-            {
-                return sortedOrder;
-            }
 
-            // 1. Initialize the Graph (O(V))
-
-            Dictionary<int, List<int>> graph = new Dictionary<int, List<int>>(); // key = node, values = list of it's adjacent nodes
-            Dictionary<int, int> inDegrees = new Dictionary<int, int>(); // key = vertex, value = number of incoming edges
-
-            for (int i = 0; i < vertices; i++)
-            {
-                inDegrees.Add(i, 0);
-                graph.Add(i, new List<int>());
-            }
-
-            // 2. Build the Graph (O(E))
-
-            for (int i = 0; i < edges.GetLength(0); i++)
-            {
-                int parent = edges[i, 0]; // left node of directed edge
-                int child = edges[i, 1]; // right node of directed edge
-
-                graph[parent].Add(child); // put the child into it's parent's adjacency list
-                inDegrees[child] += 1;
-            }
-
-            // 3. Find all Sources and add to Queue
-
-            Queue<int> sources = new Queue<int>();
-
-            foreach (var entry in inDegrees)
-            {
-                if (entry.Value == 0)
-                {
-                    sources.Enqueue(entry.Key);
-                }
-            }
-
-            // 4. Sort
-
-            // For each Source, add it to Sorted Order
-            while (sources.Count > 0)
-            {
-                int source = sources.Dequeue();
-                sortedOrder.Add(source);
-
-                // Subtract one from all of it's children's inDegrees value
-                foreach (int child in graph[source])
-                {
-                    inDegrees[child] -= 1;
-
-                    // If a child's in-degree becomes zero, add to sources queue
-                    if (inDegrees[child] == 0)
-                    {
-                        sources.Enqueue(child);
-                    }
-                }
-            }
-
-            // 5. Check for Cycles
-            // Check if there is a topological sort by seeing if the graph has a cycle
-            if (sortedOrder.Count != vertices)
-            {
-                return new List<int>();
-            }
-
-            return sortedOrder;
 
         }
 
@@ -187,55 +115,7 @@ namespace SpaceLayout.Forms.GenerativeForms
         {
 
         }
-        private List<T> TopologicalSort<T>(HashSet<T> nodes, HashSet<Tuple<T, T>> edges) where T : IEquatable<T>
-        {
-            // Empty list that will contain the sorted elements
-            var L = new List<T>();
-
-            // Set of all nodes with no incoming edges
-            var S = new HashSet<T>(nodes.Where(n => edges.All(e => e.Item2.Equals(n) == false)));
-
-            // while S is non-empty do
-            while (S.Any())
-            {
-
-                //  remove a node n from S
-                var n = S.First();
-                S.Remove(n);
-
-                // add n to tail of L
-                L.Add(n);
-
-                // for each node m with an edge e from n to m do
-                foreach (var e in edges.Where(e => e.Item1.Equals(n)).ToList())
-                {
-                    var m = e.Item2;
-
-                    // remove edge e from the graph
-                    edges.Remove(e);
-
-                    // if m has no other incoming edges then
-                    if (edges.All(me => me.Item2.Equals(m) == false))
-                    {
-                        // insert m into S
-                        S.Add(m);
-                    }
-                }
-            }
-
-            // if graph has edges then
-            if (edges.Any())
-            {
-                // return error (graph has at least one cycle)
-                return null;
-            }
-            else
-            {
-                // return L (a topologically sorted order)
-                return L;
-            }
-        }
-
+      
         private void dtZoneReationship()
         {
             string DataSourceInputData = StaticCache.DataSourceZoneRelationShip;

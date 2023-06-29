@@ -75,7 +75,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.tableLayoutPanel1.Controls.Add(this.tabControl1, 0, 0);
             this.tableLayoutPanel1.ForeColor = System.Drawing.Color.White;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 132);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -271,7 +271,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.tabGenerative.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabGenerative.Name = "tabGenerative";
             this.tabGenerative.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabGenerative.Size = new System.Drawing.Size(861, 580);
+            this.tabGenerative.Size = new System.Drawing.Size(860, 581);
             this.tabGenerative.TabIndex = 1;
             this.tabGenerative.Text = "Generative";
             this.tabGenerative.UseVisualStyleBackColor = true;
@@ -399,7 +399,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.Controls.Add(this.nColorButton1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.ForeColor = System.Drawing.Color.Navy;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainFirstPageControl";
             this.Text = "SAMOO Space Planning";
             this.TransparencyKey = System.Drawing.Color.Blue;

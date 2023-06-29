@@ -79,7 +79,7 @@
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 4;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.54694F));
@@ -100,7 +100,7 @@
             this.tableLayoutPanel4.Controls.Add(this.btnHorizontal, 0, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(4, 533);
-            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -113,7 +113,7 @@
             this.btnVertical.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnVertical.ForeColor = System.Drawing.Color.Navy;
             this.btnVertical.Location = new System.Drawing.Point(308, 4);
-            this.btnVertical.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnVertical.Margin = new System.Windows.Forms.Padding(4);
             this.btnVertical.Name = "btnVertical";
             this.btnVertical.Size = new System.Drawing.Size(297, 37);
             this.btnVertical.TabIndex = 1;
@@ -126,7 +126,7 @@
             this.btnHorizontal.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnHorizontal.ForeColor = System.Drawing.Color.Navy;
             this.btnHorizontal.Location = new System.Drawing.Point(4, 4);
-            this.btnHorizontal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnHorizontal.Margin = new System.Windows.Forms.Padding(4);
             this.btnHorizontal.Name = "btnHorizontal";
             this.btnHorizontal.Size = new System.Drawing.Size(296, 37);
             this.btnHorizontal.TabIndex = 0;
@@ -139,7 +139,7 @@
             this.textBox1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox1.ForeColor = System.Drawing.Color.Navy;
             this.textBox1.Location = new System.Drawing.Point(4, 4);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(609, 32);
             this.textBox1.TabIndex = 1;
@@ -165,7 +165,7 @@
             this.Column13});
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(4, 83);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
@@ -394,7 +394,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ZoneSelectionControl";
             this.Size = new System.Drawing.Size(617, 582);
             this.tableLayoutPanel1.ResumeLayout(false);

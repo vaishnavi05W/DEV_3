@@ -18,6 +18,8 @@ namespace SpaceLayout.Forms.GenerativeForms
     {
         public DataTable dtZoneRelationship;
         public DataTable dtSourceMain;
+        List<int> node = new List<int>();
+        private HashSet<Tuple<string, List<string>>> seq = new HashSet<Tuple<string, List<string>>>();
         public GenerativeInfomationForms()
         {
             InitializeComponent();
@@ -27,16 +29,27 @@ namespace SpaceLayout.Forms.GenerativeForms
         private void IS_Load(object sender, EventArgs args)
         {
             dtSource();
-            dtZoneReationship();
-            //for (int i = 1; i < 2; i++)
-            //{
-            //    Button btn = new Button();
-            //    btn.Text = "Alt" + i.ToString();
-            //    //btn.BackColor = Color.White;
-            //    btn.ForeColor = Color.Navy;
-            //    this.tableLayoutPanel1.Controls.Add(btn, 0, 0);
-            //}
+            dt_ZoneRelationship();
+            
+            node = dtSourceMain.AsEnumerable()
+                .Select(s => Convert.ToInt32(s.Field<string>("ID")))
+                .Distinct()
+                .ToList();
+            Graph g = new Graph(node);
+            //HashSet<Tuple<int, int>> connection = new HashSet<Tuple<int, int>>();
+            foreach (DataRow dr in dtZoneRelationship.Rows)
+            {
+                g.AddEdge(Convert.ToInt32(dr[0]), Convert.ToInt32(dr[1]));
+                //connection.Add(Tuple.Create(Convert.ToInt32(dr[0]), Convert.ToInt32(dr[1])));
+            }
+            seq = g.DFS();
+            //var ret = GetAllTopologicalSorts(new HashSet<int>(node), connection);
+            Bind_LowerTable();
+            //DgvAlternative(seq.Count);
+        }
 
+        private void DgvAlternative(int totalAlt)
+        {
             DataGridView dgv = new DataGridView();
             dgv.Name = "dgvAlternatives";
             dgv.BackgroundColor = SystemColors.ControlLightLight;
@@ -45,19 +58,14 @@ namespace SpaceLayout.Forms.GenerativeForms
             dgv.ColumnHeadersVisible = false;
             dgv.RowHeadersVisible = false;
             dgv.AllowUserToAddRows = false;
-            //dgv.DefaultCellStyle = new DataGridViewCellStyle()
-            //{
 
-            //};
+            //dgv.DataBindings = "a";
             DataGridViewRow dgvr = new DataGridViewRow();
             for (int i = 1; i <= 4; i++)
             {
                 var ButtonColumn = new DataGridViewButtonColumn();
 
-                //  dgv.Rows.Add(ButtonColumn);
                 dgv.Columns.Add(ButtonColumn);
-                //ButtonColumn.Text = "Alt" + i.ToString();
-                //ButtonColumn.UseColumnTextForButtonValue = false;
                 ButtonColumn.DefaultCellStyle = new DataGridViewCellStyle()
                 {
                     ForeColor = Color.Black
@@ -66,13 +74,10 @@ namespace SpaceLayout.Forms.GenerativeForms
 
             this.tableLayoutPanel1.Controls.Add(dgv, 0, 0);
             dgv.Dock = DockStyle.Fill;
-            ////dgv.Rows.Add(dgvr);
-            //DataGridViewButtonCell btn = new DataGridViewButtonCell();
-            //btn.te
             dgv.Rows.Add();
             int row = 1;
             int cell = 0;
-            for (int i = 1; i <= 20 - 4; i++)
+            for (int i = 1; i <= totalAlt - 4; i++)
             {
                 if (i % 4 == 0)
                 {
@@ -82,41 +87,59 @@ namespace SpaceLayout.Forms.GenerativeForms
             }
 
 
-            dgv.CellContentClick += dgv_CellContentClick;
-
-            Graph g = new Graph(4);
-            g.AddEdge(0, 1);
-            g.AddEdge(0, 2);
-            g.AddEdge(1, 2);
-            g.AddEdge(2, 0);
-            g.AddEdge(2, 3);
-            g.AddEdge(3, 3);
-
-            g.DFS();
-            //var node = dtSourceMain.AsEnumerable()
-            //    .Select(s => Convert.ToInt32(s.Field<string>("ID")))
-            //    .Distinct()
-            //    .ToList();
-
-            //HashSet<Tuple<int, int>> connection = new HashSet<Tuple<int, int>>();
-            //foreach (DataRow dr in dtZoneRelationship.Rows)
-            //{
-            //    connection.Add(Tuple.Create(Convert.ToInt32(dr[0]), Convert.ToInt32(dr[1])));
-            //}
-
-            //var ret = GetAllTopologicalSorts(new HashSet<int>(node), connection);
-
-
-
-
+            //dgv.CellContentClick += dgv_CellContentClick;
         }
 
         private void dgv_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (seq != null)
+            {
+                var a = seq.Where(x => x.Item1.Equals("1"));
+                if (a.Any())
+                {
+                    var b = a.ToList()[0].Item2.ToList();
+                    
+                }
+            }
+        }
+
+        private void DrawDiagram()
+        {
 
         }
       
-        private void dtZoneReationship()
+        private void Bind_LowerTable()
+        {
+            List<string> horizontal = new List<string>();
+            List<string> vertical = new List<string>();
+            DataTable dtlower = new DataTable();
+            dtlower.Columns.Add("Floor");
+            dtlower.Columns.Add("Horizontal");
+            dtlower.Columns.Add("Vertical");
+
+            var floor = dtSourceMain.AsEnumerable().Select(s => s.Field<string>("floor")).Distinct().ToList();
+            if (floor.Any())
+            {
+                foreach(var f in floor)
+                {
+                    DataRow dr = dtlower.NewRow();
+                    dr["Floor"] = f + "f";
+                    dr["Horizontal"] = "";
+                    dr["Vertical"] = "";
+                    dtlower.Rows.Add(dr);
+                }
+            }
+           // string a = 1 + "-" + 2;
+            //foreach (DataRow dr in dtZoneRelationship.Rows)
+            //{
+            //    var l1 = dtSourceMain.AsEnumerable().Where(x => x. = dr[0].ToString()).Select(s => s.Field<string>("floor"));
+
+            //}
+            dtlower.AcceptChanges();
+            dgvZoneRelationship.DataSource = dtlower;
+        }
+
+        private void dt_ZoneRelationship()
         {
             string DataSourceInputData = StaticCache.DataSourceZoneRelationShip;
             if (!File.Exists(DataSourceInputData))

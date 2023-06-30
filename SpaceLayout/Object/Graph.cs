@@ -10,22 +10,30 @@ namespace SpaceLayout.Object
     {
         private int Vertices;
         private List<int>[] adj;
-
-        public Graph(int v)
+        private List<string> result;
+        HashSet<Tuple<string, List<string>>> final = new HashSet<Tuple<string, List<string>>>();
+        public Graph(List<int> nodes)
         {
-            Vertices = v;
-            adj = new List<int>[v];
-            for (int i = 0; i < v; ++i)
-                adj[i] = new List<int>();
+            Vertices = nodes.Count;
+            //foreach (var v in nodes)
+            //{
+                adj = new List<int>[nodes.Count+1];
+                for (int i = 1; i <= nodes.Count; ++i)
+                    adj[i] = new List<int>();
+            //}
+            
+           
         }
 
         public void AddEdge(int v, int w)
         {
             adj[v].Add(w);
         }
-        public void DFS(int v, bool[] visited)
+        public List<string> DFS(int v, bool[] visited)
         {
             visited[v] = true;
+            
+            result.Add(v.ToString());
             Console.Write(v + " ");
 
             List<int> vList = adj[v];
@@ -34,40 +42,28 @@ namespace SpaceLayout.Object
                 if (!visited[n])
                     DFS(n, visited);
             }
+            return result;
         }
 
-        public void DFS()
+        public HashSet<Tuple<string, List<string>>> DFS()
         {
-            bool[] visited = new bool[Vertices];
+            bool[] visited = new bool[Vertices+1];
 
-            for (int i = 0; i < Vertices; ++i)
+            for (int i = 1; i <= Vertices; ++i)
             {
                 if (!visited[i])
                 {
                     Console.Write("\nDFS traversal starting from vertex " + i + ": ");
-                    DFS(i, visited);
+                    result = new List<string>();
+                    final.Add(Tuple.Create(i.ToString(),DFS(i, visited)));
                 }
 
                 // Reset visited array for the next DFS traversal
-                visited = new bool[Vertices];
+                visited = new bool[Vertices+1];
+                //visited[i] = true;
             }
+            return final;
         }
     }
 
-    //public class Program
-    //{
-    //    public static void Main()
-    //    {
-    //        Graph g = new Graph(4);
-
-    //        g.AddEdge(0, 1);
-    //        g.AddEdge(0, 2);
-    //        g.AddEdge(1, 2);
-    //        g.AddEdge(2, 0);
-    //        g.AddEdge(2, 3);
-    //        g.AddEdge(3, 3);
-
-    //        g.DFS();
-    //    }
-    //}
 }

@@ -12,7 +12,7 @@ namespace SpaceLayout.Object
         private List<int>[] adj;
         private List<string> result;
         HashSet<Tuple<string, List<string>>> final = new HashSet<Tuple<string, List<string>>>();
-        public Graph(List<int> nodes)
+        public Graph(List<string> nodes)
         {
             Vertices = nodes.Count;
             //foreach (var v in nodes)

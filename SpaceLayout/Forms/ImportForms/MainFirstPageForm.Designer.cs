@@ -46,14 +46,14 @@ namespace SpaceLayout.Forms.ZoneForms
             this.nDrawingView1 = new Nevron.Diagram.WinForm.NDrawingView();
             this.nDrawingDocument1 = new Nevron.Diagram.NDrawingDocument();
             this.tabGenerative = new System.Windows.Forms.TabPage();
+            this.nDrawingView2 = new Nevron.Diagram.WinForm.NDrawingView();
+            this.nDrawingDocument2 = new Nevron.Diagram.NDrawingDocument();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nDiagramCommandBarsManager1 = new Nevron.Diagram.WinForm.Commands.NDiagramCommandBarsManager();
             this.nColorButton1 = new Nevron.UI.WinForm.Controls.NColorButton();
-            this.nDrawingView2 = new Nevron.Diagram.WinForm.NDrawingView();
-            this.nDrawingDocument2 = new Nevron.Diagram.NDrawingDocument();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -280,6 +280,23 @@ namespace SpaceLayout.Forms.ZoneForms
             this.tabGenerative.Text = "Generative";
             this.tabGenerative.UseVisualStyleBackColor = true;
             // 
+            // nDrawingView2
+            // 
+            this.nDrawingView2.AllowDrop = true;
+            this.nDrawingView2.DesignTimeState = ((Nevron.Diagram.NBinaryState)(resources.GetObject("nDrawingView2.DesignTimeState")));
+            this.nDrawingView2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.nDrawingView2.Document = this.nDrawingDocument2;
+            this.nDrawingView2.Location = new System.Drawing.Point(3, 2);
+            this.nDrawingView2.Name = "nDrawingView2";
+            this.nDrawingView2.RenderTechnology = Nevron.GraphicsCore.RenderTechnology.GDIPlus;
+            this.nDrawingView2.Size = new System.Drawing.Size(854, 493);
+            this.nDrawingView2.TabIndex = 0;
+            this.nDrawingView2.Text = "nDrawingView2";
+            // 
+            // nDrawingDocument2
+            // 
+            this.nDrawingDocument2.DesignTimeState = ((Nevron.Diagram.NBinaryState)(resources.GetObject("nDrawingDocument2.DesignTimeState")));
+            // 
             // toolStrip2
             // 
             this.toolStrip2.BackColor = System.Drawing.SystemColors.HighlightText;
@@ -392,23 +409,6 @@ namespace SpaceLayout.Forms.ZoneForms
             this.nColorButton1.Palette.WindowText = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.nColorButton1.Size = new System.Drawing.Size(75, 25);
             this.nColorButton1.TabIndex = 4;
-            // 
-            // nDrawingView2
-            // 
-            this.nDrawingView2.AllowDrop = true;
-            this.nDrawingView2.DesignTimeState = ((Nevron.Diagram.NBinaryState)(resources.GetObject("nDrawingView2.DesignTimeState")));
-            this.nDrawingView2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.nDrawingView2.Document = this.nDrawingDocument2;
-            this.nDrawingView2.Location = new System.Drawing.Point(3, 2);
-            this.nDrawingView2.Name = "nDrawingView2";
-            this.nDrawingView2.RenderTechnology = Nevron.GraphicsCore.RenderTechnology.GDIPlus;
-            this.nDrawingView2.Size = new System.Drawing.Size(854, 493);
-            this.nDrawingView2.TabIndex = 0;
-            this.nDrawingView2.Text = "nDrawingView2";
-            // 
-            // nDrawingDocument2
-            // 
-            this.nDrawingDocument2.DesignTimeState = ((Nevron.Diagram.NBinaryState)(resources.GetObject("nDrawingDocument2.DesignTimeState")));
             // 
             // MainFirstPageControl
             // 

@@ -29,6 +29,7 @@ namespace SpaceLayout.Forms.GenerativeForms
 
         string level = string.Empty;
         List<string> existingFloor = new List<string>();
+        List<string> existingZone = new List<string>();
         NFlowLayout ZonesLayout;
         NFlowLayout FloorLayout;
 
@@ -75,18 +76,40 @@ namespace SpaceLayout.Forms.GenerativeForms
                 .Distinct()
                 .ToList();
             Graph g = new Graph(node);
-            //HashSet<Tuple<int, int>> connection = new HashSet<Tuple<int, int>>();
             foreach (DataRow dr in dtZoneRelationship.Rows)
             {
                 g.AddEdge(Convert.ToInt32(dr[0]), Convert.ToInt32(dr[1]));
-                //connection.Add(Tuple.Create(Convert.ToInt32(dr[0]), Convert.ToInt32(dr[1])));
             }
             seq = g.DFS();
-            //var ret = GetAllTopologicalSorts(new HashSet<int>(node), connection);
             dgvZoneRelationship.Enabled = false;
-            Bind_LowerTable();
-            //DgvAlternative(seq.Count);
+
+            //Bind_UpperPanel();
             DrawDiagram();
+            LowerTable_and_DrawDiagram();
+            //DgvAlternative(seq.Count);
+        }
+
+        private void Bind_UpperPanel()
+        {
+            TableLayoutPanel panel = new TableLayoutPanel();
+            
+            panel.ColumnCount = 3;
+            panel.RowCount = 1;
+            panel.Height = 40;
+            panel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33F));
+            panel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33F));
+            panel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33F));
+            //panel.RowStyles.Add(new RowStyle(SizeType.Absolute, 2F));
+            panel.Controls.Add(new Button() { Text = "Alt1", Name = "Alt1",  ForeColor = Color.Black, Dock = DockStyle.Fill }, 0, 0);
+            panel.Controls.Add(new Button() { Text = "Alt2", Name = "Alt2", ForeColor = Color.Black, Dock = DockStyle.Fill }, 1, 0);
+            panel.Controls.Add(new Button() { Text = "Alt3", Name = "Alt3", ForeColor = Color.Black, Dock = DockStyle.Fill }, 3, 0);
+            this.tableLayoutPanel1.Controls.Add(panel, 0, 0);
+            panel.Dock = DockStyle.Top;
+        }
+
+        private void btnAlt_Clicked(object sender, EventArgs e)
+        {
+
         }
 
         private void DgvAlternative(int totalAlt)
@@ -183,11 +206,12 @@ namespace SpaceLayout.Forms.GenerativeForms
                             if(row != null)
                                 zones.Add(GetShape(row));
                         }
-                            foreach (NRectangleShape z in zones)
-                            {
-                                level.Shapes.AddChild(z);
-                            }
-                            NNodeList listedNode = new NNodeList();
+                        foreach (NRectangleShape z in zones)
+                        {
+                            level.Shapes.AddChild(z);
+                        }
+                        Ndd2.ActiveLayer.AddChild(level);
+                        NNodeList listedNode = new NNodeList();
                             foreach (NRectangleShape n in level.Descendants(NFilters.Shape2D, -1))
                             {
                                 listedNode.Add(n);
@@ -206,7 +230,7 @@ namespace SpaceLayout.Forms.GenerativeForms
                             NAbilities protection1 = frame.Protection;
                             protection1.InplaceEdit = true;
                             frame.Protection = protection1;
-                            Ndd2.ActiveLayer.AddChild(level);
+                            
                     }
                     NNodeList listedFloor = new NNodeList();
                     foreach (string l in existingFloor)
@@ -230,13 +254,13 @@ namespace SpaceLayout.Forms.GenerativeForms
             NRectangleShape zone = new NRectangleShape();
             zone = new NRectangleShape(0, 0, width, height);
             zone.Name = dr[0].ToString();
+            existingZone.Add(zone.Name);
             zone.Style.FillStyle = new NColorFillStyle(color1);
             zone.Style.StrokeStyle = new NStrokeStyle(color2);
             string NodeLabelIn = dr[0].ToString()
                + System.Environment.NewLine + dr[3].ToString() + " " + "m\u00b2";
             string NodeLabelOut = dr[1].ToString();
             zone.Text = NodeLabelIn;
-            zone.Name = NodeLabelOut; ;
             zone.CreateShapeElements(ShapeElementsMask.Ports);
             NDynamicPort port = new NDynamicPort(zone.UniqueId, ContentAlignment.MiddleCenter, DynamicPortGlueMode.GlueToContour);
             zone.Ports.AddChild(port);
@@ -248,7 +272,7 @@ namespace SpaceLayout.Forms.GenerativeForms
             return zone;
         }
 
-        private void Bind_LowerTable()
+        private void LowerTable_and_DrawDiagram()
         {
             HashSet<Tuple<string, string>> horizontal = new HashSet<Tuple<string, string>>();
             HashSet<Tuple<string, string>> vertical = new HashSet<Tuple<string, string>>();
@@ -257,49 +281,72 @@ namespace SpaceLayout.Forms.GenerativeForms
             dtlower.Columns.Add("Horizontal");
             dtlower.Columns.Add("Vertical");
 
-            foreach (DataRow dr in dtZoneRelationship.Rows)
+            if (Ndd2 == null || Ndd2.ActiveLayer == null
+                || Ndd2.ActiveLayer.Descendants(NFilters.Shape1D, -1).Count == 0 || Ndd2.ActiveLayer.Descendants(NFilters.Shape2D, -1).Count == 0)
             {
-                var l1 = dtSourceMain.AsEnumerable()
-                   .Where(x => x["ID"].ToString() == dr[0].ToString())
-                   .Select(s => s["floor"].ToString()).SingleOrDefault();
-                var l2 = dtSourceMain.AsEnumerable()
-                 .Where(x => x["ID"].ToString() == dr[1].ToString())
-                 .Select(s => s["floor"].ToString()).SingleOrDefault();
-                var startNode = dr["StartNode"].ToString();
-                var endNode = dr["EndNode"].ToString();
-
-                var matchingFloor = dtSourceMain.AsEnumerable()
-                    .Any(x => x["floor"].ToString() == startNode && x["floor"].ToString() == endNode);
-
-                if (l1 == l2)
+                foreach (DataRow dr in dtZoneRelationship.Rows)
                 {
-                    // Add to horizontal list
-                    horizontal.Add(Tuple.Create(l1,startNode+ "-" + endNode));
+                    var l1 = dtSourceMain.AsEnumerable()
+                       .Where(x => x["ID"].ToString() == dr[0].ToString())
+                       .Select(s => s["floor"].ToString()).SingleOrDefault();
+                    var l2 = dtSourceMain.AsEnumerable()
+                     .Where(x => x["ID"].ToString() == dr[1].ToString())
+                     .Select(s => s["floor"].ToString()).SingleOrDefault();
+                    
+
+                    var startGroup = Ndd2.ActiveLayer.GetChildByName(l1 + "f");
+                    var endGroup = Ndd2.ActiveLayer.GetChildByName(l2 + "f");
+                    if(startGroup is NGroup SG && endGroup is NGroup EG)
+                    {
+                        var startNode = SG.Shapes.GetChildByName(dr["StartNode"].ToString());
+                        var endNode = EG.Shapes.GetChildByName(dr["EndNode"].ToString());
+                        if (startNode is NRectangleShape SN && endNode is NRectangleShape EN)
+                        {
+                            NLineShape line = new NLineShape();
+                            line.StyleSheetName = NDR.NameConnectorsStyleSheet;
+
+                            line.Style.FillStyle = new NColorFillStyle(Color.Black);
+                            line.Style.StrokeStyle = new NStrokeStyle(Color.Black);
+                            line.Text = dr["Axis"].ToString() + System.Environment.NewLine + dr["Type"].ToString();
+                            Ndd2.ActiveLayer.AddChild(line);
+                            line.StartPlug.Connect(SN.Ports.GetChildByName("ZonePort", 0) as NPort);
+                            line.EndPlug.Connect(EN.Ports.GetChildByName("ZonePort", 0) as NPort);
+                        }
+                    }
+                   
+
+                    if (l1 == l2)
+                    {
+                        // Add to horizontal list
+                        horizontal.Add(Tuple.Create(l1, dr["StartNode"].ToString() + "-" + dr["EndNode"].ToString()));
+                    }
+                    else
+                    {
+                        // Add to vertical list
+                        vertical.Add(Tuple.Create(l1, dr["StartNode"].ToString() + "-" + dr["EndNode"].ToString()));
+                    }
                 }
-                else
+
+
+                var floor = dtSourceMain.AsEnumerable().Select(s => s.Field<string>("floor")).Distinct().ToList();
+                if (floor.Any())
                 {
-                    // Add to vertical list
-                    vertical.Add(Tuple.Create(l1, startNode + "-" + endNode));
+                    foreach (var f in floor)
+                    {
+                        var H = horizontal.Where(x => x.Item1.Equals(f)).Select(x => x.Item2).ToList();
+                        var V = vertical.Where(x => x.Item1.Equals(f)).Select(x => x.Item2).ToList();
+                        DataRow dr = dtlower.NewRow();
+                        dr["Floor"] = f + "f";
+                        dr["Horizontal"] = string.Join(",", H);
+                        dr["Vertical"] = string.Join(",", V);
+                        dtlower.Rows.Add(dr);
+                    }
                 }
+                Ndd2.SmartRefreshAllViews();
+
+                dtlower.AcceptChanges();
+                dgvZoneRelationship.DataSource = dtlower;
             }
-
-            var floor = dtSourceMain.AsEnumerable().Select(s => s.Field<string>("floor")).Distinct().ToList();
-            if (floor.Any())
-            {
-                foreach (var f in floor)
-                {
-                    var H = horizontal.Where(x => x.Item1.Equals(f)).Select(x => x.Item2).ToList();
-                    var V = vertical.Where(x => x.Item1.Equals(f)).Select(x => x.Item2).ToList();
-                    DataRow dr = dtlower.NewRow();
-                    dr["Floor"] = f + "f";
-                    dr["Horizontal"] = string.Join(",", H);
-                    dr["Vertical"] = string.Join(",", V);
-                    dtlower.Rows.Add(dr);
-                }
-            }
-
-            dtlower.AcceptChanges();
-            dgvZoneRelationship.DataSource = dtlower;
         }
 
         private void dt_ZoneRelationship()

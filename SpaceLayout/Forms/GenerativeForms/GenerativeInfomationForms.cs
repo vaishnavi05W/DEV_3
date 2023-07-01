@@ -83,7 +83,7 @@ namespace SpaceLayout.Forms.GenerativeForms
             seq = g.DFS();
             dgvZoneRelationship.Enabled = false;
 
-            //Bind_UpperPanel();
+            Bind_UpperPanel();
             DrawDiagram();
             LowerTable_and_DrawDiagram();
             //DgvAlternative(seq.Count);

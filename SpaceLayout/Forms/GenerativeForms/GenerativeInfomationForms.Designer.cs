@@ -53,10 +53,10 @@ namespace SpaceLayout.Forms.GenerativeForms
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 57.52212F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 42.47787F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40.74567F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 59.25433F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(480, 751);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(622, 699);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // dgvZoneRelationship
@@ -75,15 +75,16 @@ namespace SpaceLayout.Forms.GenerativeForms
             this.colVertical});
             this.dgvZoneRelationship.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvZoneRelationship.GridColor = System.Drawing.SystemColors.Control;
-            this.dgvZoneRelationship.Location = new System.Drawing.Point(4, 435);
+            this.dgvZoneRelationship.Location = new System.Drawing.Point(4, 288);
             this.dgvZoneRelationship.Margin = new System.Windows.Forms.Padding(4);
             this.dgvZoneRelationship.Name = "dgvZoneRelationship";
             this.dgvZoneRelationship.RowHeadersWidth = 51;
-            this.dgvZoneRelationship.Size = new System.Drawing.Size(472, 312);
+            this.dgvZoneRelationship.Size = new System.Drawing.Size(614, 407);
             this.dgvZoneRelationship.TabIndex = 3;
             // 
             // colFloor
             // 
+            this.colFloor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colFloor.DataPropertyName = "Floor";
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -93,10 +94,10 @@ namespace SpaceLayout.Forms.GenerativeForms
             this.colFloor.HeaderText = "Floor";
             this.colFloor.MinimumWidth = 6;
             this.colFloor.Name = "colFloor";
-            this.colFloor.Width = 125;
             // 
             // colHorizontal
             // 
+            this.colHorizontal.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colHorizontal.DataPropertyName = "Horizontal";
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
@@ -108,10 +109,10 @@ namespace SpaceLayout.Forms.GenerativeForms
             this.colHorizontal.HeaderText = "Horizontal";
             this.colHorizontal.MinimumWidth = 6;
             this.colHorizontal.Name = "colHorizontal";
-            this.colHorizontal.Width = 147;
             // 
             // colVertical
             // 
+            this.colVertical.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colVertical.DataPropertyName = "Vertical";
             dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
@@ -123,7 +124,6 @@ namespace SpaceLayout.Forms.GenerativeForms
             this.colVertical.HeaderText = "Vertical";
             this.colVertical.MinimumWidth = 6;
             this.colVertical.Name = "colVertical";
-            this.colVertical.Width = 147;
             // 
             // GenerativeInfomationForms
             // 
@@ -132,7 +132,7 @@ namespace SpaceLayout.Forms.GenerativeForms
             this.Controls.Add(this.tableLayoutPanel1);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "GenerativeInfomationForms";
-            this.Size = new System.Drawing.Size(480, 751);
+            this.Size = new System.Drawing.Size(622, 699);
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvZoneRelationship)).EndInit();
             this.ResumeLayout(false);

@@ -18,6 +18,8 @@ using Nevron.Diagram.DataStructures;
 using Nevron.GraphicsCore;
 using Nevron.Dom;
 using Nevron.Diagram.Filters;
+using Nevron.Diagram.Extensions;
+using Nevron.UI.WinForm.Controls;
 
 namespace SpaceLayout.Forms.GenerativeForms
 {
@@ -30,23 +32,35 @@ namespace SpaceLayout.Forms.GenerativeForms
         string level = string.Empty;
         List<string> existingFloor = new List<string>();
         List<string> existingZone = new List<string>();
+        NLayoutContext layoutContext;
         NFlowLayout ZonesLayout;
         NFlowLayout FloorLayout;
+        private NPersistencyManager persistencyManager;
+        private NGroupBox groupPropertiesGroup;
+        private NCheckBox autoDestroyCheckBox;
+        private NCheckBox canBeEmptyCheckBox;
 
         public DataTable dtZoneRelationship;
         public DataTable dtSourceMain;
         List<string> node = new List<string>();
         private HashSet<Tuple<string, List<string>>> seq = new HashSet<Tuple<string, List<string>>>();
-        public GenerativeInfomationForms()
+        public GenerativeInfomationForms(DataTable dt_Main, DataTable dt_ZoneRelationship)
         {
             InitializeComponent();
+            this.persistencyManager = new NPersistencyManager();
+            this.groupPropertiesGroup = new NGroupBox();
+            this.autoDestroyCheckBox = new NCheckBox();
+            this.canBeEmptyCheckBox = new NCheckBox(); this.groupPropertiesGroup.SuspendLayout();
+            this.SuspendLayout();
+            dtSourceMain = dt_Main;
+            dtZoneRelationship = dt_ZoneRelationship;
             this.Load += IS_Load;
         }
 
         private void IS_Load(object sender, EventArgs args)
         {
-            dtSource();
-            dt_ZoneRelationship();
+            ///dtSource();
+           // dt_ZoneRelationship();
             Form f = this.ParentForm;
             Ndv2 = f.Controls.Find("nDrawingView2", true).FirstOrDefault() as NDrawingView;
             if (Ndv2 != null)
@@ -71,19 +85,35 @@ namespace SpaceLayout.Forms.GenerativeForms
             FloorLayout.VerticalSpacing = 50;
             FloorLayout.MaxOrdinal = 1;
 
+            layer2 = new NLayer();
+            Ndd2.Layers.AddChild(layer2);
+
+            layoutContext = new NLayoutContext();
+            layoutContext.GraphAdapter = new NShapeGraphAdapter();
+            layoutContext.BodyAdapter = new NShapeBodyAdapter(Ndd2);
+            layoutContext.BodyContainerAdapter = new NDrawingBodyContainerAdapter(Ndd2);
+
             node = dtSourceMain.AsEnumerable()
                 .Select(s => s.Field<string>("ID"))
                 .Distinct()
                 .ToList();
             Graph g = new Graph(node);
-            foreach (DataRow dr in dtZoneRelationship.Rows)
+            if(dtZoneRelationship.Rows.Count > 0)
             {
-                g.AddEdge(Convert.ToInt32(dr[0]), Convert.ToInt32(dr[1]));
-            }
-            seq = g.DFS();
-            dgvZoneRelationship.Enabled = false;
+                foreach (DataRow dr in dtZoneRelationship.Rows)
+                {
+                    g.AddEdge(Convert.ToInt32(dr[0]), Convert.ToInt32(dr[1]));
+                }
+                seq = g.DFS();
+                dgvZoneRelationship.Enabled = false;
 
-            Bind_UpperPanel();
+                Bind_UpperPanel();
+            }
+            else
+            {
+                MessageBox.Show("There is no connection record!");
+                return;
+            }
         }
 
         private void Bind_UpperPanel()
@@ -106,20 +136,68 @@ namespace SpaceLayout.Forms.GenerativeForms
             btn3.ForeColor = Color.Black;
             btn3.Dock = DockStyle.Fill;
 
+            Button btn4 = new Button();
+            btn4.Text = "Alt4";
+            btn4.Name = "Alt4";
+            btn4.ForeColor = Color.Black;
+            btn4.Dock = DockStyle.Fill;
+
+            Button btn5 = new Button();
+            btn5.Text = "Alt5";
+            btn5.Name = "Alt5";
+            btn5.ForeColor = Color.Black;
+            btn5.Dock = DockStyle.Fill;
+
+            Button btn6 = new Button();
+            btn6.Text = "Alt6";
+            btn6.Name = "Alt6";
+            btn6.ForeColor = Color.Black;
+            btn6.Dock = DockStyle.Fill;
+
+            Button btn7 = new Button();
+            btn7.Text = "Alt7";
+            btn7.Name = "Alt7";
+            btn7.ForeColor = Color.Black;
+            btn7.Dock = DockStyle.Fill;
+
+            Button btn8 = new Button();
+            btn8.Text = "Alt8";
+            btn8.Name = "Alt8";
+            btn8.ForeColor = Color.Black;
+            btn8.Dock = DockStyle.Fill;
+
+            Button btn9 = new Button();
+            btn9.Text = "Alt9";
+            btn9.Name = "Alt9";
+            btn9.ForeColor = Color.Black;
+            btn9.Dock = DockStyle.Fill;
+
             btn1.Click += btnAlt_Clicked;
             btn2.Click += btnAlt_Clicked;
             btn3.Click += btnAlt_Clicked;
+            btn4.Click += btnAlt_Clicked;
+            btn5.Click += btnAlt_Clicked;
+            btn6.Click += btnAlt_Clicked;
+            btn7.Click += btnAlt_Clicked;
+            btn8.Click += btnAlt_Clicked;
+            btn9.Click += btnAlt_Clicked;
 
             TableLayoutPanel panel = new TableLayoutPanel();
             panel.ColumnCount = 3;
-            panel.RowCount = 1;
-            panel.Height = 40;
+            panel.RowCount = 3;
+            panel.Height = 90;
             panel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33F));
             panel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33F));
             panel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33F));
             panel.Controls.Add(btn1, 0, 0);
             panel.Controls.Add(btn2, 1, 0);
             panel.Controls.Add(btn3, 3, 0);
+            panel.Controls.Add(btn4, 0, 1);
+            panel.Controls.Add(btn5, 1, 1);
+            panel.Controls.Add(btn6, 3, 1);
+            panel.Controls.Add(btn7, 0, 2);
+            panel.Controls.Add(btn8, 1, 2);
+            panel.Controls.Add(btn9, 3, 2);
             //panel.RowStyles.Add(new RowStyle(SizeType.Absolute, 2F));
             //panel.Controls.Add(new Button() { Text = "Alt1", Name = "Alt1",  ForeColor = Color.Black, Dock = DockStyle.Fill }, 0, 0);
             //panel.Controls.Add(new Button() { Text = "Alt2", Name = "Alt2", ForeColor = Color.Black, Dock = DockStyle.Fill }, 1, 0);
@@ -134,6 +212,7 @@ namespace SpaceLayout.Forms.GenerativeForms
             if (text.Equals("Alt1"))
             {
                 Ndd2.ActiveLayer.RemoveAllChildren();
+                existingFloor = new List<string>();
                 Ndd2.SmartRefreshAllViews();
                 DrawDiagram("1");
                 LowerTable_and_DrawConnector();
@@ -141,15 +220,65 @@ namespace SpaceLayout.Forms.GenerativeForms
             else if (text.Equals("Alt2"))
             {
                 Ndd2.ActiveLayer.RemoveAllChildren();
+                existingFloor = new List<string>();
                 Ndd2.SmartRefreshAllViews();
                 DrawDiagram("2");
                 LowerTable_and_DrawConnector();
             }
-            else
+            else if(text.Equals("Alt3"))
             {
                 Ndd2.ActiveLayer.RemoveAllChildren();
+                existingFloor = new List<string>();
                 Ndd2.SmartRefreshAllViews();
                 DrawDiagram("3");
+                LowerTable_and_DrawConnector();
+            }
+            else if (text.Equals("Alt4"))
+            {
+                Ndd2.ActiveLayer.RemoveAllChildren();
+                existingFloor = new List<string>();
+                Ndd2.SmartRefreshAllViews();
+                DrawDiagram("4");
+                LowerTable_and_DrawConnector();
+            }
+            else if (text.Equals("Alt5"))
+            {
+                Ndd2.ActiveLayer.RemoveAllChildren();
+                existingFloor = new List<string>();
+                Ndd2.SmartRefreshAllViews();
+                DrawDiagram("5");
+                LowerTable_and_DrawConnector();
+            }
+            else if (text.Equals("Alt6"))
+            {
+                Ndd2.ActiveLayer.RemoveAllChildren();
+                existingFloor = new List<string>();
+                Ndd2.SmartRefreshAllViews();
+                DrawDiagram("6");
+                LowerTable_and_DrawConnector();
+            }
+            else if (text.Equals("Alt7"))
+            {
+                Ndd2.ActiveLayer.RemoveAllChildren();
+                existingFloor = new List<string>();
+                Ndd2.SmartRefreshAllViews();
+                DrawDiagram("7");
+                LowerTable_and_DrawConnector();
+            }
+            else if (text.Equals("Alt8"))
+            {
+                Ndd2.ActiveLayer.RemoveAllChildren();
+                existingFloor = new List<string>();
+                Ndd2.SmartRefreshAllViews();
+                DrawDiagram("8");
+                LowerTable_and_DrawConnector();
+            }
+            else if (text.Equals("Alt9"))
+            {
+                Ndd2.ActiveLayer.RemoveAllChildren();
+                existingFloor = new List<string>();
+                Ndd2.SmartRefreshAllViews();
+                DrawDiagram("9");
                 LowerTable_and_DrawConnector();
             }
         }
@@ -212,14 +341,6 @@ namespace SpaceLayout.Forms.GenerativeForms
         private void DrawDiagram(string zoneID)
         {
             Ndd2.ActiveLayer.RemoveAllChildren();
-            layer2 = new NLayer();
-            Ndd2.Layers.AddChild(layer2);
-
-            NLayoutContext layoutContext = new NLayoutContext();
-            layoutContext.GraphAdapter = new NShapeGraphAdapter();
-            layoutContext.BodyAdapter = new NShapeBodyAdapter(Ndd2);
-            layoutContext.BodyContainerAdapter = new NDrawingBodyContainerAdapter(Ndd2);
-
             var alt1 = seq.Where(x => x.Item1.Equals(zoneID)).Select(x => x.Item2).ToList();   //add except zones ID at the end of sequence
             var except = node.Except(alt1[0]);
             if (except.Any())
@@ -240,7 +361,7 @@ namespace SpaceLayout.Forms.GenerativeForms
                         NGroup level = new NGroup();
                         level.Name = f.ToString() + "f";
                         existingFloor.Add(level.Name);
-
+                        Ndd2.ActiveLayer.AddChild(level);
                         List<NRectangleShape> zones = new List<NRectangleShape>();
                         foreach (var r in alt1[0])
                         {
@@ -252,7 +373,7 @@ namespace SpaceLayout.Forms.GenerativeForms
                         {
                             level.Shapes.AddChild(z);
                         }
-                        Ndd2.ActiveLayer.AddChild(level);
+                        
                         NNodeList listedNode = new NNodeList();
                             foreach (NRectangleShape n in level.Descendants(NFilters.Shape2D, -1))
                             {
@@ -280,6 +401,7 @@ namespace SpaceLayout.Forms.GenerativeForms
                         listedFloor.Add(Ndd2.ActiveLayer.GetChildByName(l));
                     }
                     FloorLayout.Layout(listedFloor, layoutContext);
+                    
                     Ndd2.SmartRefreshAllViews();
                 }
             }
@@ -289,9 +411,9 @@ namespace SpaceLayout.Forms.GenerativeForms
         {
             float width = 0;
             float height = 0;
-            width = (float)Math.Sqrt(Convert.ToDouble(dr[3].ToString()) * 2);
+            width = (float)Math.Sqrt(Convert.ToDouble(dr[5].ToString()) * 2);
             height = (float)(width / 2);
-            Color color1 = Color.FromName(dr[2].ToString());
+            Color color1 = Color.FromName(dr[4].ToString());
             Color color2 = Color.Black;
 
             NRectangleShape zone = new NRectangleShape();
@@ -301,7 +423,7 @@ namespace SpaceLayout.Forms.GenerativeForms
             zone.Style.FillStyle = new NColorFillStyle(color1);
             zone.Style.StrokeStyle = new NStrokeStyle(color2);
             string NodeLabelIn = dr[0].ToString()
-               + System.Environment.NewLine + dr[3].ToString() + " " + "m\u00b2";
+               + System.Environment.NewLine + dr[5].ToString() + " " + "m\u00b2";
             string NodeLabelOut = dr[1].ToString();
             zone.Text = NodeLabelIn;
             zone.CreateShapeElements(ShapeElementsMask.Ports);

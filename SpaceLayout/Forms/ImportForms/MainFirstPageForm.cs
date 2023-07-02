@@ -26,6 +26,7 @@ namespace SpaceLayout.Forms.ZoneForms
         //public static bool CADFlg = false;
         public static DataTable dtZoneSelection = null;
         private MouseEventHandler nDrawingView1_MouseWheel;
+        public static DataTable dtDataSource = null;
         public static DataTable dtZoneRelationship = null;
         public static object CommandBarsManager { get; internal set; }
         public object m_ZoomRect { get; private set; }
@@ -83,6 +84,7 @@ namespace SpaceLayout.Forms.ZoneForms
             nDrawingView2.EndInit();
 
             this.tabControl1.SelectedTab = tabMain;
+                this.nDiagramCommandBarsManager1.View = this.nDrawingView1; 
             this.tabControl1.SelectedIndexChanged += TabControl1_SelectedIndexChanged;
             this.nDiagramCommandBarsManager1.AllowCustomize = true;
             //foreach (NDockingToolbar tb in this.nDiagramCommandBarsManager1.Toolbars)
@@ -152,6 +154,7 @@ namespace SpaceLayout.Forms.ZoneForms
                 var ZoneSelectionControl = new ZoneSelectionControl();
                 tableLayoutPanel2.Controls.Add(ZoneSelectionControl, 0, 1);
                 ZoneSelectionControl.Dock = DockStyle.Fill;
+                KeepDataSource(ZoneSelectionControl.dtSource);
                 btnNext.Visible = true;
                 btnPrevious.Visible = true;
             }
@@ -160,7 +163,7 @@ namespace SpaceLayout.Forms.ZoneForms
                 if (tableLayoutPanel2.Controls.Count > 1)
                     tableLayoutPanel2.Controls.Remove(tableLayoutPanel2.GetControlFromPosition(0, 1));
 
-                var ZoneRelation = new ZoneRelationshipControl();
+                var ZoneRelation = new ZoneRelationshipControl(dtDataSource);
                 tableLayoutPanel2.Controls.Add(ZoneRelation, 0, 1);
                 ZoneRelation.Dock = DockStyle.Fill;
                 KeepDataFromZoneReationship(ZoneRelation.dtZoneRelationSource);
@@ -172,7 +175,7 @@ namespace SpaceLayout.Forms.ZoneForms
             {
                 if (tableLayoutPanel2.Controls.Count > 1)
                     tableLayoutPanel2.Controls.Remove(tableLayoutPanel2.GetControlFromPosition(0, 1));
-                var GenerativeInformationForms = new GenerativeInfomationForms();
+                var GenerativeInformationForms = new GenerativeInfomationForms(dtDataSource,dtZoneRelationship);
                 tableLayoutPanel2.Controls.Add(GenerativeInformationForms, 0, 1);
                 GenerativeInformationForms.Dock = DockStyle.Fill;
                 btnNext.Visible = true;
@@ -294,6 +297,27 @@ namespace SpaceLayout.Forms.ZoneForms
             dtZoneRelationship.AcceptChanges();
         }
 
-       
+       private void KeepDataSource(DataTable dtSource)
+        {
+            dtDataSource = new DataTable();
+            dtDataSource.Columns.Add("ID");
+            dtDataSource.Columns.Add("Name");
+            //dtSource.Columns.Add("Department");
+            dtDataSource.Columns.Add("Group");
+            //dtSource.Columns.Add("GroupColor");
+            dtDataSource.Columns.Add("Relation");
+            //dtSource.Columns.Add("GroupArea");
+            dtDataSource.Columns.Add("Color");
+            dtDataSource.Columns.Add("Area");
+            dtDataSource.Columns.Add("Width");
+            dtDataSource.Columns.Add("Length");
+            dtDataSource.Columns.Add("Height");
+            dtDataSource.Columns.Add("Floor");
+            dtDataSource.Columns.Add("Ratio");
+            dtDataSource.Columns.Add("Type");
+
+            dtDataSource = dtSource.Copy();
+            dtDataSource.AcceptChanges();
+        }
     }
 }

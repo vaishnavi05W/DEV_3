@@ -42,7 +42,7 @@ namespace SpaceLayout.Forms.ZoneForms
     public partial class ZoneSelectionControl : UserControl
     {
         static string DataSourceInputData = StaticCache.DataSourceBasicInfo;
-        private DataTable dtSource;
+        public DataTable dtSource;
 
         // public GraphControl chartControl { get; set; }
         public NDrawingView Ndv;

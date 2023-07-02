@@ -18,6 +18,7 @@ namespace SpaceLayout.Forms.ZoneForms
     public partial class ZoneRelationshipControl : UserControl
     {
         public DataTable dtZoneRelationSource = new DataTable();
+        public DataTable dtSource = new DataTable();
         Form parentFrm = null;
 
         public NDrawingView Ndv = null;
@@ -26,11 +27,11 @@ namespace SpaceLayout.Forms.ZoneForms
         public TabPage tabGenerative = null;
         public TabControl tabControl1 = null;
         public TableLayoutPanel rightPanel = null;
-        public ZoneRelationshipControl()
+        public ZoneRelationshipControl(DataTable dtDataSource)
         {
             InitializeComponent();
             this.Load += IS_Load;
-
+            dtSource = dtDataSource;
         }
 
         private void IS_Load(object sender, EventArgs e)
@@ -88,8 +89,8 @@ namespace SpaceLayout.Forms.ZoneForms
                                 axistype = line.Text.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
                                 workRow["StartNode"] = line.FromShape.Group.Name.ToString();
                                 workRow["EndNode"] = line.ToShape.Group.Name.ToString();
-                                workRow["Axis"] = axistype[0];
-                                workRow["Type"] = axistype[1];
+                                workRow["Axis"] = axistype[0] is null ? string.Empty : axistype[0];
+                                workRow["Type"] = axistype[1] is null ? string.Empty : axistype[1];
 
                                 dtZoneRelationSource.Rows.Add(workRow);
 
@@ -98,7 +99,7 @@ namespace SpaceLayout.Forms.ZoneForms
                             {
                                 workRow["StartNode"] = line.FromShape.Group.Name.ToString();
                                 workRow["EndNode"] = line.ToShape.Group.Name.ToString();
-                                workRow["Axis"] = axistype[0];
+                                workRow["Axis"] = axistype[0] is null? string.Empty : axistype[0];
                                 workRow["Type"] = "";
 
                                 dtZoneRelationSource.Rows.Add(workRow);
@@ -113,8 +114,8 @@ namespace SpaceLayout.Forms.ZoneForms
                                 axistype = line.Text.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
                                 workRow["StartNode"] = line.FromShape.Text.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None)[0].ToString();
                                 workRow["EndNode"] = line.ToShape.Text.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None)[0].ToString();
-                                workRow["Axis"] = axistype[0];
-                                workRow["Type"] = axistype[1];
+                                workRow["Axis"] = axistype[0] is null ? string.Empty : axistype[0];
+                                workRow["Type"] = axistype[1] is null ? string.Empty : axistype[1];
 
                                 dtZoneRelationSource.Rows.Add(workRow);
 
@@ -123,7 +124,7 @@ namespace SpaceLayout.Forms.ZoneForms
                             {
                                 workRow["StartNode"] = line.FromShape.Text.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None)[0].ToString();
                                 workRow["EndNode"] = line.ToShape.Text.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None)[0].ToString();
-                                workRow["Axis"] = axistype[0];
+                                workRow["Axis"] = axistype[0] is null ? string.Empty : axistype[0];
                                 workRow["Type"] = "";
 
                                 dtZoneRelationSource.Rows.Add(workRow);
@@ -182,7 +183,7 @@ namespace SpaceLayout.Forms.ZoneForms
             {
                 tabControl1.SelectedTab = tabGenerative;
                 rightPanel.Controls.Remove(rightPanel.GetControlFromPosition(0, 1));
-                var GenerativeInfomationForms = new GenerativeInfomationForms();
+                var GenerativeInfomationForms = new GenerativeInfomationForms(dtSource, dtZoneRelationSource);
                 rightPanel.Controls.Add(GenerativeInfomationForms, 0, 1);
                 GenerativeInfomationForms.Dock = DockStyle.Fill;
             }

@@ -58,7 +58,7 @@ namespace SpaceLayout.Forms.GenerativeForms
             ZonesLayout.ConstrainMode = CellConstrainMode.Ordinal;
             ZonesLayout.HorizontalContentPlacement = ContentPlacement.Near;
             ZonesLayout.VerticalContentPlacement = ContentPlacement.Near;
-            ZonesLayout.HorizontalSpacing = 20;
+            ZonesLayout.HorizontalSpacing = 100;
             ZonesLayout.VerticalSpacing = 20;
             ZonesLayout.MaxOrdinal = 3;
 
@@ -84,32 +84,74 @@ namespace SpaceLayout.Forms.GenerativeForms
             dgvZoneRelationship.Enabled = false;
 
             Bind_UpperPanel();
-            DrawDiagram();
-            LowerTable_and_DrawDiagram();
-            //DgvAlternative(seq.Count);
         }
 
         private void Bind_UpperPanel()
         {
+            Button btn1 = new Button();
+            btn1.Text = "Alt1";
+            btn1.Name = "Alt1";
+            btn1.ForeColor = Color.Black;
+            btn1.Dock = DockStyle.Fill;
+
+            Button btn2 = new Button();
+            btn2.Text = "Alt2";
+            btn2.Name = "Alt2";
+            btn2.ForeColor = Color.Black;
+            btn2.Dock = DockStyle.Fill;
+
+            Button btn3 = new Button();
+            btn3.Text = "Alt3";
+            btn3.Name = "Alt3";
+            btn3.ForeColor = Color.Black;
+            btn3.Dock = DockStyle.Fill;
+
+            btn1.Click += btnAlt_Clicked;
+            btn2.Click += btnAlt_Clicked;
+            btn3.Click += btnAlt_Clicked;
+
             TableLayoutPanel panel = new TableLayoutPanel();
-            
             panel.ColumnCount = 3;
             panel.RowCount = 1;
             panel.Height = 40;
             panel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33F));
             panel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33F));
             panel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33F));
+            panel.Controls.Add(btn1, 0, 0);
+            panel.Controls.Add(btn2, 1, 0);
+            panel.Controls.Add(btn3, 3, 0);
             //panel.RowStyles.Add(new RowStyle(SizeType.Absolute, 2F));
-            panel.Controls.Add(new Button() { Text = "Alt1", Name = "Alt1",  ForeColor = Color.Black, Dock = DockStyle.Fill }, 0, 0);
-            panel.Controls.Add(new Button() { Text = "Alt2", Name = "Alt2", ForeColor = Color.Black, Dock = DockStyle.Fill }, 1, 0);
-            panel.Controls.Add(new Button() { Text = "Alt3", Name = "Alt3", ForeColor = Color.Black, Dock = DockStyle.Fill }, 3, 0);
+            //panel.Controls.Add(new Button() { Text = "Alt1", Name = "Alt1",  ForeColor = Color.Black, Dock = DockStyle.Fill }, 0, 0);
+            //panel.Controls.Add(new Button() { Text = "Alt2", Name = "Alt2", ForeColor = Color.Black, Dock = DockStyle.Fill }, 1, 0);
+            //panel.Controls.Add(new Button() { Text = "Alt3", Name = "Alt3", ForeColor = Color.Black, Dock = DockStyle.Fill }, 3, 0);
             this.tableLayoutPanel1.Controls.Add(panel, 0, 0);
             panel.Dock = DockStyle.Top;
         }
 
         private void btnAlt_Clicked(object sender, EventArgs e)
         {
-
+            string text = (sender as Button).Text as string;
+            if (text.Equals("Alt1"))
+            {
+                Ndd2.ActiveLayer.RemoveAllChildren();
+                Ndd2.SmartRefreshAllViews();
+                DrawDiagram("1");
+                LowerTable_and_DrawConnector();
+            }
+            else if (text.Equals("Alt2"))
+            {
+                Ndd2.ActiveLayer.RemoveAllChildren();
+                Ndd2.SmartRefreshAllViews();
+                DrawDiagram("2");
+                LowerTable_and_DrawConnector();
+            }
+            else
+            {
+                Ndd2.ActiveLayer.RemoveAllChildren();
+                Ndd2.SmartRefreshAllViews();
+                DrawDiagram("3");
+                LowerTable_and_DrawConnector();
+            }
         }
 
         private void DgvAlternative(int totalAlt)
@@ -167,7 +209,7 @@ namespace SpaceLayout.Forms.GenerativeForms
             }
         }
 
-        private void DrawDiagram()
+        private void DrawDiagram(string zoneID)
         {
             Ndd2.ActiveLayer.RemoveAllChildren();
             layer2 = new NLayer();
@@ -178,7 +220,7 @@ namespace SpaceLayout.Forms.GenerativeForms
             layoutContext.BodyAdapter = new NShapeBodyAdapter(Ndd2);
             layoutContext.BodyContainerAdapter = new NDrawingBodyContainerAdapter(Ndd2);
 
-            var alt1 = seq.Where(x => x.Item1.Equals("1")).Select(x => x.Item2).ToList();   //add except zones ID at the end of sequence
+            var alt1 = seq.Where(x => x.Item1.Equals(zoneID)).Select(x => x.Item2).ToList();   //add except zones ID at the end of sequence
             var except = node.Except(alt1[0]);
             if (except.Any())
             {
@@ -238,6 +280,7 @@ namespace SpaceLayout.Forms.GenerativeForms
                         listedFloor.Add(Ndd2.ActiveLayer.GetChildByName(l));
                     }
                     FloorLayout.Layout(listedFloor, layoutContext);
+                    Ndd2.SmartRefreshAllViews();
                 }
             }
         }
@@ -272,7 +315,7 @@ namespace SpaceLayout.Forms.GenerativeForms
             return zone;
         }
 
-        private void LowerTable_and_DrawDiagram()
+        private void LowerTable_and_DrawConnector()
         {
             HashSet<Tuple<string, string>> horizontal = new HashSet<Tuple<string, string>>();
             HashSet<Tuple<string, string>> vertical = new HashSet<Tuple<string, string>>();

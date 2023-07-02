@@ -50,34 +50,40 @@ namespace SpaceLayout.Forms.ZoneForms
 
             // begin view init
             nDrawingView1.BeginInit();
-
+            nDrawingView2.BeginInit();
             // display the document in the view
             nDrawingView1.Document = nDrawingDocument1;
-
+            nDrawingView2.Document = nDrawingDocument2;
             // do not show ports
             nDrawingView1.GlobalVisibility.ShowPorts = true;
-
+            nDrawingView2.GlobalVisibility.ShowPorts = true;
             // hide the grid
             nDrawingView1.Grid.Visible = false;
+            nDrawingView2.Grid.Visible = false;
 
             nDrawingView1.HorizontalRuler.Visible = false;
             nDrawingView1.VerticalRuler.Visible = false;
-           
+            nDrawingView2.HorizontalRuler.Visible = false;
+            nDrawingView2.VerticalRuler.Visible = false;
             // fit the document in the viewport 
             //nDrawingView1.ViewLayout = ViewLayout.StretchToWidth;
-            
+
             // apply padding to the document bounds
             nDrawingView1.DocumentPadding = new Nevron.Diagram.NMargins(10);
-
+            nDrawingView2.DocumentPadding = new Nevron.Diagram.NMargins(10);
             // init document
             nDrawingDocument1.BeginInit();
-
+            nDrawingDocument2.BeginInit();
 
             // end nDrawingDocument1 init
             nDrawingDocument1.EndInit();
-
+            nDrawingDocument2.EndInit();
             //end view init
             nDrawingView1.EndInit();
+            nDrawingView2.EndInit();
+
+            this.tabControl1.SelectedTab = tabMain;
+            this.tabControl1.SelectedIndexChanged += TabControl1_SelectedIndexChanged;
             this.nDiagramCommandBarsManager1.AllowCustomize = true;
             //foreach (NDockingToolbar tb in this.nDiagramCommandBarsManager1.Toolbars)
             //{
@@ -89,6 +95,14 @@ namespace SpaceLayout.Forms.ZoneForms
                 this.nDiagramCommandBarsManager1.Toolbars.Remove(tb);
             }
           
+        }
+
+        private void TabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var tabname = (sender as TabControl).SelectedTab.Name as string;
+            if (tabname == "tabGenerative")
+                this.nDiagramCommandBarsManager1.View = this.nDrawingView2;
+            else this.nDiagramCommandBarsManager1.View = this.nDrawingView1;
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e)

@@ -97,14 +97,24 @@ namespace SpaceLayout.Forms.GenerativeForms
                 .Select(s => s.Field<string>("ID"))
                 .Distinct()
                 .ToList();
-            Graph g = new Graph(node);
-            if(dtZoneRelationship.Rows.Count > 0)
+            //Graph g = new Graph(node);
+            if(dtSourceMain.Rows.Count > 0)
             {
-                foreach (DataRow dr in dtZoneRelationship.Rows)
+                int floor1Area = 16786;
+                int floor2Area = 10108;
+                List<int> nodeAreas = new List<int>();
+                foreach (DataRow dr in dtSourceMain.Rows)
                 {
-                    g.AddEdge(Convert.ToInt32(dr[0]), Convert.ToInt32(dr[1]));
+                    nodeAreas.Add(Convert.ToInt32(dr["Area"].ToString().Replace(",", "")));
                 }
-                seq = g.DFS();
+                
+                List<(List<int>, List<int>)> permutations = GeneratePermutations(floor1Area, floor2Area, nodeAreas);
+                //foreach (DataRow dr in dtZoneRelationship.Rows)
+                //{
+                //    g.AddEdge(Convert.ToInt32(dr[0]), Convert.ToInt32(dr[1]));
+                //}
+                //seq = g.DFS();
+
                 dgvZoneRelationship.Enabled = false;
 
                 Bind_UpperPanel();
@@ -514,96 +524,52 @@ namespace SpaceLayout.Forms.GenerativeForms
             }
         }
 
-        private void dt_ZoneRelationship()
+        public static List<(List<int>, List<int>)> GeneratePermutations(int floor1Area, int floor2Area, List<int> nodes)
         {
-            string DataSourceInputData = StaticCache.DataSourceZoneRelationShip;
-            if (!File.Exists(DataSourceInputData))
-            {
-                MessageBox.Show("Please make and configure a setting to initialize dbsource file having path " + DataSourceInputData + "." + Environment.NewLine + "Source File have been put at Project's Datasource Folder.");
-                return;
-            }
-            dtZoneRelationship = new DataTable();
-            dtZoneRelationship.Columns.Add("StartNode");
-            dtZoneRelationship.Columns.Add("EndNode");
-            dtZoneRelationship.Columns.Add("Axis");
-            dtZoneRelationship.Columns.Add("Type");
+            List<(List<int>, List<int>)> validPermutations = new List<(List<int>, List<int>)>();
 
-            using (var stream = File.Open(DataSourceInputData, FileMode.Open, FileAccess.Read))
+            void Backtrack(List<int> floor1Nodes, List<int> floor2Nodes, List<int> remainingNodes)
             {
-                // Auto-detect format, supports:
-                //  - Binary Excel files (2.0-2003 format; *.xls)
-                //  - OpenXml Excel files (2007 format; *.xlsx, *.xlsb)
-
-                using (var reader = ExcelReaderFactory.CreateReader(stream))
+                if (remainingNodes.Count == 0)
                 {
-                    // Choose one of either 1 or 2:
-
-                    // 1. Use the reader methods
-                    do
-                    {
-                        while (reader.Read())
-                        {
-                            // reader.GetDouble(0);
-                        }
-                    } while (reader.NextResult());
-
-                    // 2. Use the AsDataSet extension method
-                    var ds = reader.AsDataSet();
-                    ds.Tables["Input Data_Module"].Rows.RemoveAt(0);
-                    foreach (DataRow dr in ds.Tables["Input Data_Module"].Rows)
-                    {
-                        dtZoneRelationship.Rows.Add(dr.ItemArray);
-                    }
+                    validPermutations.Add((floor1Nodes, floor2Nodes));
+                    return;
                 }
-                dtZoneRelationship.AcceptChanges();
+
+                int currentNode = remainingNodes[0];
+                List<int> remaining = new List<int>(remainingNodes);
+                remaining.RemoveAt(0);
+
+                // Try placing the current node on the first floor
+                if (currentNode <= floor1Area)
+                {
+                    List<int> newFloor1Nodes = new List<int>(floor1Nodes);
+                    newFloor1Nodes.Add(currentNode);
+                    List<int> newFloor2Nodes = new List<int>(floor2Nodes);
+                    Backtrack(newFloor1Nodes, newFloor2Nodes, remaining);
+                }
+
+                // Try placing the current node on the second floor
+                if (currentNode <= floor2Area)
+                {
+                    List<int> newFloor1Nodes = new List<int>(floor1Nodes);
+                    List<int> newFloor2Nodes = new List<int>(floor2Nodes);
+                    newFloor2Nodes.Add(currentNode);
+                    Backtrack(newFloor1Nodes, newFloor2Nodes, remaining);
+                }
+
+                // Try skipping the current node
+                List<int> newFloor1NodesSkip = new List<int>(floor1Nodes);
+                List<int> newFloor2NodesSkip = new List<int>(floor2Nodes);
+                Backtrack(newFloor1NodesSkip, newFloor2NodesSkip, remaining);
             }
+
+            Backtrack(new List<int>(), new List<int>(), nodes);
+
+            return validPermutations;
         }
 
-        private void dtSource()
-        {
-            string DataSourceInputData = StaticCache.DataSource_Test;
-            if (!File.Exists(DataSourceInputData))
-            {
-                MessageBox.Show("Please make and configure a setting to initialize dbsource file having path " + DataSourceInputData + "." + Environment.NewLine + "Source File have been put at Project's Datasource Folder.");
-                return;
-            }
-            dtSourceMain = new DataTable();
-            dtSourceMain.Columns.Add("ID");
-            dtSourceMain.Columns.Add("module name");
-            dtSourceMain.Columns.Add("color");
-            dtSourceMain.Columns.Add("area");
-            dtSourceMain.Columns.Add("height");
-            dtSourceMain.Columns.Add("floor");
 
-            using (var stream = File.Open(DataSourceInputData, FileMode.Open, FileAccess.Read))
-            {
-                // Auto-detect format, supports:
-                //  - Binary Excel files (2.0-2003 format; *.xls)
-                //  - OpenXml Excel files (2007 format; *.xlsx, *.xlsb)
 
-                using (var reader = ExcelReaderFactory.CreateReader(stream))
-                {
-                    // Choose one of either 1 or 2:
-
-                    // 1. Use the reader methods
-                    do
-                    {
-                        while (reader.Read())
-                        {
-                            // reader.GetDouble(0);
-                        }
-                    } while (reader.NextResult());
-
-                    // 2. Use the AsDataSet extension method
-                    var ds = reader.AsDataSet();
-                    ds.Tables["Input Data_Module"].Rows.RemoveAt(0);
-                    foreach (DataRow dr in ds.Tables["Input Data_Module"].Rows)
-                    {
-                        dtSourceMain.Rows.Add(dr.ItemArray);
-                    }
-                }
-                dtSourceMain.AcceptChanges();
-            }
-        }
     }
 }

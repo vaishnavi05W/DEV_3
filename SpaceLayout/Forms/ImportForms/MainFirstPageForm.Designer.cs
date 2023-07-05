@@ -245,7 +245,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.tabMain.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabMain.Name = "tabMain";
             this.tabMain.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabMain.Size = new System.Drawing.Size(860, 497);
+            this.tabMain.Size = new System.Drawing.Size(860, 588);
             this.tabMain.TabIndex = 0;
             this.tabMain.Text = "Main";
             this.tabMain.UseVisualStyleBackColor = true;
@@ -260,7 +260,7 @@ namespace SpaceLayout.Forms.ZoneForms
             this.nDrawingView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.nDrawingView1.Name = "nDrawingView1";
             this.nDrawingView1.RenderTechnology = Nevron.GraphicsCore.RenderTechnology.GDIPlus;
-            this.nDrawingView1.Size = new System.Drawing.Size(854, 493);
+            this.nDrawingView1.Size = new System.Drawing.Size(854, 584);
             this.nDrawingView1.TabIndex = 2;
             this.nDrawingView1.Text = "nDrawingView1";
             // 

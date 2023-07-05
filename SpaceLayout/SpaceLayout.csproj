@@ -298,6 +298,7 @@
     <Compile Include="Object\Graph.cs" />
     <Compile Include="Object\Group.cs" />
     <Compile Include="Object\Connector_Main.cs" />
+    <Compile Include="Object\Permutation.cs" />
     <Compile Include="Object\Undo.cs" />
     <Compile Include="Object\Project.cs" />
     <Compile Include="Object\Connector.cs" />

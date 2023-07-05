@@ -81,6 +81,7 @@ namespace SpaceLayout.Forms.GenerativeForms
             this.dgvZoneRelationship.RowHeadersWidth = 51;
             this.dgvZoneRelationship.Size = new System.Drawing.Size(614, 407);
             this.dgvZoneRelationship.TabIndex = 3;
+            this.dgvZoneRelationship.Visible = false;
             // 
             // colFloor
             // 

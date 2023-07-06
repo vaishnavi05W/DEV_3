@@ -98,17 +98,23 @@ namespace SpaceLayout.Forms.GenerativeForms
                 .Distinct()
                 .ToList();
             //Graph g = new Graph(node);
-            if(dtSourceMain.Rows.Count > 0)
+            if (dtSourceMain.Rows.Count > 0)
             {
                 int floor1Area = 16786;
                 int floor2Area = 10108;
                 List<int> nodeAreas = new List<int>();
                 foreach (DataRow dr in dtSourceMain.Rows)
                 {
-                    nodeAreas.Add(Convert.ToInt32(dr["Area"].ToString().Replace(",", "")));
+                    nodeAreas.Add(Convert.ToInt32(Convert.ToDouble(dr[5].ToString().Replace(",", ""))));
                 }
-                
+
                 List<(List<int>, List<int>)> permutations = GeneratePermutations(floor1Area, floor2Area, nodeAreas);
+                if (permutations != null)
+                {
+                    List<(List<int>, List<int>)> forDelete = permutations.Where(x => x.Item1.Count() == 0) as List<(List<int>, List<int>)>;
+
+                    List<(List<int>, List<int>)> generateLevels = GenerateWithLevels(permutations);
+                }
                 //foreach (DataRow dr in dtZoneRelationship.Rows)
                 //{
                 //    g.AddEdge(Convert.ToInt32(dr[0]), Convert.ToInt32(dr[1]));
@@ -235,7 +241,7 @@ namespace SpaceLayout.Forms.GenerativeForms
                 DrawDiagram("2");
                 LowerTable_and_DrawConnector();
             }
-            else if(text.Equals("Alt3"))
+            else if (text.Equals("Alt3"))
             {
                 Ndd2.ActiveLayer.RemoveAllChildren();
                 existingFloor = new List<string>();
@@ -343,7 +349,7 @@ namespace SpaceLayout.Forms.GenerativeForms
                 if (a.Any())
                 {
                     var b = a.ToList()[0].Item2.ToList();
-                    
+
                 }
             }
         }
@@ -376,34 +382,34 @@ namespace SpaceLayout.Forms.GenerativeForms
                         foreach (var r in alt1[0])
                         {
                             var row = dtSourceMain.Select("ID =" + r.ToString() + " And floor =" + f.ToString()).SingleOrDefault();
-                            if(row != null)
+                            if (row != null)
                                 zones.Add(GetShape(row));
                         }
                         foreach (NRectangleShape z in zones)
                         {
                             level.Shapes.AddChild(z);
                         }
-                        
+
                         NNodeList listedNode = new NNodeList();
-                            foreach (NRectangleShape n in level.Descendants(NFilters.Shape2D, -1))
-                            {
-                                listedNode.Add(n);
-                            }
-                            ZonesLayout.Layout(listedNode, layoutContext);
-                            level.UpdateModelBounds();
+                        foreach (NRectangleShape n in level.Descendants(NFilters.Shape2D, -1))
+                        {
+                            listedNode.Add(n);
+                        }
+                        ZonesLayout.Layout(listedNode, layoutContext);
+                        level.UpdateModelBounds();
 
-                            NRectangleShape frame = new NRectangleShape(level.Bounds.X, level.Bounds.Y, level.Width, level.Height);
-                            //CreateDecorators(frame, newGroup.Name);
-                            frame.Protection = new NAbilities(AbilitiesMask.Select);
-                            frame.Style.FillStyle = new NColorFillStyle(Color.Transparent);
-                            frame.Style.StrokeStyle = new NStrokeStyle(Color.Gray);
-                            level.Shapes.AddChild(frame);
+                        NRectangleShape frame = new NRectangleShape(level.Bounds.X, level.Bounds.Y, level.Width, level.Height);
+                        //CreateDecorators(frame, newGroup.Name);
+                        frame.Protection = new NAbilities(AbilitiesMask.Select);
+                        frame.Style.FillStyle = new NColorFillStyle(Color.Transparent);
+                        frame.Style.StrokeStyle = new NStrokeStyle(Color.Gray);
+                        level.Shapes.AddChild(frame);
 
 
-                            NAbilities protection1 = frame.Protection;
-                            protection1.InplaceEdit = true;
-                            frame.Protection = protection1;
-                            
+                        NAbilities protection1 = frame.Protection;
+                        protection1.InplaceEdit = true;
+                        frame.Protection = protection1;
+
                     }
                     NNodeList listedFloor = new NNodeList();
                     foreach (string l in existingFloor)
@@ -411,7 +417,7 @@ namespace SpaceLayout.Forms.GenerativeForms
                         listedFloor.Add(Ndd2.ActiveLayer.GetChildByName(l));
                     }
                     FloorLayout.Layout(listedFloor, layoutContext);
-                    
+
                     Ndd2.SmartRefreshAllViews();
                 }
             }
@@ -467,11 +473,11 @@ namespace SpaceLayout.Forms.GenerativeForms
                     var l2 = dtSourceMain.AsEnumerable()
                      .Where(x => x["ID"].ToString() == dr[1].ToString())
                      .Select(s => s["floor"].ToString()).SingleOrDefault();
-                    
+
 
                     var startGroup = Ndd2.ActiveLayer.GetChildByName(l1 + "f");
                     var endGroup = Ndd2.ActiveLayer.GetChildByName(l2 + "f");
-                    if(startGroup is NGroup SG && endGroup is NGroup EG)
+                    if (startGroup is NGroup SG && endGroup is NGroup EG)
                     {
                         var startNode = SG.Shapes.GetChildByName(dr["StartNode"].ToString());
                         var endNode = EG.Shapes.GetChildByName(dr["EndNode"].ToString());
@@ -488,7 +494,7 @@ namespace SpaceLayout.Forms.GenerativeForms
                             line.EndPlug.Connect(EN.Ports.GetChildByName("ZonePort", 0) as NPort);
                         }
                     }
-                   
+
 
                     if (l1 == l2)
                     {
@@ -569,7 +575,15 @@ namespace SpaceLayout.Forms.GenerativeForms
             return validPermutations;
         }
 
+        private  List<(List<int>, List<int>)> GenerateWithLevels(List<(List<int>, List<int>)> validPermutations)
+        {
+            List<(List<int>, List<int>)> validResult = new List<(List<int>, List<int>)>();
+            foreach(DataRow dr in dtZoneRelationship.Rows)
+            {
 
-
+            }
+            return validResult;
+        }
     }
+   
 }

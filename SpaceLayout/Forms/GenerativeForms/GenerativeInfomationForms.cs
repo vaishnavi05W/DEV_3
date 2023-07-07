@@ -43,6 +43,8 @@ namespace SpaceLayout.Forms.GenerativeForms
         public DataTable dtZoneRelationship;
         public DataTable dtSourceMain;
         List<string> node = new List<string>();
+        List<int> Nodes_1F = new List<int>();
+        List<int> Nodes_2F = new List<int>();
         private HashSet<Tuple<string, List<string>>> seq = new HashSet<Tuple<string, List<string>>>();
         public GenerativeInfomationForms(DataTable dt_Main, DataTable dt_ZoneRelationship)
         {
@@ -102,24 +104,19 @@ namespace SpaceLayout.Forms.GenerativeForms
             {
                 int floor1Area = 16786;
                 int floor2Area = 10108;
-                List<int> nodeAreas = new List<int>();
+                //Keep_Floors_Zones(dtSourceMain);
+                List<(int,int)> nodeAreas = new List<(int, int)>();
                 foreach (DataRow dr in dtSourceMain.Rows)
                 {
-                    nodeAreas.Add(Convert.ToInt32(Convert.ToDouble(dr[5].ToString().Replace(",", ""))));
+                    nodeAreas.Add((Convert.ToInt32(Convert.ToDouble(dr[5].ToString().Replace(",", ""))), Convert.ToInt32(dr[0].ToString().Replace(",", ""))));
                 }
 
-                List<(List<int>, List<int>)> permutations = GeneratePermutations(floor1Area, floor2Area, nodeAreas);
+                List<(List<(int, int)>, List<(int, int)>)> permutations = GeneratePermutations(floor1Area, floor2Area, nodeAreas);
                 if (permutations != null)
                 {
-                    List<(List<int>, List<int>)> forDelete = permutations.Where(x => x.Item1.Count() == 0) as List<(List<int>, List<int>)>;
-
-                    List<(List<int>, List<int>)> generateLevels = GenerateWithLevels(permutations);
+                    List<(List<(int, int)>, List<(int, int)>)> filterLevels = GenerateWithLevels(permutations);
                 }
-                //foreach (DataRow dr in dtZoneRelationship.Rows)
-                //{
-                //    g.AddEdge(Convert.ToInt32(dr[0]), Convert.ToInt32(dr[1]));
-                //}
-                //seq = g.DFS();
+                
 
                 dgvZoneRelationship.Enabled = false;
 
@@ -530,11 +527,11 @@ namespace SpaceLayout.Forms.GenerativeForms
             }
         }
 
-        public static List<(List<int>, List<int>)> GeneratePermutations(int floor1Area, int floor2Area, List<int> nodes)
+        public static List<(List<(int, int)>, List<(int, int)>)> GeneratePermutations(int floor1Area, int floor2Area, List<(int,int)> nodes)
         {
-            List<(List<int>, List<int>)> validPermutations = new List<(List<int>, List<int>)>();
+            List<(List<(int, int)>, List<(int, int)>)> validPermutations = new List<(List<(int, int)>, List<(int, int)>)>();
 
-            void Backtrack(List<int> floor1Nodes, List<int> floor2Nodes, List<int> remainingNodes)
+            void Backtrack(List<(int, int)> floor1Nodes, List<(int, int)> floor2Nodes, List<(int, int)> remainingNodes)
             {
                 if (remainingNodes.Count == 0)
                 {
@@ -542,47 +539,69 @@ namespace SpaceLayout.Forms.GenerativeForms
                     return;
                 }
 
-                int currentNode = remainingNodes[0];
-                List<int> remaining = new List<int>(remainingNodes);
+                (int,int) currentNode = remainingNodes[0];
+                List<(int, int)> remaining = new List<(int, int)>(remainingNodes);
                 remaining.RemoveAt(0);
 
                 // Try placing the current node on the first floor
-                if (currentNode <= floor1Area)
+                if (currentNode.Item1 <= floor1Area)
                 {
-                    List<int> newFloor1Nodes = new List<int>(floor1Nodes);
+                    List<(int, int)> newFloor1Nodes = new List<(int, int)>(floor1Nodes);
                     newFloor1Nodes.Add(currentNode);
-                    List<int> newFloor2Nodes = new List<int>(floor2Nodes);
+                    List<(int, int)> newFloor2Nodes = new List<(int, int)>(floor2Nodes);
                     Backtrack(newFloor1Nodes, newFloor2Nodes, remaining);
                 }
 
                 // Try placing the current node on the second floor
-                if (currentNode <= floor2Area)
+                if (currentNode.Item1 <= floor2Area)
                 {
-                    List<int> newFloor1Nodes = new List<int>(floor1Nodes);
-                    List<int> newFloor2Nodes = new List<int>(floor2Nodes);
+                    List<(int, int)> newFloor1Nodes = new List<(int, int)>(floor1Nodes);
+                    List<(int, int)> newFloor2Nodes = new List<(int, int)>(floor2Nodes);
                     newFloor2Nodes.Add(currentNode);
                     Backtrack(newFloor1Nodes, newFloor2Nodes, remaining);
                 }
 
                 // Try skipping the current node
-                List<int> newFloor1NodesSkip = new List<int>(floor1Nodes);
-                List<int> newFloor2NodesSkip = new List<int>(floor2Nodes);
+                List<(int, int)> newFloor1NodesSkip = new List<(int, int)>(floor1Nodes);
+                List<(int, int)> newFloor2NodesSkip = new List<(int, int)>(floor2Nodes);
                 Backtrack(newFloor1NodesSkip, newFloor2NodesSkip, remaining);
             }
 
-            Backtrack(new List<int>(), new List<int>(), nodes);
+            Backtrack(new List<(int, int)>(), new List<(int, int)>(), nodes);
 
             return validPermutations;
         }
 
-        private  List<(List<int>, List<int>)> GenerateWithLevels(List<(List<int>, List<int>)> validPermutations)
+        private List<(List<(int, int)>, List<(int, int)>)> GenerateWithLevels(List<(List<(int, int)>, List<(int, int)>)> validPermutations)
         {
-            List<(List<int>, List<int>)> validResult = new List<(List<int>, List<int>)>();
-            foreach(DataRow dr in dtZoneRelationship.Rows)
+            validPermutations.RemoveAll(x => x.Item1.Count() + x.Item2.Count() < dtSourceMain.Rows.Count);
+            List<(List<(int, int)>, List<(int, int)>)> validResult = new List<(List<(int, int)>, List<(int, int)>)>();
+            validResult = validPermutations;
+            var totalFloor = dtSourceMain.Select("Floor <> ''").Select(r => r[9].ToString()).Distinct().ToList();
+            if (totalFloor.Any())
             {
+                foreach(string f in totalFloor)
+                {
 
+                    if (f.Equals("1"))
+                    {
+                        List<int> selectedZones = dtSourceMain.Select("Floor = '" + f + "'").Select(r => Convert.ToInt32(r[0].ToString())).Distinct().ToList();
+                        validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item1.Select(y => y.Item2).Intersect(selectedZones).Any()));
+                    }
+                    else if (f.Equals("2"))
+                    {
+                        List<int> selectedZones = dtSourceMain.Select("Floor = '" + f + "'").Select(r => Convert.ToInt32(r[0].ToString())).Distinct().ToList();
+                        validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item2.Select(y => y.Item2).Intersect(selectedZones).Any()));
+                    }
+                }
             }
             return validResult;
+        }
+
+        private void Keep_Floors_Zones(DataTable dtMainSource)
+        {
+            
+           
         }
     }
    

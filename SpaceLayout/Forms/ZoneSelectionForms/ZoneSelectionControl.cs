@@ -53,6 +53,7 @@ namespace SpaceLayout.Forms.ZoneForms
         public NGroup endgroup = null;
         public NRectangleShape startNode = null;
         public NRectangleShape endNode = null;
+        private NNodeList noLevelzones = null;
         private NPersistencyManager persistencyManager;
         private NGroupBox groupPropertiesGroup;
         private NCheckBox autoDestroyCheckBox;
@@ -83,6 +84,7 @@ namespace SpaceLayout.Forms.ZoneForms
             zone = new List<Zone_Main>();
             groups = new List<Group>();
             congroup = new List<Connector_Group>();
+            noLevelzones = new NNodeList();
             // Add the diagram view to the form
             this.Controls.Add(Ndv);
         }
@@ -571,7 +573,7 @@ namespace SpaceLayout.Forms.ZoneForms
                                 newGroup.Labels.DefaultLabelUniqueId = label.UniqueId;
                                 newGroup.Labels.AddChild(label);
                                 frame.SendToBack();
-                                existingGroups.Add(newGroup.Name, dtGroup.Rows[0]["Floor"].ToString());
+                                existingGroups.Add(newGroup.Name, dtGroup.Select("Floor <> ''").Select(r => r[9].ToString()).FirstOrDefault());
                                 Ndd.ActiveLayer.AddChild(newGroup);
 
                                 NAbilities protection1 = frame.Protection;
@@ -632,7 +634,13 @@ namespace SpaceLayout.Forms.ZoneForms
                     listedFloor.Add(Ndd.ActiveLayer.GetChildByName(l));
                     //Ndd.ActiveLayer.RemoveChild(Ndd.ActiveLayer.GetChildByName(l));
                 }
+                foreach (INNode n in noLevelzones)
+                {
+                    listedFloor.Add(n);
+                    //Ndd.ActiveLayer.RemoveChild(Ndd.ActiveLayer.GetChildByName(l));
+                }
                 FloorLayout.Layout(listedFloor, layoutContext);
+                
                 ////Ndd.AutoBoundsMode = AutoBoundsMode.AutoSizeToContent;
             }
             catch (Exception e)
@@ -656,9 +664,10 @@ namespace SpaceLayout.Forms.ZoneForms
             return result;
         }
 
-        private List<NRectangleShape> GetShape(DataTable dtGroup)
+        private NGroup GetShape(DataTable dtGroup)
         {
-            List<NRectangleShape> zones = new List<NRectangleShape>();
+            NGroup group = new NGroup();
+            //List<NRectangleShape> zones = new List<NRectangleShape>();
             float width = 0;
             float height = 0;
 
@@ -701,9 +710,17 @@ namespace SpaceLayout.Forms.ZoneForms
                 NAbilities protection = zone.Protection;
                 protection.InplaceEdit = true;
                 zone.Protection = protection;
-                zones.Add(zone);
+                if(dr[9] != DBNull.Value)
+                {
+                    group.Shapes.AddChild(zone);
+                }
+                else
+                {
+                    Ndd.ActiveLayer.AddChild(zone);
+                    noLevelzones.Add(zone);
+                }
             }
-            return zones;
+            return group;
 
         }
 
@@ -731,14 +748,11 @@ namespace SpaceLayout.Forms.ZoneForms
             NGroup group = new NGroup();
             if (ZonesLayout != null)
             {
-                NRectangleF bounds = new NRectangleF(5, 5, 1, 1);
-                NRectangleShape frame = new NRectangleShape(bounds);
-                frame.Protection = new NAbilities(AbilitiesMask.Select);
-                List<NRectangleShape> zones = GetShape(dtgroup);
-                foreach (NRectangleShape r in zones)
-                {
-                    group.Shapes.AddChild(r);
-                }
+                group = GetShape(dtgroup);
+                //foreach (NRectangleShape r in zones)
+                //{
+                //    group.Shapes.AddChild(r);
+                //}
                 NNodeList listedNode = new NNodeList();
                 foreach (NRectangleShape n in group.Descendants(NFilters.Shape2D, -1))
                 {

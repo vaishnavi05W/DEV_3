@@ -115,6 +115,10 @@ namespace SpaceLayout.Forms.GenerativeForms
                 if (permutations != null)
                 {
                     List<(List<(int, int)>, List<(int, int)>)> filterLevels = GenerateWithLevels(permutations);
+                    if(filterLevels != null)
+                    {
+                        List<(List<(int, int)>, List<(int, int)>)> filterVertical = GenerateWithVertical(filterLevels);
+                    }
                 }
                 
 
@@ -598,10 +602,43 @@ namespace SpaceLayout.Forms.GenerativeForms
             return validResult;
         }
 
-        private void Keep_Floors_Zones(DataTable dtMainSource)
+        private List<(List<(int, int)>, List<(int, int)>)> GenerateWithVertical(List<(List<(int, int)>, List<(int, int)>)> validPermutations)
         {
-            
-           
+            List<(List<(int, int)>, List<(int, int)>)> validResult = new List<(List<(int, int)>, List<(int, int)>)>();
+            if(dtZoneRelationship.Rows.Count > 0)
+            {
+                HashSet<Tuple<string, string>> vertical = new HashSet<Tuple<string, string>>();
+                foreach(DataRow r in dtZoneRelationship.Rows)
+                {
+                    if(r[2].ToString() == "Vertical") //get data if it's ony vertical
+                    {
+                        for (int i = 0; i <= 1; i++)
+                        {
+                            var floor = dtSourceMain.AsEnumerable()
+                                .Where(x => x.Field<string>("ID").Equals(r[i].ToString()))
+                                .Select(y => y.Field<string>("Floor")).SingleOrDefault();
+                            if (floor != null)
+                            {
+                                vertical.Add(Tuple.Create(floor.ToString(), r[i].ToString()));
+                            }
+                            else
+                            {
+                                vertical.Add(Tuple.Create(string.Empty, r[i].ToString()));
+                            }
+                        }
+                    }
+                    
+                }
+                if(vertical.Count() > 0)
+                {
+                    var totalFloor = dtSourceMain.Select("Floor <> ''").Select(r => r[9].ToString()).Distinct().ToList();
+                    if (totalFloor.Any())
+                    {
+
+                    }
+                }
+            }
+            return validResult;
         }
     }
    

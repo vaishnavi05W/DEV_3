@@ -90,7 +90,9 @@ namespace SpaceLayout.Forms.ZoneForms
                                 workRow["StartNode"] = line.FromShape.Group.Name.ToString();
                                 workRow["EndNode"] = line.ToShape.Group.Name.ToString();
                                 workRow["Axis"] = axistype[0] is null ? string.Empty : axistype[0];
-                                workRow["Type"] = axistype[1] is null ? string.Empty : axistype[1];
+                                if (axistype.Count() > 1)
+                                    workRow["Type"] = axistype[1] is null ? string.Empty : axistype[1];
+                                else workRow["Type"] = string.Empty;
 
                                 dtZoneRelationSource.Rows.Add(workRow);
 
@@ -115,7 +117,9 @@ namespace SpaceLayout.Forms.ZoneForms
                                 workRow["StartNode"] = line.FromShape.Text.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None)[0].ToString();
                                 workRow["EndNode"] = line.ToShape.Text.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None)[0].ToString();
                                 workRow["Axis"] = axistype[0] is null ? string.Empty : axistype[0];
-                                workRow["Type"] = axistype[1] is null ? string.Empty : axistype[1];
+                                if (axistype.Count() > 1)
+                                    workRow["Type"] = axistype[1] is null ? string.Empty : axistype[1];
+                                else workRow["Type"] = string.Empty;
 
                                 dtZoneRelationSource.Rows.Add(workRow);
 

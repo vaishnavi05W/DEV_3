@@ -605,7 +605,8 @@ namespace SpaceLayout.Forms.GenerativeForms
         private List<(List<(int, int)>, List<(int, int)>)> GenerateWithVertical(List<(List<(int, int)>, List<(int, int)>)> validPermutations)
         {
             List<(List<(int, int)>, List<(int, int)>)> validResult = new List<(List<(int, int)>, List<(int, int)>)>();
-            if(dtZoneRelationship.Rows.Count > 0)
+            validResult = validPermutations;
+            if (dtZoneRelationship.Rows.Count > 0)
             {
                 HashSet<Tuple<string, string>> vertical = new HashSet<Tuple<string, string>>();
                 foreach(DataRow r in dtZoneRelationship.Rows)
@@ -634,7 +635,63 @@ namespace SpaceLayout.Forms.GenerativeForms
                     var totalFloor = dtSourceMain.Select("Floor <> ''").Select(r => r[9].ToString()).Distinct().ToList();
                     if (totalFloor.Any())
                     {
-
+                        foreach(var f in totalFloor)
+                        {
+                            if (f.Equals("1"))
+                            {
+                                List<int> selectedZones = vertical.Where(x => x.Item1.Equals(f)).Select(y => Convert.ToInt32(y.Item2)).ToList();
+                                foreach(int r in selectedZones)
+                                {
+                                    validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item1.Select(y => y.Item2).Contains(r)));
+                                }
+                               // validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x=>x.Item1.Except(selectedZones)));
+                            }
+                            else if (f.Equals("2"))
+                            {
+                                List<int> selectedZones = vertical.Where(x => x.Item1.Equals(f)).Select(y => Convert.ToInt32(y.Item2)).ToList();
+                                foreach (int r in selectedZones)
+                                {
+                                    validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item2.Select(y => y.Item2).Contains(r)));
+                                }
+                                //validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item1.Select(y => y.Item1.Any())));
+                            }
+                          
+                        }
+                        List<string> noFloorZones = vertical.Where(x => string.IsNullOrWhiteSpace(x.Item1)).Select(y =>(y.Item2)).ToList();
+                        
+                        if (noFloorZones.Any())
+                        {
+                            foreach(string i in noFloorZones)
+                            {
+                                List<string> result = new List<string>();
+                                List<string> a = dtZoneRelationship.AsEnumerable().Where(y=>y.Field<string>("EndNode").Equals(i)).Select(x=>x.Field<string>("StartNode")).ToList();
+                                if (a.Any())
+                                {
+                                    List<string> b = new List<string>();
+                                    foreach (string v in a)
+                                    {
+                                        
+                                        b.Add(dtSourceMain.AsEnumerable().Where(y => y.Field<string>("ID").Equals(v)).Select(x => x.Field<string>("Floor")).SingleOrDefault());
+                                        
+                                    }
+                                    if (b.Any())
+                                    {
+                                        result = totalFloor.Except(b).ToList();
+                                    }
+                                }
+                                if (result.Any())
+                                {
+                                    if (result.First().Equals("1"))
+                                    {
+                                        validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item1.Select(y => y.Item2).Contains(Convert.ToInt32(i))));
+                                    }
+                                    else if (result.First().Equals("2"))
+                                    {
+                                        validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item2.Select(y => y.Item2).Contains(Convert.ToInt32(i))));
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

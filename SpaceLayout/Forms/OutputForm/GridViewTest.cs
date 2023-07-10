@@ -27,20 +27,26 @@ namespace SpaceLayout.Forms.OutputForm
             dataTable.Columns.Add("Column1", typeof(Button));
             dataTable.Columns.Add("Column2", typeof(Button));
             dataTable.Columns.Add("Column3", typeof(Button));
-            int s = 1;
-            do
-            {
-                int i = 3;
-                do
-                {
-                    i--;
-                    s++;
-                } while (i == 0);
+            int buttonCount = 16; // Number of buttons to generate
 
-            } while (s <= 8);
-            
-            dataTable.Rows.Add(new Button() ,new Button() , new Button() );
-            
+            for (int s = 0; s < buttonCount; s++)
+            {
+                dataTable.Rows.Add(new Button(), new Button(), new Button());
+            }
+            //int s = 1;
+            //do
+            //{
+            //    int i = 3;
+            //    do
+            //    {
+            //        i--;
+            //        s++;
+            //    } while (i == 0);
+
+            //} while (s <= 8);
+
+            //dataTable.Rows.Add(new Button() ,new Button() , new Button() );
+
             dataGridView1.DataSource = dataTable;
 
             foreach (DataGridViewRow row in dataGridView1.Rows)
@@ -48,6 +54,11 @@ namespace SpaceLayout.Forms.OutputForm
                 DataGridViewCell cell = row.Cells[0];//Column Index
                 cell.Value = "Set Text";
             }
+        }
+
+        private void GridViewTest_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

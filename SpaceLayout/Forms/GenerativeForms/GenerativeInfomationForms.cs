@@ -99,7 +99,7 @@ namespace SpaceLayout.Forms.GenerativeForms
                 .Select(s => s.Field<string>("ID"))
                 .Distinct()
                 .ToList();
-            //Graph g = new Graph(node);
+
             if (dtSourceMain.Rows.Count > 0)
             {
                 int floor1Area = 16786;
@@ -135,92 +135,95 @@ namespace SpaceLayout.Forms.GenerativeForms
 
         private void Bind_UpperPanel()
         {
-            Button btn1 = new Button();
-            btn1.Text = "Alt1";
-            btn1.Name = "Alt1";
-            btn1.ForeColor = Color.Black;
-            btn1.Dock = DockStyle.Fill;
+            DataGridView dgvUpper = new DataGridView();
+            
+            //Button btn1 = new Button();
+            //btn1.Text = "Alt1";
+            //btn1.Name = "Alt1";
+            //btn1.ForeColor = Color.Black;
+            //btn1.Dock = DockStyle.Fill;
 
-            Button btn2 = new Button();
-            btn2.Text = "Alt2";
-            btn2.Name = "Alt2";
-            btn2.ForeColor = Color.Black;
-            btn2.Dock = DockStyle.Fill;
+            //Button btn2 = new Button();
+            //btn2.Text = "Alt2";
+            //btn2.Name = "Alt2";
+            //btn2.ForeColor = Color.Black;
+            //btn2.Dock = DockStyle.Fill;
 
-            Button btn3 = new Button();
-            btn3.Text = "Alt3";
-            btn3.Name = "Alt3";
-            btn3.ForeColor = Color.Black;
-            btn3.Dock = DockStyle.Fill;
+            //Button btn3 = new Button();
+            //btn3.Text = "Alt3";
+            //btn3.Name = "Alt3";
+            //btn3.ForeColor = Color.Black;
+            //btn3.Dock = DockStyle.Fill;
 
-            Button btn4 = new Button();
-            btn4.Text = "Alt4";
-            btn4.Name = "Alt4";
-            btn4.ForeColor = Color.Black;
-            btn4.Dock = DockStyle.Fill;
+            //Button btn4 = new Button();
+            //btn4.Text = "Alt4";
+            //btn4.Name = "Alt4";
+            //btn4.ForeColor = Color.Black;
+            //btn4.Dock = DockStyle.Fill;
 
-            Button btn5 = new Button();
-            btn5.Text = "Alt5";
-            btn5.Name = "Alt5";
-            btn5.ForeColor = Color.Black;
-            btn5.Dock = DockStyle.Fill;
+            //Button btn5 = new Button();
+            //btn5.Text = "Alt5";
+            //btn5.Name = "Alt5";
+            //btn5.ForeColor = Color.Black;
+            //btn5.Dock = DockStyle.Fill;
 
-            Button btn6 = new Button();
-            btn6.Text = "Alt6";
-            btn6.Name = "Alt6";
-            btn6.ForeColor = Color.Black;
-            btn6.Dock = DockStyle.Fill;
+            //Button btn6 = new Button();
+            //btn6.Text = "Alt6";
+            //btn6.Name = "Alt6";
+            //btn6.ForeColor = Color.Black;
+            //btn6.Dock = DockStyle.Fill;
 
-            Button btn7 = new Button();
-            btn7.Text = "Alt7";
-            btn7.Name = "Alt7";
-            btn7.ForeColor = Color.Black;
-            btn7.Dock = DockStyle.Fill;
+            //Button btn7 = new Button();
+            //btn7.Text = "Alt7";
+            //btn7.Name = "Alt7";
+            //btn7.ForeColor = Color.Black;
+            //btn7.Dock = DockStyle.Fill;
 
-            Button btn8 = new Button();
-            btn8.Text = "Alt8";
-            btn8.Name = "Alt8";
-            btn8.ForeColor = Color.Black;
-            btn8.Dock = DockStyle.Fill;
+            //Button btn8 = new Button();
+            //btn8.Text = "Alt8";
+            //btn8.Name = "Alt8";
+            //btn8.ForeColor = Color.Black;
+            //btn8.Dock = DockStyle.Fill;
 
-            Button btn9 = new Button();
-            btn9.Text = "Alt9";
-            btn9.Name = "Alt9";
-            btn9.ForeColor = Color.Black;
-            btn9.Dock = DockStyle.Fill;
+            //Button btn9 = new Button();
+            //btn9.Text = "Alt9";
+            //btn9.Name = "Alt9";
+            //btn9.ForeColor = Color.Black;
+            //btn9.Dock = DockStyle.Fill;
 
-            btn1.Click += btnAlt_Clicked;
-            btn2.Click += btnAlt_Clicked;
-            btn3.Click += btnAlt_Clicked;
-            btn4.Click += btnAlt_Clicked;
-            btn5.Click += btnAlt_Clicked;
-            btn6.Click += btnAlt_Clicked;
-            btn7.Click += btnAlt_Clicked;
-            btn8.Click += btnAlt_Clicked;
-            btn9.Click += btnAlt_Clicked;
+            //btn1.Click += btnAlt_Clicked;
+            //btn2.Click += btnAlt_Clicked;
+            //btn3.Click += btnAlt_Clicked;
+            //btn4.Click += btnAlt_Clicked;
+            //btn5.Click += btnAlt_Clicked;
+            //btn6.Click += btnAlt_Clicked;
+            //btn7.Click += btnAlt_Clicked;
+            //btn8.Click += btnAlt_Clicked;
+            //btn9.Click += btnAlt_Clicked;
 
-            TableLayoutPanel panel = new TableLayoutPanel();
-            panel.ColumnCount = 3;
-            panel.RowCount = 3;
-            panel.Height = 90;
-            panel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33F));
-            panel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33F));
-            panel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33F));
-            panel.Controls.Add(btn1, 0, 0);
-            panel.Controls.Add(btn2, 1, 0);
-            panel.Controls.Add(btn3, 3, 0);
-            panel.Controls.Add(btn4, 0, 1);
-            panel.Controls.Add(btn5, 1, 1);
-            panel.Controls.Add(btn6, 3, 1);
-            panel.Controls.Add(btn7, 0, 2);
-            panel.Controls.Add(btn8, 1, 2);
-            panel.Controls.Add(btn9, 3, 2);
-            //panel.RowStyles.Add(new RowStyle(SizeType.Absolute, 2F));
-            //panel.Controls.Add(new Button() { Text = "Alt1", Name = "Alt1",  ForeColor = Color.Black, Dock = DockStyle.Fill }, 0, 0);
-            //panel.Controls.Add(new Button() { Text = "Alt2", Name = "Alt2", ForeColor = Color.Black, Dock = DockStyle.Fill }, 1, 0);
-            //panel.Controls.Add(new Button() { Text = "Alt3", Name = "Alt3", ForeColor = Color.Black, Dock = DockStyle.Fill }, 3, 0);
-            this.tableLayoutPanel1.Controls.Add(panel, 0, 0);
-            panel.Dock = DockStyle.Top;
+            //TableLayoutPanel panel = new TableLayoutPanel();
+            //panel.ColumnCount = 3;
+            
+            //panel.RowCount = 3;
+            //panel.Height = 90;
+            //panel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33F));
+            //panel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33F));
+            //panel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33F));
+            //panel.Controls.Add(btn1, 0, 0);
+            //panel.Controls.Add(btn2, 1, 0);
+            //panel.Controls.Add(btn3, 3, 0);
+            //panel.Controls.Add(btn4, 0, 1);
+            //panel.Controls.Add(btn5, 1, 1);
+            //panel.Controls.Add(btn6, 3, 1);
+            //panel.Controls.Add(btn7, 0, 2);
+            //panel.Controls.Add(btn8, 1, 2);
+            //panel.Controls.Add(btn9, 3, 2);
+            ////panel.RowStyles.Add(new RowStyle(SizeType.Absolute, 2F));
+            ////panel.Controls.Add(new Button() { Text = "Alt1", Name = "Alt1",  ForeColor = Color.Black, Dock = DockStyle.Fill }, 0, 0);
+            ////panel.Controls.Add(new Button() { Text = "Alt2", Name = "Alt2", ForeColor = Color.Black, Dock = DockStyle.Fill }, 1, 0);
+            ////panel.Controls.Add(new Button() { Text = "Alt3", Name = "Alt3", ForeColor = Color.Black, Dock = DockStyle.Fill }, 3, 0);
+            //this.tableLayoutPanel1.Controls.Add(panel, 0, 0);
+           // panel.Dock = DockStyle.Top;
         }
 
         private void btnAlt_Clicked(object sender, EventArgs e)
@@ -531,6 +534,7 @@ namespace SpaceLayout.Forms.GenerativeForms
             }
         }
 
+        //Case-1
         public static List<(List<(int, int)>, List<(int, int)>)> GeneratePermutations(int floor1Area, int floor2Area, List<(int,int)> nodes)
         {
             List<(List<(int, int)>, List<(int, int)>)> validPermutations = new List<(List<(int, int)>, List<(int, int)>)>();
@@ -576,124 +580,148 @@ namespace SpaceLayout.Forms.GenerativeForms
             return validPermutations;
         }
 
+        //Case-2
         private List<(List<(int, int)>, List<(int, int)>)> GenerateWithLevels(List<(List<(int, int)>, List<(int, int)>)> validPermutations)
         {
-            validPermutations.RemoveAll(x => x.Item1.Count() + x.Item2.Count() < dtSourceMain.Rows.Count);
+            //validPermutations.RemoveAll(x => x.Item1.Count() + x.Item2.Count() < dtSourceMain.Rows.Count);
             List<(List<(int, int)>, List<(int, int)>)> validResult = new List<(List<(int, int)>, List<(int, int)>)>();
             validResult = validPermutations;
             var totalFloor = dtSourceMain.Select("Floor <> ''").Select(r => r[9].ToString()).Distinct().ToList();
             if (totalFloor.Any())
             {
-                foreach(string f in totalFloor)
+                foreach(var n in node)  //select sequences that contains all Zones
+                {
+                    validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item1.Select(y => y.Item2).Union(x.Item2.Select(y => y.Item2)).Contains(Convert.ToInt32(n))));
+                }
+                
+
+                foreach (string f in totalFloor)
                 {
 
                     if (f.Equals("1"))
                     {
                         List<int> selectedZones = dtSourceMain.Select("Floor = '" + f + "'").Select(r => Convert.ToInt32(r[0].ToString())).Distinct().ToList();
-                        validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item1.Select(y => y.Item2).Intersect(selectedZones).Any()));
+                        foreach (int r in selectedZones)
+                        {
+                            validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item1.Select(y => y.Item2).Contains(r)));
+                        }
+                        //validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item1.Select(y => y.Item2).Intersect(selectedZones).Any()));
                     }
                     else if (f.Equals("2"))
                     {
                         List<int> selectedZones = dtSourceMain.Select("Floor = '" + f + "'").Select(r => Convert.ToInt32(r[0].ToString())).Distinct().ToList();
-                        validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item2.Select(y => y.Item2).Intersect(selectedZones).Any()));
+                        foreach (int r in selectedZones)
+                        {
+                            validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item2.Select(y => y.Item2).Contains(r)));
+                        }
+                        //validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item2.Select(y => y.Item2).Intersect(selectedZones).Any()));
                     }
                 }
             }
             return validResult;
         }
 
+        //Case-3
         private List<(List<(int, int)>, List<(int, int)>)> GenerateWithVertical(List<(List<(int, int)>, List<(int, int)>)> validPermutations)
         {
             List<(List<(int, int)>, List<(int, int)>)> validResult = new List<(List<(int, int)>, List<(int, int)>)>();
-            validResult = validPermutations;
-            if (dtZoneRelationship.Rows.Count > 0)
+            try
             {
-                HashSet<Tuple<string, string>> vertical = new HashSet<Tuple<string, string>>();
-                foreach(DataRow r in dtZoneRelationship.Rows)
+                validResult = validPermutations;
+                if (dtZoneRelationship.Rows.Count > 0)
                 {
-                    if(r[2].ToString() == "Vertical") //get data if it's ony vertical
+                    HashSet<Tuple<string, string>> vertical = new HashSet<Tuple<string, string>>();
+                    foreach (DataRow r in dtZoneRelationship.Rows)
                     {
-                        for (int i = 0; i <= 1; i++)
+                        if (r[2].ToString() == "Vertical") //get data if it's ony vertical
                         {
-                            var floor = dtSourceMain.AsEnumerable()
-                                .Where(x => x.Field<string>("ID").Equals(r[i].ToString()))
-                                .Select(y => y.Field<string>("Floor")).SingleOrDefault();
-                            if (floor != null)
+                            for (int i = 0; i <= 1; i++)
                             {
-                                vertical.Add(Tuple.Create(floor.ToString(), r[i].ToString()));
+                                var floor = dtSourceMain.AsEnumerable()
+                                    .Where(x => x.Field<string>("ID").Equals(r[i].ToString()))
+                                    .Select(y => y.Field<string>("Floor")).SingleOrDefault();
+                                if (floor != null)
+                                {
+                                    vertical.Add(Tuple.Create(floor.ToString(), r[i].ToString()));
+                                }
+                                else
+                                {
+                                    vertical.Add(Tuple.Create(string.Empty, r[i].ToString()));
+                                }
                             }
-                            else
+                        }
+
+                    }
+                    if (vertical.Count() > 0)  //Filter Zones with Vertical connections
+                    {
+                        var totalFloor = dtSourceMain.Select("Floor <> ''").Select(r => r[9].ToString()).Distinct().ToList();
+                        if (totalFloor.Any())
+                        {
+                            foreach (var f in totalFloor)
                             {
-                                vertical.Add(Tuple.Create(string.Empty, r[i].ToString()));
+                                if (f.Equals("1"))
+                                {
+                                    List<int> selectedZones = vertical.Where(x => x.Item1.Equals(f)).Select(y => Convert.ToInt32(y.Item2)).ToList();
+                                    foreach (int r in selectedZones)
+                                    {
+                                        validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item1.Select(y => y.Item2).Contains(r)));
+                                    }
+                                    // validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x=>x.Item1.Except(selectedZones)));
+                                }
+                                else if (f.Equals("2"))
+                                {
+                                    List<int> selectedZones = vertical.Where(x => x.Item1.Equals(f)).Select(y => Convert.ToInt32(y.Item2)).ToList();
+                                    foreach (int r in selectedZones)
+                                    {
+                                        validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item2.Select(y => y.Item2).Contains(r)));
+                                    }
+                                    //validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item1.Select(y => y.Item1.Any())));
+                                }
+
+                            }
+                            List<string> noFloorZones = vertical.Where(x => string.IsNullOrWhiteSpace(x.Item1)).Select(y => (y.Item2)).ToList();
+
+                            if (noFloorZones.Any()) //For Zones that has no Floor
+                            {
+                                foreach (string i in noFloorZones)
+                                {
+                                    List<string> result = new List<string>();
+                                    List<string> a = dtZoneRelationship.AsEnumerable().Where(y => y.Field<string>("EndNode").Equals(i)).Select(x => x.Field<string>("StartNode")).ToList();
+                                    if (a.Any())
+                                    {
+                                        List<string> b = new List<string>();
+                                        foreach (string v in a)
+                                        {
+
+                                            b.Add(dtSourceMain.AsEnumerable().Where(y => y.Field<string>("ID").Equals(v)).Select(x => x.Field<string>("Floor")).SingleOrDefault());
+
+                                        }
+                                        if (b.Any())
+                                        {
+                                            result = totalFloor.Except(b).ToList();
+                                        }
+                                    }
+                                    if (result.Any())
+                                    {
+                                        if (result.First().Equals("1"))
+                                        {
+                                            validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item1.Select(y => y.Item2).Contains(Convert.ToInt32(i))));
+                                        }
+                                        else if (result.First().Equals("2"))
+                                        {
+                                            validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item2.Select(y => y.Item2).Contains(Convert.ToInt32(i))));
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
-                    
                 }
-                if(vertical.Count() > 0)
-                {
-                    var totalFloor = dtSourceMain.Select("Floor <> ''").Select(r => r[9].ToString()).Distinct().ToList();
-                    if (totalFloor.Any())
-                    {
-                        foreach(var f in totalFloor)
-                        {
-                            if (f.Equals("1"))
-                            {
-                                List<int> selectedZones = vertical.Where(x => x.Item1.Equals(f)).Select(y => Convert.ToInt32(y.Item2)).ToList();
-                                foreach(int r in selectedZones)
-                                {
-                                    validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item1.Select(y => y.Item2).Contains(r)));
-                                }
-                               // validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x=>x.Item1.Except(selectedZones)));
-                            }
-                            else if (f.Equals("2"))
-                            {
-                                List<int> selectedZones = vertical.Where(x => x.Item1.Equals(f)).Select(y => Convert.ToInt32(y.Item2)).ToList();
-                                foreach (int r in selectedZones)
-                                {
-                                    validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item2.Select(y => y.Item2).Contains(r)));
-                                }
-                                //validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item1.Select(y => y.Item1.Any())));
-                            }
-                          
-                        }
-                        List<string> noFloorZones = vertical.Where(x => string.IsNullOrWhiteSpace(x.Item1)).Select(y =>(y.Item2)).ToList();
-                        
-                        if (noFloorZones.Any())
-                        {
-                            foreach(string i in noFloorZones)
-                            {
-                                List<string> result = new List<string>();
-                                List<string> a = dtZoneRelationship.AsEnumerable().Where(y=>y.Field<string>("EndNode").Equals(i)).Select(x=>x.Field<string>("StartNode")).ToList();
-                                if (a.Any())
-                                {
-                                    List<string> b = new List<string>();
-                                    foreach (string v in a)
-                                    {
-                                        
-                                        b.Add(dtSourceMain.AsEnumerable().Where(y => y.Field<string>("ID").Equals(v)).Select(x => x.Field<string>("Floor")).SingleOrDefault());
-                                        
-                                    }
-                                    if (b.Any())
-                                    {
-                                        result = totalFloor.Except(b).ToList();
-                                    }
-                                }
-                                if (result.Any())
-                                {
-                                    if (result.First().Equals("1"))
-                                    {
-                                        validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item1.Select(y => y.Item2).Contains(Convert.ToInt32(i))));
-                                    }
-                                    else if (result.First().Equals("2"))
-                                    {
-                                        validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item2.Select(y => y.Item2).Contains(Convert.ToInt32(i))));
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
             }
             return validResult;
         }

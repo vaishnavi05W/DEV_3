@@ -264,6 +264,12 @@
     <Compile Include="Forms\ImportForms\LoadingPageControl.Designer.cs">
       <DependentUpon>LoadingPageControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\OutputForm\GridViewTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\OutputForm\GridViewTest.Designer.cs">
+      <DependentUpon>GridViewTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\OutputForm\OutputControl1.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -323,6 +329,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ImportForms\LoadingPageControl.resx">
       <DependentUpon>LoadingPageControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\OutputForm\GridViewTest.resx">
+      <DependentUpon>GridViewTest.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\OutputForm\OutputControl1.resx">
       <DependentUpon>OutputControl1.cs</DependentUpon>

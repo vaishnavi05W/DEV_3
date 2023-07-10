@@ -104,7 +104,15 @@ namespace SpaceLayout.Forms.GenerativeForms
             {
                 int floor1Area = 16786;
                 int floor2Area = 10108;
-                //Keep_Floors_Zones(dtSourceMain);
+
+                List<double> node_areas = new List<double>();
+
+                foreach (DataRow dr in dtSourceMain.Rows)
+                {
+                    node_areas.Add(Convert.ToDouble(Convert.ToDouble(dr[5].ToString().Replace(",", ""))));
+                }
+
+
                 List<(int,int)> nodeAreas = new List<(int, int)>();
                 foreach (DataRow dr in dtSourceMain.Rows)
                 {
@@ -725,6 +733,67 @@ namespace SpaceLayout.Forms.GenerativeForms
             }
             return validResult;
         }
+
+
+        public static long CalculateValidPermutations(double[] roomAreas, double firstFloorArea, double secondFloorArea)
+        {
+            int totalRooms = roomAreas.Length;
+
+            long numPermutations = 0;
+
+            for (int i = 1; i < (1 << totalRooms); i++)
+            {
+                double firstFloorTotalArea = 0;
+                double secondFloorTotalArea = 0;
+
+                int firstFloorRooms = 0;
+                int secondFloorRooms = 0;
+
+                for (int j = 0; j < totalRooms; j++)
+                {
+                    if ((i & (1 << j)) != 0)
+                    {
+                        firstFloorTotalArea += roomAreas[j];
+                        firstFloorRooms++;
+                    }
+                    else
+                    {
+                        secondFloorTotalArea += roomAreas[j];
+                        secondFloorRooms++;
+                    }
+                }
+
+                if (firstFloorTotalArea == firstFloorArea && secondFloorTotalArea == secondFloorArea)
+                {
+                    long permutationsForDistribution = CalculatePermutations(totalRooms, firstFloorRooms, secondFloorRooms);
+                    numPermutations += permutationsForDistribution;
+                }
+            }
+
+            return numPermutations;
+        }
+
+        public static long CalculatePermutations(int totalRooms, int firstFloorRooms, int secondFloorRooms)
+        {
+            long numerator = Factorial(totalRooms);
+            long denominator = Factorial(firstFloorRooms) * Factorial(secondFloorRooms);
+            long numPermutations = numerator / denominator;
+
+            return numPermutations;
+        }
+
+        public static long Factorial(int number)
+        {
+            long factorial = 1;
+
+            for (int i = 2; i <= number; i++)
+            {
+                factorial *= i;
+            }
+
+            return factorial;
+        }
+
     }
-   
+
 }

@@ -80,6 +80,7 @@ namespace SpaceLayout.Forms.OutputForm
             this.Controls.Add(this.dataGridView1);
             this.Name = "GridViewTest";
             this.Text = "GridViewTest";
+            this.Load += new System.EventHandler(this.GridViewTest_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 

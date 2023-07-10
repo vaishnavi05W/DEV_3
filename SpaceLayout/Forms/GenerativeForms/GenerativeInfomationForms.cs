@@ -591,7 +591,7 @@ namespace SpaceLayout.Forms.GenerativeForms
 
             Backtrack(new List<(int, int)>(), new List<(int, int)>(), nodes);
 
-            validPermutations = new List<(List<(int, int)>, List<(int, int)>)>(validPermutations.Where(x => x.Item1.Select(y => y.Item1).Sum() <= floor1Area && x.Item2.Select(y => y.Item1).Sum() <= floor2Area));
+           validPermutations = new List<(List<(int, int)>, List<(int, int)>)>(validPermutations.Where(x => x.Item1.Select(y => y.Item1).Sum() <= floor1Area && x.Item2.Select(y => y.Item1).Sum() <= floor2Area));
             return validPermutations;
         }
 
@@ -616,20 +616,20 @@ namespace SpaceLayout.Forms.GenerativeForms
                     if (f.Equals("1"))
                     {
                         List<int> selectedZones = dtSourceMain.Select("Floor = '" + f + "'").Select(r => Convert.ToInt32(r[0].ToString())).Distinct().ToList();
-                        foreach (int r in selectedZones)
-                        {
-                            validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item1.Select(y => y.Item2).Contains(r)));
-                        }
-                        //validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item1.Select(y => y.Item2).Intersect(selectedZones).Any()));
+                        //foreach (int r in selectedZones)
+                        //{
+                        //    validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item1.Select(y => y.Item2).Contains(r)));
+                        //}
+                        validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item1.Select(y => y.Item2).Intersect(selectedZones).Any()));
                     }
                     else if (f.Equals("2"))
                     {
                         List<int> selectedZones = dtSourceMain.Select("Floor = '" + f + "'").Select(r => Convert.ToInt32(r[0].ToString())).Distinct().ToList();
-                        foreach (int r in selectedZones)
-                        {
-                            validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item2.Select(y => y.Item2).Contains(r)));
-                        }
-                        //validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item2.Select(y => y.Item2).Intersect(selectedZones).Any()));
+                        //foreach (int r in selectedZones)
+                        //{
+                        //    validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item2.Select(y => y.Item2).Contains(r)));
+                        //}
+                        validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item2.Select(y => y.Item2).Intersect(selectedZones).Any()));
                     }
                 }
             }

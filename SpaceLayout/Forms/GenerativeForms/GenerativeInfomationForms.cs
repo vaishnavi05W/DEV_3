@@ -105,13 +105,16 @@ namespace SpaceLayout.Forms.GenerativeForms
                 int floor1Area = 16786;
                 int floor2Area = 10108;
 
-                List<double> node_areas = new List<double>();
+                //Permutation p = new Permutation(node.Count);
+                //var result = p.Successor();
+                
+                //List<double> node_areas = new List<double>();
 
-                foreach (DataRow dr in dtSourceMain.Rows)
-                {
-                    node_areas.Add(Convert.ToDouble(Convert.ToDouble(dr[5].ToString().Replace(",", ""))));
-                }
-
+                //foreach (DataRow dr in dtSourceMain.Rows)
+                //{
+                //    node_areas.Add(Convert.ToDouble(Convert.ToDouble(dr[5].ToString().Replace(",", ""))));
+                //}
+                //var res = CalculateValidPermutations(node_areas.ToArray(), Convert.ToDouble(floor1Area), Convert.ToDouble(floor2Area));
 
                 List<(int,int)> nodeAreas = new List<(int, int)>();
                 foreach (DataRow dr in dtSourceMain.Rows)
@@ -122,6 +125,7 @@ namespace SpaceLayout.Forms.GenerativeForms
                 List<(List<(int, int)>, List<(int, int)>)> permutations = GeneratePermutations(floor1Area, floor2Area, nodeAreas);
                 if (permutations != null)
                 {
+
                     List<(List<(int, int)>, List<(int, int)>)> filterLevels = GenerateWithLevels(permutations);
                     if(filterLevels != null)
                     {
@@ -564,16 +568,18 @@ namespace SpaceLayout.Forms.GenerativeForms
                 {
                     List<(int, int)> newFloor1Nodes = new List<(int, int)>(floor1Nodes);
                     newFloor1Nodes.Add(currentNode);
+                    //floor1Area = floor1Area - currentNode.Item1;
                     List<(int, int)> newFloor2Nodes = new List<(int, int)>(floor2Nodes);
                     Backtrack(newFloor1Nodes, newFloor2Nodes, remaining);
                 }
 
                 // Try placing the current node on the second floor
-                if (currentNode.Item1 <= floor2Area)
+                 if (currentNode.Item1 <= floor2Area)
                 {
                     List<(int, int)> newFloor1Nodes = new List<(int, int)>(floor1Nodes);
                     List<(int, int)> newFloor2Nodes = new List<(int, int)>(floor2Nodes);
                     newFloor2Nodes.Add(currentNode);
+                    //floor2Area = floor2Area - currentNode.Item1;
                     Backtrack(newFloor1Nodes, newFloor2Nodes, remaining);
                 }
 
@@ -585,6 +591,7 @@ namespace SpaceLayout.Forms.GenerativeForms
 
             Backtrack(new List<(int, int)>(), new List<(int, int)>(), nodes);
 
+            validPermutations = new List<(List<(int, int)>, List<(int, int)>)>(validPermutations.Where(x => x.Item1.Select(y => y.Item1).Sum() <= floor1Area && x.Item2.Select(y => y.Item1).Sum() <= floor2Area));
             return validPermutations;
         }
 
@@ -751,7 +758,7 @@ namespace SpaceLayout.Forms.GenerativeForms
 
                 for (int j = 0; j < totalRooms; j++)
                 {
-                    if ((i & (1 << j)) != 0)
+                    if (firstFloorTotalArea + roomAreas[j] <= firstFloorArea)
                     {
                         firstFloorTotalArea += roomAreas[j];
                         firstFloorRooms++;
@@ -763,7 +770,7 @@ namespace SpaceLayout.Forms.GenerativeForms
                     }
                 }
 
-                if (firstFloorTotalArea == firstFloorArea && secondFloorTotalArea == secondFloorArea)
+                if (firstFloorTotalArea <= firstFloorArea && secondFloorTotalArea <= secondFloorArea)
                 {
                     long permutationsForDistribution = CalculatePermutations(totalRooms, firstFloorRooms, secondFloorRooms);
                     numPermutations += permutationsForDistribution;

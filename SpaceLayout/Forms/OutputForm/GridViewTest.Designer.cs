@@ -48,7 +48,7 @@ namespace SpaceLayout.Forms.OutputForm
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(557, 150);
+            this.dataGridView1.Size = new System.Drawing.Size(795, 433);
             this.dataGridView1.TabIndex = 0;
             // 
             // Column1

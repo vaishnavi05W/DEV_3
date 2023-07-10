@@ -11,7 +11,7 @@ using VectorDraw.Professional.Constants;
 using VectorDraw.Professional.vdCollections;
 using VectorDraw.Professional.vdPrimaries;
 using VectorDraw.Actions;
-using SpaceLayout.Forms.ZoneForms;
+using SpaceLayout.Forms.OutputForm;
 
 
 namespace SpaceLayout.Forms
@@ -26,7 +26,7 @@ namespace SpaceLayout.Forms
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-             Application.Run(new MainFirstPageControl());
+             Application.Run(new GridViewTest());
          //   Application.Run(new SpaceLayout.Forms.TestForm());
         }
     }

@@ -598,43 +598,44 @@ namespace SpaceLayout.Forms.GenerativeForms
         //Case-2
         private List<(List<(int, int)>, List<(int, int)>)> GenerateWithLevels(List<(List<(int, int)>, List<(int, int)>)> validPermutations)
         {
-            //validPermutations.RemoveAll(x => x.Item1.Count() + x.Item2.Count() < dtSourceMain.Rows.Count);
-            List<(List<(int, int)>, List<(int, int)>)> validResult = new List<(List<(int, int)>, List<(int, int)>)>();
-            validResult = validPermutations;
             var totalFloor = dtSourceMain.Select("Floor <> ''").Select(r => r[9].ToString()).Distinct().ToList();
+            List<(List<(int, int)>, List<(int, int)>)> validResult = validPermutations;
+
             if (totalFloor.Any())
             {
-                foreach(var n in node)  //select sequences that contains all Zones
+                foreach (var n in node)  //select sequences that contain all Zones
                 {
-                    validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item1.Select(y => y.Item2).Union(x.Item2.Select(y => y.Item2)).Contains(Convert.ToInt32(n))));
+                    validResult = validResult.Where(x =>
+                        x.Item1.Select(y => y.Item2).Union(x.Item2.Select(y => y.Item2)).Contains(Convert.ToInt32(n))
+                    ).ToList();
                 }
-                
 
                 foreach (string f in totalFloor)
                 {
-
                     if (f.Equals("1"))
                     {
-                        List<int> selectedZones = dtSourceMain.Select("Floor = '" + f + "'").Select(r => Convert.ToInt32(r[0].ToString())).Distinct().ToList();
-                        //foreach (int r in selectedZones)
-                        //{
-                        //    validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item1.Select(y => y.Item2).Contains(r)));
-                        //}
-                        validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item1.Select(y => y.Item2).Intersect(selectedZones).Any()));
+                        List<int> selectedZones = dtSourceMain.Select("Floor = '" + f + "'")
+                            .Select(r => Convert.ToInt32(r[0].ToString())).Distinct().ToList();
+
+                        validResult = validResult.Where(x =>
+                            selectedZones.All(zone => x.Item1.Select(y => y.Item2).Contains(zone))
+                        ).ToList();
                     }
                     else if (f.Equals("2"))
                     {
-                        List<int> selectedZones = dtSourceMain.Select("Floor = '" + f + "'").Select(r => Convert.ToInt32(r[0].ToString())).Distinct().ToList();
-                        //foreach (int r in selectedZones)
-                        //{
-                        //    validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item2.Select(y => y.Item2).Contains(r)));
-                        //}
-                        validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item2.Select(y => y.Item2).Intersect(selectedZones).Any()));
+                        List<int> selectedZones = dtSourceMain.Select("Floor = '" + f + "'")
+                            .Select(r => Convert.ToInt32(r[0].ToString())).Distinct().ToList();
+
+                        validResult = validResult.Where(x =>
+                            selectedZones.All(zone => x.Item2.Select(y => y.Item2).Contains(zone))
+                        ).ToList();
                     }
                 }
             }
+
             return validResult;
         }
+
 
         //Case-3
         private List<(List<(int, int)>, List<(int, int)>)> GenerateWithVertical(List<(List<(int, int)>, List<(int, int)>)> validPermutations)
@@ -672,28 +673,28 @@ namespace SpaceLayout.Forms.GenerativeForms
                         var totalFloor = dtSourceMain.Select("Floor <> ''").Select(r => r[9].ToString()).Distinct().ToList();
                         if (totalFloor.Any())
                         {
-                            foreach (var f in totalFloor)
-                            {
-                                if (f.Equals("1"))
-                                {
-                                    List<int> selectedZones = vertical.Where(x => x.Item1.Equals(f)).Select(y => Convert.ToInt32(y.Item2)).ToList();
-                                    foreach (int r in selectedZones)
-                                    {
-                                        validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item1.Select(y => y.Item2).Contains(r)));
-                                    }
-                                    // validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x=>x.Item1.Except(selectedZones)));
-                                }
-                                else if (f.Equals("2"))
-                                {
-                                    List<int> selectedZones = vertical.Where(x => x.Item1.Equals(f)).Select(y => Convert.ToInt32(y.Item2)).ToList();
-                                    foreach (int r in selectedZones)
-                                    {
-                                        validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item2.Select(y => y.Item2).Contains(r)));
-                                    }
-                                    //validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item1.Select(y => y.Item1.Any())));
-                                }
+                            //foreach (var f in totalFloor)
+                            //{
+                            //    if (f.Equals("1"))
+                            //    {
+                            //        List<int> selectedZones = vertical.Where(x => x.Item1.Equals(f)).Select(y => Convert.ToInt32(y.Item2)).ToList();
+                            //        foreach (int r in selectedZones)
+                            //        {
+                            //            validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item1.Select(y => y.Item2).Contains(r)));
+                            //        }
+                            //        // validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x=>x.Item1.Except(selectedZones)));
+                            //    }
+                            //    else if (f.Equals("2"))
+                            //    {
+                            //        List<int> selectedZones = vertical.Where(x => x.Item1.Equals(f)).Select(y => Convert.ToInt32(y.Item2)).ToList();
+                            //        foreach (int r in selectedZones)
+                            //        {
+                            //            validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item2.Select(y => y.Item2).Contains(r)));
+                            //        }
+                            //        //validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item1.Select(y => y.Item1.Any())));
+                            //    }
 
-                            }
+                            //}
                             List<string> noFloorZones = vertical.Where(x => string.IsNullOrWhiteSpace(x.Item1)).Select(y => (y.Item2)).ToList();
 
                             if (noFloorZones.Any()) //For Zones that has no Floor
@@ -718,13 +719,23 @@ namespace SpaceLayout.Forms.GenerativeForms
                                     }
                                     if (result.Any())
                                     {
-                                        if (result.First().Equals("1"))
+                                        var floorValue = result.First();
+
+                                        if (floorValue == "1")
                                         {
                                             validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item1.Select(y => y.Item2).Contains(Convert.ToInt32(i))));
                                         }
-                                        else if (result.First().Equals("2"))
+                                        else if (floorValue == "2")
                                         {
                                             validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x => x.Item2.Select(y => y.Item2).Contains(Convert.ToInt32(i))));
+                                        }
+                                        else
+                                        {
+                                            // Filter permutations where node 'i' is in the same floor as the connected node
+                                            validResult = new List<(List<(int, int)>, List<(int, int)>)>(validResult.Where(x =>
+                                                (x.Item1.Select(y => y.Item2).Contains(Convert.ToInt32(i)) && x.Item1.Select(y => y.Item1).Contains(Convert.ToInt32(result.First()))) ||
+                                                (x.Item2.Select(y => y.Item2).Contains(Convert.ToInt32(i)) && x.Item2.Select(y => y.Item1).Contains(Convert.ToInt32(result.First())))
+                                            ));
                                         }
                                     }
                                 }

@@ -130,6 +130,9 @@ namespace SpaceLayout.Forms.GenerativeForms
                     if(filterLevels != null)
                     {
                         List<(List<(int, int)>, List<(int, int)>)> filterVertical = GenerateWithVertical(filterLevels);
+                        if(filterVertical != null) { 
+                            //call bind upperpanel function and pass parameter
+                        }
                     }
                 }
                 
@@ -149,7 +152,7 @@ namespace SpaceLayout.Forms.GenerativeForms
         {
             DataGridView dgvUpper = new DataGridView();
             
-            //Button btn1 = new Button();
+            //Button btn = new Button();
             //btn1.Text = "Alt1";
             //btn1.Name = "Alt1";
             //btn1.ForeColor = Color.Black;
@@ -203,7 +206,7 @@ namespace SpaceLayout.Forms.GenerativeForms
             //btn9.ForeColor = Color.Black;
             //btn9.Dock = DockStyle.Fill;
 
-            //btn1.Click += btnAlt_Clicked;
+            //btn.Click += btnAlt_Clicked;
             //btn2.Click += btnAlt_Clicked;
             //btn3.Click += btnAlt_Clicked;
             //btn4.Click += btnAlt_Clicked;
@@ -246,8 +249,8 @@ namespace SpaceLayout.Forms.GenerativeForms
                 Ndd2.ActiveLayer.RemoveAllChildren();
                 existingFloor = new List<string>();
                 Ndd2.SmartRefreshAllViews();
-                DrawDiagram("1");
-                LowerTable_and_DrawConnector();
+                DrawDiagram("1"); //Draw at diagram
+                LowerTable_and_DrawConnector(); // bind data at Lower table
             }
             else if (text.Equals("Alt2"))
             {
@@ -315,48 +318,7 @@ namespace SpaceLayout.Forms.GenerativeForms
             }
         }
 
-        private void DgvAlternative(int totalAlt)
-        {
-            DataGridView dgv = new DataGridView();
-            dgv.Name = "dgvAlternatives";
-            dgv.BackgroundColor = SystemColors.ControlLightLight;
-            dgv.GridColor = SystemColors.Control;
-            dgv.ForeColor = SystemColors.ControlText;
-            dgv.ColumnHeadersVisible = false;
-            dgv.RowHeadersVisible = false;
-            dgv.AllowUserToAddRows = false;
-
-            //dgv.DataBindings = "a";
-            DataGridViewRow dgvr = new DataGridViewRow();
-            for (int i = 1; i <= 4; i++)
-            {
-                var ButtonColumn = new DataGridViewButtonColumn();
-
-                dgv.Columns.Add(ButtonColumn);
-                ButtonColumn.DefaultCellStyle = new DataGridViewCellStyle()
-                {
-                    ForeColor = Color.Black
-                };
-            }
-
-            this.tableLayoutPanel1.Controls.Add(dgv, 0, 0);
-            dgv.Dock = DockStyle.Fill;
-            dgv.Rows.Add();
-            int row = 1;
-            int cell = 0;
-            for (int i = 1; i <= totalAlt - 4; i++)
-            {
-                if (i % 4 == 0)
-                {
-                    dgv.Rows.Add();
-
-                }
-            }
-
-
-            //dgv.CellContentClick += dgv_CellContentClick;
-        }
-
+        
         private void dgv_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (seq != null)
@@ -477,6 +439,8 @@ namespace SpaceLayout.Forms.GenerativeForms
             dtlower.Columns.Add("Floor");
             dtlower.Columns.Add("Horizontal");
             dtlower.Columns.Add("Vertical");
+            //dtlower.Columns.Add("Horizontal");
+            //dtlower.Columns.Add("Vertical");
 
             if (Ndd2 == null || Ndd2.ActiveLayer == null
                 || Ndd2.ActiveLayer.Descendants(NFilters.Shape1D, -1).Count == 0 || Ndd2.ActiveLayer.Descendants(NFilters.Shape2D, -1).Count == 0)
@@ -536,6 +500,8 @@ namespace SpaceLayout.Forms.GenerativeForms
                         dr["Floor"] = f + "f";
                         dr["Horizontal"] = string.Join(",", H);
                         dr["Vertical"] = string.Join(",", V);
+                        //dr["totalarea"] = ;
+                        //dr["totalarea"] = ;
                         dtlower.Rows.Add(dr);
                     }
                 }
@@ -742,6 +708,7 @@ namespace SpaceLayout.Forms.GenerativeForms
                             }
                         }
                     }
+                    //return validResult;
                 }
                 
             }

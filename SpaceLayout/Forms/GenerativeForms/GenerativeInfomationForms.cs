@@ -25,6 +25,8 @@ namespace SpaceLayout.Forms.GenerativeForms
 {
     public partial class GenerativeInfomationForms : UserControl
     {
+        public int floor1Area = 0;
+        public int floor2Area = 0;
         public NDrawingView Ndv2;
         public NDrawingDocument Ndd2;
         private NLayer layer2;
@@ -46,6 +48,8 @@ namespace SpaceLayout.Forms.GenerativeForms
         List<int> Nodes_1F = new List<int>();
         List<int> Nodes_2F = new List<int>();
         private HashSet<Tuple<string, List<string>>> seq = new HashSet<Tuple<string, List<string>>>();
+        List<(List<(int, int)>, List<(int, int)>)> FinalResult = new List<(List<(int, int)>, List<(int, int)>)>();
+
         public GenerativeInfomationForms(DataTable dt_Main, DataTable dt_ZoneRelationship)
         {
             InitializeComponent();
@@ -62,7 +66,14 @@ namespace SpaceLayout.Forms.GenerativeForms
         private void IS_Load(object sender, EventArgs args)
         {
             ///dtSource();
-           // dt_ZoneRelationship();
+            // dt_ZoneRelationship();
+            dataGridView1.AutoGenerateColumns = false;
+            dataGridView1.ColumnHeadersVisible = false;
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView1.BorderStyle = BorderStyle.None;
+
+            dgvZoneRelationship.Enabled = false;
+
             Form f = this.ParentForm;
             Ndv2 = f.Controls.Find("nDrawingView2", true).FirstOrDefault() as NDrawingView;
             if (Ndv2 != null)
@@ -102,8 +113,8 @@ namespace SpaceLayout.Forms.GenerativeForms
 
             if (dtSourceMain.Rows.Count > 0)
             {
-                int floor1Area = 16786;
-                int floor2Area = 10108;
+                floor1Area = 16786;
+                floor2Area = 10108;
 
                 //Permutation p = new Permutation(node.Count);
                 //var result = p.Successor();
@@ -121,25 +132,22 @@ namespace SpaceLayout.Forms.GenerativeForms
                 {
                     nodeAreas.Add((Convert.ToInt32(Convert.ToDouble(dr[5].ToString().Replace(",", ""))), Convert.ToInt32(dr[0].ToString().Replace(",", ""))));
                 }
-
-                List<(List<(int, int)>, List<(int, int)>)> permutations = GeneratePermutations(floor1Area, floor2Area, nodeAreas);
-                if (permutations != null)
+                if(nodeAreas.Count > 0)
                 {
-
-                    List<(List<(int, int)>, List<(int, int)>)> filterLevels = GenerateWithLevels(permutations);
-                    if(filterLevels != null)
+                    List<(List<(int, int)>, List<(int, int)>)> permutations = GeneratePermutations(floor1Area, floor2Area, nodeAreas);
+                    if (permutations != null)
                     {
-                        List<(List<(int, int)>, List<(int, int)>)> filterVertical = GenerateWithVertical(filterLevels);
-                        if(filterVertical != null) { 
-                            //call bind upperpanel function and pass parameter
+                        List<(List<(int, int)>, List<(int, int)>)> filterLevels = GenerateWithLevels(permutations);
+                        if (filterLevels != null)
+                        {
+                            FinalResult = GenerateWithVertical(filterLevels);
+                            if (FinalResult != null)
+                            {
+                                Bind_UpperPanel(FinalResult);
+                            }
                         }
                     }
                 }
-                
-
-                dgvZoneRelationship.Enabled = false;
-
-                Bind_UpperPanel();
             }
             else
             {
@@ -148,174 +156,55 @@ namespace SpaceLayout.Forms.GenerativeForms
             }
         }
 
-        private void Bind_UpperPanel()
+        private void Bind_UpperPanel(List<(List<(int, int)>, List<(int, int)>)> result)
         {
-            DataGridView dgvUpper = new DataGridView();
-            
-            //Button btn = new Button();
-            //btn1.Text = "Alt1";
-            //btn1.Name = "Alt1";
-            //btn1.ForeColor = Color.Black;
-            //btn1.Dock = DockStyle.Fill;
+           
+            if(result.Count > 0)
+            {
+                int buttonCount = result.Count(); // Number of buttons to generate
+                int buttonsPerRow = 4;
+                int rowCount = (int)Math.Ceiling((double)buttonCount / buttonsPerRow);
+                for (int row = 0; row < rowCount; row++)
+                {
+                    DataGridViewRow dataGridViewRow = new DataGridViewRow();
+                    dataGridViewRow.CreateCells(dataGridView1);
 
-            //Button btn2 = new Button();
-            //btn2.Text = "Alt2";
-            //btn2.Name = "Alt2";
-            //btn2.ForeColor = Color.Black;
-            //btn2.Dock = DockStyle.Fill;
+                    for (int col = 0; col < buttonsPerRow; col++)
+                    {
+                        int buttonIndex = (row * buttonsPerRow) + col;
+                        if (buttonIndex < buttonCount)
+                        {
+                            Button button = new Button();
+                            button.Text = "Set Text";
+                            dataGridViewRow.Cells[col] = new DataGridViewButtonCell()
+                            {
+                                Value = "Alt" + (col+1).ToString()
+                            };
+                            button.Click += btnAlt_Clicked;
+                        }
+                    }
 
-            //Button btn3 = new Button();
-            //btn3.Text = "Alt3";
-            //btn3.Name = "Alt3";
-            //btn3.ForeColor = Color.Black;
-            //btn3.Dock = DockStyle.Fill;
-
-            //Button btn4 = new Button();
-            //btn4.Text = "Alt4";
-            //btn4.Name = "Alt4";
-            //btn4.ForeColor = Color.Black;
-            //btn4.Dock = DockStyle.Fill;
-
-            //Button btn5 = new Button();
-            //btn5.Text = "Alt5";
-            //btn5.Name = "Alt5";
-            //btn5.ForeColor = Color.Black;
-            //btn5.Dock = DockStyle.Fill;
-
-            //Button btn6 = new Button();
-            //btn6.Text = "Alt6";
-            //btn6.Name = "Alt6";
-            //btn6.ForeColor = Color.Black;
-            //btn6.Dock = DockStyle.Fill;
-
-            //Button btn7 = new Button();
-            //btn7.Text = "Alt7";
-            //btn7.Name = "Alt7";
-            //btn7.ForeColor = Color.Black;
-            //btn7.Dock = DockStyle.Fill;
-
-            //Button btn8 = new Button();
-            //btn8.Text = "Alt8";
-            //btn8.Name = "Alt8";
-            //btn8.ForeColor = Color.Black;
-            //btn8.Dock = DockStyle.Fill;
-
-            //Button btn9 = new Button();
-            //btn9.Text = "Alt9";
-            //btn9.Name = "Alt9";
-            //btn9.ForeColor = Color.Black;
-            //btn9.Dock = DockStyle.Fill;
-
-            //btn.Click += btnAlt_Clicked;
-            //btn2.Click += btnAlt_Clicked;
-            //btn3.Click += btnAlt_Clicked;
-            //btn4.Click += btnAlt_Clicked;
-            //btn5.Click += btnAlt_Clicked;
-            //btn6.Click += btnAlt_Clicked;
-            //btn7.Click += btnAlt_Clicked;
-            //btn8.Click += btnAlt_Clicked;
-            //btn9.Click += btnAlt_Clicked;
-
-            //TableLayoutPanel panel = new TableLayoutPanel();
-            //panel.ColumnCount = 3;
-            
-            //panel.RowCount = 3;
-            //panel.Height = 90;
-            //panel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33F));
-            //panel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33F));
-            //panel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33F));
-            //panel.Controls.Add(btn1, 0, 0);
-            //panel.Controls.Add(btn2, 1, 0);
-            //panel.Controls.Add(btn3, 3, 0);
-            //panel.Controls.Add(btn4, 0, 1);
-            //panel.Controls.Add(btn5, 1, 1);
-            //panel.Controls.Add(btn6, 3, 1);
-            //panel.Controls.Add(btn7, 0, 2);
-            //panel.Controls.Add(btn8, 1, 2);
-            //panel.Controls.Add(btn9, 3, 2);
-            ////panel.RowStyles.Add(new RowStyle(SizeType.Absolute, 2F));
-            ////panel.Controls.Add(new Button() { Text = "Alt1", Name = "Alt1",  ForeColor = Color.Black, Dock = DockStyle.Fill }, 0, 0);
-            ////panel.Controls.Add(new Button() { Text = "Alt2", Name = "Alt2", ForeColor = Color.Black, Dock = DockStyle.Fill }, 1, 0);
-            ////panel.Controls.Add(new Button() { Text = "Alt3", Name = "Alt3", ForeColor = Color.Black, Dock = DockStyle.Fill }, 3, 0);
-            //this.tableLayoutPanel1.Controls.Add(panel, 0, 0);
-           // panel.Dock = DockStyle.Top;
+                    dataGridView1.Rows.Add(dataGridViewRow);
+                }
+            }
+           
         }
 
         private void btnAlt_Clicked(object sender, EventArgs e)
         {
+            //(List<(int, int)>, List<(int, int)>) result = new(List<(int, int)>, List<(int, int)>);
             string text = (sender as Button).Text as string;
-            if (text.Equals("Alt1"))
+            if (!string.IsNullOrWhiteSpace(text))
             {
+                var seq = text.Remove(0, 3);
+                var result = FinalResult.ElementAt(Convert.ToInt32(seq));
                 Ndd2.ActiveLayer.RemoveAllChildren();
                 existingFloor = new List<string>();
                 Ndd2.SmartRefreshAllViews();
-                DrawDiagram("1"); //Draw at diagram
-                LowerTable_and_DrawConnector(); // bind data at Lower table
+                //DrawDiagram(seq); //Draw at diagram
+                LowerTable_and_DrawConnector(result); // bind data at Lower table
             }
-            else if (text.Equals("Alt2"))
-            {
-                Ndd2.ActiveLayer.RemoveAllChildren();
-                existingFloor = new List<string>();
-                Ndd2.SmartRefreshAllViews();
-                DrawDiagram("2");
-                LowerTable_and_DrawConnector();
-            }
-            else if (text.Equals("Alt3"))
-            {
-                Ndd2.ActiveLayer.RemoveAllChildren();
-                existingFloor = new List<string>();
-                Ndd2.SmartRefreshAllViews();
-                DrawDiagram("3");
-                LowerTable_and_DrawConnector();
-            }
-            else if (text.Equals("Alt4"))
-            {
-                Ndd2.ActiveLayer.RemoveAllChildren();
-                existingFloor = new List<string>();
-                Ndd2.SmartRefreshAllViews();
-                DrawDiagram("4");
-                LowerTable_and_DrawConnector();
-            }
-            else if (text.Equals("Alt5"))
-            {
-                Ndd2.ActiveLayer.RemoveAllChildren();
-                existingFloor = new List<string>();
-                Ndd2.SmartRefreshAllViews();
-                DrawDiagram("5");
-                LowerTable_and_DrawConnector();
-            }
-            else if (text.Equals("Alt6"))
-            {
-                Ndd2.ActiveLayer.RemoveAllChildren();
-                existingFloor = new List<string>();
-                Ndd2.SmartRefreshAllViews();
-                DrawDiagram("6");
-                LowerTable_and_DrawConnector();
-            }
-            else if (text.Equals("Alt7"))
-            {
-                Ndd2.ActiveLayer.RemoveAllChildren();
-                existingFloor = new List<string>();
-                Ndd2.SmartRefreshAllViews();
-                DrawDiagram("7");
-                LowerTable_and_DrawConnector();
-            }
-            else if (text.Equals("Alt8"))
-            {
-                Ndd2.ActiveLayer.RemoveAllChildren();
-                existingFloor = new List<string>();
-                Ndd2.SmartRefreshAllViews();
-                DrawDiagram("8");
-                LowerTable_and_DrawConnector();
-            }
-            else if (text.Equals("Alt9"))
-            {
-                Ndd2.ActiveLayer.RemoveAllChildren();
-                existingFloor = new List<string>();
-                Ndd2.SmartRefreshAllViews();
-                DrawDiagram("9");
-                LowerTable_and_DrawConnector();
-            }
+                
         }
 
         
@@ -431,7 +320,7 @@ namespace SpaceLayout.Forms.GenerativeForms
             return zone;
         }
 
-        private void LowerTable_and_DrawConnector()
+        private void LowerTable_and_DrawConnector((List<(int, int)>, List<(int, int)>) result)
         {
             HashSet<Tuple<string, string>> horizontal = new HashSet<Tuple<string, string>>();
             HashSet<Tuple<string, string>> vertical = new HashSet<Tuple<string, string>>();
@@ -439,8 +328,8 @@ namespace SpaceLayout.Forms.GenerativeForms
             dtlower.Columns.Add("Floor");
             dtlower.Columns.Add("Horizontal");
             dtlower.Columns.Add("Vertical");
-            //dtlower.Columns.Add("Horizontal");
-            //dtlower.Columns.Add("Vertical");
+            dtlower.Columns.Add("TotalArea");
+            dtlower.Columns.Add("ExtraArea");
 
             if (Ndd2 == null || Ndd2.ActiveLayer == null
                 || Ndd2.ActiveLayer.Descendants(NFilters.Shape1D, -1).Count == 0 || Ndd2.ActiveLayer.Descendants(NFilters.Shape2D, -1).Count == 0)
@@ -500,8 +389,8 @@ namespace SpaceLayout.Forms.GenerativeForms
                         dr["Floor"] = f + "f";
                         dr["Horizontal"] = string.Join(",", H);
                         dr["Vertical"] = string.Join(",", V);
-                        //dr["totalarea"] = ;
-                        //dr["totalarea"] = ;
+                        dr["TotalArea"] =  (floor1Area - result.Item1.Sum(x=>x.Item1)).ToString();
+                        dr["ExtraArea"] = (floor2Area - result.Item2.Sum(x => x.Item1)).ToString();
                         dtlower.Rows.Add(dr);
                     }
                 }
@@ -707,8 +596,9 @@ namespace SpaceLayout.Forms.GenerativeForms
                                 }
                             }
                         }
+                        
                     }
-                    //return validResult;
+                    return validResult;
                 }
                 
             }

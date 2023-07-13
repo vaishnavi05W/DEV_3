@@ -45,7 +45,7 @@ namespace SpaceLayout.Forms.OutputForm
                         button.Text = "Set Text";
                         dataGridViewRow.Cells[col] = new DataGridViewButtonCell()
                         {
-                            Value = button
+                            Value = "Set Text"
                         };
                     }
                 }

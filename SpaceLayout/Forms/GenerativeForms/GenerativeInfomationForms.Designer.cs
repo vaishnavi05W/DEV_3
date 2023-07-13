@@ -38,8 +38,16 @@ namespace SpaceLayout.Forms.GenerativeForms
             this.colFloor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colHorizontal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colVertical = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTotalArea = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colExtraArea = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewButtonColumn();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvZoneRelationship)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -48,6 +56,7 @@ namespace SpaceLayout.Forms.GenerativeForms
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.dgvZoneRelationship, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.dataGridView1, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
@@ -56,7 +65,7 @@ namespace SpaceLayout.Forms.GenerativeForms
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40.74567F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 59.25433F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(622, 699);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(546, 699);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // dgvZoneRelationship
@@ -72,16 +81,17 @@ namespace SpaceLayout.Forms.GenerativeForms
             this.dgvZoneRelationship.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colFloor,
             this.colHorizontal,
-            this.colVertical});
+            this.colVertical,
+            this.colTotalArea,
+            this.colExtraArea});
             this.dgvZoneRelationship.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvZoneRelationship.GridColor = System.Drawing.SystemColors.Control;
             this.dgvZoneRelationship.Location = new System.Drawing.Point(4, 288);
             this.dgvZoneRelationship.Margin = new System.Windows.Forms.Padding(4);
             this.dgvZoneRelationship.Name = "dgvZoneRelationship";
             this.dgvZoneRelationship.RowHeadersWidth = 51;
-            this.dgvZoneRelationship.Size = new System.Drawing.Size(614, 407);
+            this.dgvZoneRelationship.Size = new System.Drawing.Size(538, 407);
             this.dgvZoneRelationship.TabIndex = 3;
-            this.dgvZoneRelationship.Visible = false;
             // 
             // colFloor
             // 
@@ -126,6 +136,72 @@ namespace SpaceLayout.Forms.GenerativeForms
             this.colVertical.MinimumWidth = 6;
             this.colVertical.Name = "colVertical";
             // 
+            // colTotalArea
+            // 
+            this.colTotalArea.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colTotalArea.DataPropertyName = "TotalArea";
+            this.colTotalArea.HeaderText = "Total Area";
+            this.colTotalArea.MinimumWidth = 6;
+            this.colTotalArea.Name = "colTotalArea";
+            this.colTotalArea.ReadOnly = true;
+            // 
+            // colExtraArea
+            // 
+            this.colExtraArea.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colExtraArea.DataPropertyName = "ExtraArea";
+            this.colExtraArea.HeaderText = "Extra Area";
+            this.colExtraArea.MinimumWidth = 6;
+            this.colExtraArea.Name = "colExtraArea";
+            this.colExtraArea.ReadOnly = true;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1,
+            this.Column2,
+            this.Column3,
+            this.Column4});
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.Location = new System.Drawing.Point(3, 3);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersWidth = 51;
+            this.dataGridView1.RowTemplate.Height = 24;
+            this.dataGridView1.Size = new System.Drawing.Size(540, 278);
+            this.dataGridView1.TabIndex = 4;
+            // 
+            // Column1
+            // 
+            this.Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column1.HeaderText = "Column1";
+            this.Column1.MinimumWidth = 6;
+            this.Column1.Name = "Column1";
+            // 
+            // Column2
+            // 
+            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column2.HeaderText = "Column2";
+            this.Column2.MinimumWidth = 6;
+            this.Column2.Name = "Column2";
+            // 
+            // Column3
+            // 
+            this.Column3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column3.HeaderText = "Column3";
+            this.Column3.MinimumWidth = 6;
+            this.Column3.Name = "Column3";
+            // 
+            // Column4
+            // 
+            this.Column4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column4.HeaderText = "Column4";
+            this.Column4.MinimumWidth = 6;
+            this.Column4.Name = "Column4";
+            this.Column4.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
             // GenerativeInfomationForms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -133,9 +209,10 @@ namespace SpaceLayout.Forms.GenerativeForms
             this.Controls.Add(this.tableLayoutPanel1);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "GenerativeInfomationForms";
-            this.Size = new System.Drawing.Size(622, 699);
+            this.Size = new System.Drawing.Size(546, 699);
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvZoneRelationship)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -147,5 +224,12 @@ namespace SpaceLayout.Forms.GenerativeForms
         private System.Windows.Forms.DataGridViewTextBoxColumn colFloor;
         private System.Windows.Forms.DataGridViewTextBoxColumn colHorizontal;
         private System.Windows.Forms.DataGridViewTextBoxColumn colVertical;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTotalArea;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colExtraArea;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewButtonColumn Column1;
+        private System.Windows.Forms.DataGridViewButtonColumn Column2;
+        private System.Windows.Forms.DataGridViewButtonColumn Column3;
+        private System.Windows.Forms.DataGridViewButtonColumn Column4;
     }
 }
